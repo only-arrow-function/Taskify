@@ -64,20 +64,12 @@
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
   }
-  html {
-    font-size: 62.5%;
-  }
 }
  
 @layer base {
   * {
-    @apply border-border;
     @apply box-border; /* box-sizing: border-box; */
     font-family: 'Pretendard', sans-serif; /* Pretendard 폰트 적용 */
     font-style: normal;
-  }
-  
-  body {
-    @apply bg-background text-foreground;
   }
 }
