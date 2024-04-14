@@ -9,6 +9,8 @@ interface Props {
 const BaseButton = ({children, sizeVariant, colorVariant}: Props) => {
   // style
   const baseClasses = "flex items-center justify-center gap-10px flex-shrink-0 rounded";
+  const textBaseClasses = 'text-center font-[Pretendard] text-lg font-medium leading-normal';
+
   let sizeVariantClasses;
   let textSizeVariantClasses = 'text-sm';
   switch (sizeVariant) {
@@ -26,8 +28,8 @@ const BaseButton = ({children, sizeVariant, colorVariant}: Props) => {
       sizeVariantClasses = 'w-[52px] px-[9px] py-[7px]'; 
       break;
   }
+
   const bgVariantClasses = colorVariant === 'positive' ? 'bg-violet-50' : 'bg-white border border-grayscale-40';
-  const textBaseClasses = 'text-center font-[Pretendard] text-lg font-medium leading-normal';
   const textVariantClasses = colorVariant === 'positive' ? 'text-white' : 'text-violet-50';
 
   return (
