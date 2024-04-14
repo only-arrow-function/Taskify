@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   sizeVariant?: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
-  colorVariant?: 'positive' | 'negative';
+  purpose: 'positive' | 'negative';
 }
 
-const BaseButton = ({children, sizeVariant, colorVariant}: Props) => {
+const BaseButton = ({ children, sizeVariant, purpose }: Props) => {
   // style
   const baseClasses = "flex items-center justify-center gap-10px flex-shrink-0 rounded";
   const textBaseClasses = 'text-center font-[Pretendard] text-lg font-medium leading-normal';
@@ -29,8 +29,8 @@ const BaseButton = ({children, sizeVariant, colorVariant}: Props) => {
       break;
   }
 
-  const bgVariantClasses = colorVariant === 'positive' ? 'bg-violet-50' : 'bg-white border border-grayscale-40';
-  const textVariantClasses = colorVariant === 'positive' ? 'text-white' : 'text-violet-50';
+  const bgVariantClasses = purpose === 'positive' ? 'bg-violet-50' : 'bg-white border border-grayscale-40';
+  const textVariantClasses = purpose === 'positive' ? 'text-white' : 'text-violet-50';
 
   return (
     <button className={`${baseClasses} ${sizeVariantClasses} ${bgVariantClasses}`}>
