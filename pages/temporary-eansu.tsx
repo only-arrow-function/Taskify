@@ -1,7 +1,9 @@
-const temporaryEansu = () => {
+import LoginButton from "@/components/buttons/login-button"
+
+const TemporaryEansu = () => {
   return (
-    <div>temporary-eunsu</div>
+    <LoginButton isValidated={true} variant="secondary"/>
   )
 }
 
-export default temporaryEansu
+export default TemporaryEansu
