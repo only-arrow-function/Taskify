@@ -56,9 +56,6 @@ const config: Config = {
     corePlugins: {
       fontSize: false,  // 폰트 사이즈 기본 플러그인 비활성화
     },
-    fontSize: {
-      base: "62.5%", // 모든 텍스트의 기본 크기 설정
-    },
   },
   plugins: [],
 };
