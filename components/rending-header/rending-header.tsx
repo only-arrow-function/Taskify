@@ -1,8 +1,8 @@
-import type { RendingHeaderProps } from './rending-header-type';
+import type { DarkmodeProps } from './rending-header-type';
 import RendingHeaderLogo from './rending-header-logo';
 import RendingHeaderNavBar from './rending-header-navbar';
 
-const RendingHeader = (props: RendingHeaderProps) => {
+const RendingHeader = (props: DarkmodeProps) => {
   const darkmodeClassName = props.isDarkmode
     ? 'bg-black text-white'
     : 'bg-white text-black';

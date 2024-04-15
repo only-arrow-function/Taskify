@@ -1,3 +1,3 @@
-export interface RendingHeaderProps {
+export interface DarkmodeProps {
   isDarkmode?: boolean;
 }

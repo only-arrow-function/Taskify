@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { RendingHeaderProps } from './rending-header-type';
+import type { DarkmodeProps } from './rending-header-type';
 import darkmodeLargeLogoImage from '@/public/icon/rending-header/rending-header-logo-large-darkmode.svg';
 import largeLogoImage from '@/public/icon/rending-header/rending-header-logo-large.svg';
 import darkmodeSmallLogoImage from '@/public/icon/rending-header/rending-header-logo-small-darkmode.svg';
 import smallLogoImage from '@/public/icon/rending-header/rending-header-logo-small.svg';
 
-const RendingHeaderLogo = (props: RendingHeaderProps) => {
+const RendingHeaderLogo = (props: DarkmodeProps) => {
   return (
     <h1 className="relative w-[121px] h-[39px] max-sm:w-[24px] max-sm:h-[27px]">
       <Link href="/" className="block">
