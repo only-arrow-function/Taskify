@@ -1,18 +1,14 @@
-import DomainButtonBase from "./commons/domain-button-base"
-import AddChip from "@/components/chips/add-chip";
+import ColumnBase from './commons/column-base';
+import AddChip from '@/components/chips/add-chip';
 
-interface Props {
-  sizeVariant?: "primary" | "secondary" | "tertiary";
-}
-
-const ColumnAddButton = ({ sizeVariant }: Props) => {
+const ColumnAddButton = () => {
   return (
-    <DomainButtonBase sizeVariant={sizeVariant} purpose='column-add'>
-      <div className="flex items-center justify-center gap-x-3">
+    <ColumnBase>
+      <div className='flex items-center justify-center my-[10px] sm:my-[6px]'>
         <AddChip />
       </div>
-    </DomainButtonBase>
-  )
-}
+    </ColumnBase>
+  );
+};
 
-export default ColumnAddButton
+export default ColumnAddButton;
