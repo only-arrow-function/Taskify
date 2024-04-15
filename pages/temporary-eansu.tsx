@@ -1,4 +1,4 @@
-//import BaseButton from "@/components/buttons/base-button"
+import BasicButton from "@/components/buttons/basic-button"
 //import LoginButton from "@/components/buttons/login-button"
 // import DashboardDeleteButton from '@/components/buttons/domain/dashboard-delete-button';
 //import DashboardOpenButton from '@/components/buttons/domain/dashboard-open-button';
@@ -10,7 +10,7 @@ const TemporaryEansu = () => {
   return (
     <>
       {/* <LoginButton isValidated={true} variant="secondary"/> */}
-      {/* <BaseButton sizeVariant='quaternary' purpose='negative'>삭제</BaseButton> */}
+      <BasicButton purpose='negative'>삭제</BasicButton>
       {/* <NewColumnAddButton /> */}
       {/* <ColumnAddButton /> */}
       {/* <DashboardDeleteButton /> */}
