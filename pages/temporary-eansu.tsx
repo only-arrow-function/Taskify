@@ -1,13 +1,17 @@
 //import BaseButton from "@/components/buttons/base-button"
 //import LoginButton from "@/components/buttons/login-button"
-import DomainButton from "@/components/buttons/domain-button";
+import ColumnAddButton from "@/components/buttons/domain/column-add-button";
+import DashboardDeleteButton from "@/components/buttons/domain/dashboard-delete-button";
+import NewDashboardAddButton from "@/components/buttons/domain/new-dashboard-add-button";
 
 const TemporaryEansu = () => {
   return (
     <>
       {/* <LoginButton isValidated={true} variant="secondary"/> */}
       {/* <BaseButton sizeVariant='quaternary' purpose='negative'>삭제</BaseButton> */}
-      <DomainButton sizeVariant="primary" purpose="dashboard-add">새로운 대시보드</DomainButton>
+      <ColumnAddButton sizeVariant="primary"/>
+      <DashboardDeleteButton sizeVariant="tertiary"/>
+      <NewDashboardAddButton sizeVariant="secondary"/>
     </>
   );
 };
