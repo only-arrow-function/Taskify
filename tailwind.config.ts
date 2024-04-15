@@ -34,18 +34,23 @@ const config: Config = {
           50: "#D6173A",
         },
         green: {
+          10: "#F5FAF2", // 8% green color
           50: "#7AC555",
         },
         purple: {
+          10: "#F4ECFC", // 8% purple color
           50: "#760DDE",
         },
         orange: {
+          10: "#FFF8EB", // 8% orange color
           50: "#FFA500",
         },
         blue: {
+          10: "#F4F8FD", // 8% blue color
           50: "#76A5EA",
         },
         pink: {
+          10: "#FDF4FD", // 8% pink color
           50: '#E876EA',
         },
       },
