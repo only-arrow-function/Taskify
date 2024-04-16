@@ -1,34 +1,6 @@
 import { PropsWithChildren } from 'react';
-
-type Color = 'green' | 'purple' | 'orange' | 'blue' | 'pink';
-
-interface Colors {
-  color: string;
-  bgColor: string;
-}
-
-const tagColorConfig: Record<Color, Colors> = {
-  green: {
-    color: 'text-green-50',
-    bgColor: 'bg-green-10',
-  },
-  purple: {
-    color: 'text-purple-50',
-    bgColor: 'bg-purple-10',
-  },
-  orange: {
-    color: 'text-orange-50',
-    bgColor: 'bg-orange-10',
-  },
-  blue: {
-    color: 'text-blue-50',
-    bgColor: 'bg-blue-10',
-  },
-  pink: {
-    color: 'text-pink-50',
-    bgColor: 'bg-pink-10',
-  },
-};
+import { tagColorConfig } from '@/constants/chips';
+import { Color } from '@/types/color';
 
 const TagChip = ({ children, color }: PropsWithChildren<{ color: Color }>) => {
   return (
