@@ -8,7 +8,7 @@ const SideMenuAddDashBoards = () => {
       <p className="hidden sm:block text-[12px] font-bold font-[Pretendard] text-grayscale-60">
         {addText}
       </p>
-      <div className="relative w-[20px] h-[20px]">
+      <div className="relative w-[20px] h-[20px] ml-[2px] sm:ml-0">
         <Image src={addBox} alt="addBox" fill />
       </div>
     </div>
