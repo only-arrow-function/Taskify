@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { backgroundColorConfig } from '@/constants/chips';
+import { backgroundColorConfig } from '@/components/chips/color-constants';
+import { Color } from '@/components/chips/color-type';
 import CheckIcon from '@/public/chips/check.svg';
-import { Color } from '@/types/color';
 
 const ColorChip = ({ color, checked }: { color: Color; checked?: boolean }) => {
   return (
