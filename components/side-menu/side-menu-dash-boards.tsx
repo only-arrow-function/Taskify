@@ -3,25 +3,16 @@ import { DashBoardProps } from '@/components/side-menu/side-menu-type';
 import crownImg from '@/public/icon/crown.svg';
 
 const SideMenuDashBoard = (prop: DashBoardProps) => {
-  let propColor: string;
-  switch (prop.color) {
-    case 'green':
-      propColor = 'before:bg-green-50';
-      break;
-    case 'purple':
-      propColor = 'before:bg-purple-50';
-      break;
-    case 'orange':
-      propColor = 'before:bg-orange-50';
-      break;
-    case 'blue':
-      propColor = 'before:bg-blue-50';
-      break;
-    case 'pink':
-      propColor = 'before:bg-pink-50';
-      break;
-  }
-  const pseudoBefore = `before:content-[''] before:block before:size-[8px] before:rounded-full ${propColor} mr-3 ml-2 sm:ml-0`;
+  const colorObj = {
+    green: 'before:bg-green-50',
+    purple: 'before:bg-purple-50',
+    orange: 'before:bg-orange-50',
+    blue: 'before:bg-blue-50',
+    pink: 'before:bg-pink-50',
+  };
+  const pseudoBefore = `before:content-[''] before:block before:size-[8px] before:rounded-full ${
+    colorObj[prop.color]
+  } mr-3 ml-2 sm:ml-0`;
 
   return (
     <div className="w-full h-[40px] sm:h-[43px] xl:h-[45px] flex items-center rounded-[4px] text-grayscale-60 hover:bg-violet-10 hover:text-grayscale-80">
