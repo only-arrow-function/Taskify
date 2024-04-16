@@ -30,17 +30,17 @@ const PasswordInput = ({
             error ? 'border-red-50' : 'border-grayscale-40'
           }`}
         />
-        <button
-          type="button"
+        <div
+          className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
           onClick={toggleShowPassword}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center"
         >
-          {showPassword ? (
-            <Image src={ShowPasswordIcon} alt="비밀번호 표시" />
-          ) : (
-            <Image src={HidePasswordIcon} alt="비밀번호 숨김" />
-          )}
-        </button>
+          <Image
+            src={showPassword ? ShowPasswordIcon : HidePasswordIcon}
+            alt={showPassword ? '비밀번호 표시' : '비밀번호 숨김'}
+            width={24}
+            height={24}
+          />
+        </div>
       </div>
       {error && <p className="text-red-50 text-sm mt-2">{error}</p>}
     </div>
