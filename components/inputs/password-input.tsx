@@ -11,7 +11,7 @@ const PasswordInput = ({
   onChange,
   error,
 }: PasswordInputProps) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
