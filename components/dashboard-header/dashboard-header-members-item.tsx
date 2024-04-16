@@ -1,11 +1,14 @@
-import { translateLayouts } from './dashboard-header-members.constants';
+interface DashboardHeaderMemberItemProps {
+  index: number;
+  user: string;
+}
 
-const DashboardHeaderMemberItem = (props: any) => {
+const DashboardHeaderMemberItem = (props: DashboardHeaderMemberItemProps) => {
+  const marginLayouts = props.index >= 1 ? '-ml-[10px]' : '';
+
   return (
     <li
-      className={` w-[2.375rem] h-[2.375rem] rounded-full flex items-center justify-center bg-slate-500 text-white ${
-        translateLayouts[props.index as keyof typeof translateLayouts]
-      }`}
+      className={`w-[2.375rem] h-[2.375rem] rounded-full flex items-center justify-center bg-slate-500 text-white ${marginLayouts}`}
     >
       {props.user.slice(0, 1)}
     </li>
