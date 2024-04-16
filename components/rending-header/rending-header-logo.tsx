@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { DarkmodeProps } from './rending-header-type';
-import darkmodeLargeLogoImage from '@/public/icon/rending-header/rending-header-logo-large-darkmode.svg';
-import largeLogoImage from '@/public/icon/rending-header/rending-header-logo-large.svg';
-import darkmodeSmallLogoImage from '@/public/icon/rending-header/rending-header-logo-small-darkmode.svg';
-import smallLogoImage from '@/public/icon/rending-header/rending-header-logo-small.svg';
+import darkmodeSmallLogoImage from '@/public/logo/logo-small-darkmode.svg';
+import smallLogoImage from '@/public/logo/logo-small.svg';
+import darkmodeLargeLogoImage from '@/public/logo/logo-with-title-large-darkmode.svg';
+import largeLogoImage from '@/public/logo/logo-with-title-large.svg';
 
 const RendingHeaderLogo = (props: DarkmodeProps) => {
   return (
