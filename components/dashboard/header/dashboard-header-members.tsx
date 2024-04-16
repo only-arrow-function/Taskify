@@ -5,9 +5,9 @@ const DashboardHeaderMembers = (props: { users: string[] }) => {
   const router = useRouter();
   if (router.pathname.match('my')) return null;
 
-  const greaterThanFive = props.users.length > 5;
-  const remainingUserCount = props.users.slice(4, props.users.length).length;
-  const users = greaterThanFive ? props.users.slice(0, 4) : props.users;
+  const isGreaterThanFive = props.users.length > 5;
+  const remainingUserCount = props.users.length - 4;
+  const users = props.users.slice(0, 4);
 
   return (
     <ul className="flex relative">
@@ -19,7 +19,7 @@ const DashboardHeaderMembers = (props: { users: string[] }) => {
         </li>
       ))}
 
-      {greaterThanFive && (
+      {isGreaterThanFive && (
         <ProfileBadge styles="-ml-[10px]">+{remainingUserCount}</ProfileBadge>
       )}
     </ul>

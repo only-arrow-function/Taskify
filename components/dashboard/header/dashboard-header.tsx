@@ -14,7 +14,7 @@ const DashboardHeader = () => {
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
 
   return (
-    <header className="w-full border-b border-grayscale-40 py-6 max-[744px]:pr-3 max-[744px]:py-4">
+    <header className="w-full border border-grayscale-40 py-6 max-[744px]:pr-3 max-[744px]:py-4">
       <div className="ml-[17.5vw] mr-[4.167vw] flex justify-between items-center max-md:justify-end max-[744px]:w-full max-[744px]:ml-0">
         <h2 className="text-xl font-bold max-md:hidden">
           <Link href="/dashboard/my">내 대시보드</Link>
