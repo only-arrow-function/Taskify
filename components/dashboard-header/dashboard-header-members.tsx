@@ -1,6 +1,10 @@
+import { useRouter } from 'next/router';
 import ProfileBadge from '../profile/profile-badge';
 
 const DashboardHeaderMembers = (props: { users: string[] }) => {
+  const router = useRouter();
+  if (router.pathname.match('my')) return null;
+
   const greaterThanFive = props.users.length > 5;
   const remainingUserCount = props.users.slice(4, props.users.length).length;
   const users = greaterThanFive ? props.users.slice(0, 4) : props.users;
