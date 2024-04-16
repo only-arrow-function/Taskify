@@ -1,13 +1,8 @@
-// import InviteTable from "@/components/tables/invite-table";
-import ColorChip from "@/components/chips/color-chip";
+import InviteTable from '@/components/tables/invite-table';
+// import ColorChip from "@/components/chips/color-chip";
 
 const TemporaryEansu = () => {
-  return (
-    <>
-      {/* <InviteTable/> */}
-      <ColorChip color='pink' checked/>
-    </>
-  );
+  return <InviteTable />;
 };
 
 export default TemporaryEansu;
