@@ -1,4 +1,4 @@
-import DashboardHeaderMemberItem from './dashboard-header-members-item';
+import ProfileBadge from '../profile/profile-badge';
 
 const DashboardHeaderMembers = (props: { users: string[] }) => {
   const greaterThanFive = props.users.length > 5;
@@ -8,13 +8,15 @@ const DashboardHeaderMembers = (props: { users: string[] }) => {
   return (
     <ul className="flex relative">
       {users.map((user, index) => (
-        <DashboardHeaderMemberItem key={index} user={user} index={index} />
+        <li key={index}>
+          <ProfileBadge styles={index >= 1 ? '-ml-[10px]' : ''}>
+            {user.slice(0, 1)}
+          </ProfileBadge>
+        </li>
       ))}
 
       {greaterThanFive && (
-        <li className="w-[2.375rem] h-[2.375rem] rounded-full flex items-center justify-center bg-slate-500 text-white -ml-[10px]">
-          +{remainingUserCount}
-        </li>
+        <ProfileBadge styles="-ml-[10px]">+{remainingUserCount}</ProfileBadge>
       )}
     </ul>
   );

@@ -10,13 +10,13 @@ const DashboardHeader = () => {
       <div className="ml-[17.5vw] mr-[4.167vw] py-6 flex justify-between items-center">
         <h2 className="text-xl font-bold">내 대시보드</h2>
 
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center">
           <div>
             <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>
               관리
             </DashboardHeaderButton>
           </div>
-          <div>
+          <div className="ml-4">
             <DashboardHeaderButton imageSource={dashboardInviteIcon.src}>
               초대하기
             </DashboardHeaderButton>
