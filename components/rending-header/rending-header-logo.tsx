@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { DarkmodeProps } from './rending-header-type';
+import type { DarkmodeProps } from './rending-header.type';
 import darkmodeSmallLogoImage from '@/public/logo/logo-small-darkmode.svg';
 import smallLogoImage from '@/public/logo/logo-small.svg';
 import darkmodeLargeLogoImage from '@/public/logo/logo-with-title-large-darkmode.svg';
