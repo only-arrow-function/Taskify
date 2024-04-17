@@ -1,4 +1,4 @@
-import { Color, Colors } from '@/components/chips/color-type';
+import type { Color, Colors } from '@/components/chips/color.type';
 
 export const tagColorConfig: Record<Color, Colors> = Object.freeze({
   green: {
