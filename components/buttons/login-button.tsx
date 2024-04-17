@@ -1,16 +1,15 @@
-import { ReactNode } from 'react';
-
 interface Props {
   isValidated: boolean;
   variant: 'primary' | 'secondary';
-  type: 'submit' | 'button' | 'reset';
-  children: ReactNode;
 }
 
-const LoginButton = ({ isValidated }: Props) => {
+const LoginButton = ({ isValidated, variant }: Props) => {
   // style
   const baseClasses = 'flex items-center justify-center gap-10px flex-shrink-0 rounded-md';
-  const variantClasses = `w-[351px] sm:w-[520px] h-[50px] py-[14px]`;
+  const variantClasses =
+    variant === 'primary'
+      ? 'w-[520px] h-[50px] py-[14px]' // primary 스타일
+      : 'w-[351px] h-[50px] py-[14px]'; // secondary 스타일
 
   return (
     <button

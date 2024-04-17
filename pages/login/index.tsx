@@ -45,9 +45,12 @@ const Login: React.FC = () => {
           placeholder="비밀번호를 입력해 주세요"
           error={errors.password}
         />
-        <LoginButton isValidated={true} variant="primary" type="submit">
+        <button
+          className="w-[351px] sm:w-[520px] h-[50px] py-[14px] bg-violet-50 rounded-md text-white text-lg font-500"
+          type="submit"
+        >
           로그인
-        </LoginButton>
+        </button>
       </form>
       <p className="mt-[24px]">
         회원이 아니신가요?&nbsp;
