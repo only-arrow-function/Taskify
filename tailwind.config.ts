@@ -12,6 +12,7 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'search-icon': "url('/icon/search.svg')",
       },
       colors: {
         grayscale: {
@@ -57,6 +58,9 @@ const config: Config = {
       spacing: {
         px: '1px',
       },
+      boxShadow: {
+        'b-inner-30': 'inset 0 -1px #EEEEEE'
+      }
     },
     corePlugins: {
       fontSize: false, // 폰트 사이즈 기본 플러그인 비활성화
