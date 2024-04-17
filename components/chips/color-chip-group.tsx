@@ -3,13 +3,6 @@ import type { Color } from './color.type';
 import ColorChip from './color-chip';
 
 const colors: Color[] = ['green', 'purple', 'orange', 'blue', 'pink'];
-const hexColors = {
-  green: '#7AC555',
-  purple: '#760DDE',
-  orange: '#FFA500',
-  blue: '#76A5EA',
-  pink: '#E876EA',
-};
 
 const ColorChipGroup = () => {
   const [checkedColor, setCheckedColor] = useState(colors[0]);
@@ -23,7 +16,7 @@ const ColorChipGroup = () => {
             type="radio"
             id={color}
             name="color"
-            value={hexColors[color]}
+            value={color}
             checked={checkedColor === color}
             onChange={(e) => setCheckedColor(e.target.value as Color)}
           />
