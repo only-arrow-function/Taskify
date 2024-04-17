@@ -24,7 +24,7 @@ const requests = Object.freeze({
 
   fetchDashboards: async () => {
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         'dashboards?navigationMethod=infiniteScroll',
         {
           headers: {
@@ -32,9 +32,7 @@ const requests = Object.freeze({
           },
         },
       );
-
-      const responseData = await response.data;
-      return responseData;
+      return data;
     } catch (error) {
       return error;
     }
