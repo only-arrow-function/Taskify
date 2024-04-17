@@ -2,7 +2,7 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 
 import BasicButton from "../buttons/basic-button"
-import { useGetInviteUsers } from "@/hooks/swr/useInviteUsers"
+import { useGetInviteUsers } from "@/hooks/swr/use-invite-users"
 
 import NoEmailIcon from "@/public/icon/no-email.svg"
 

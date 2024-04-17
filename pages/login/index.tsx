@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
-import { useLogin } from '@/hooks/useLogin';
+import { useLogin } from '@/hooks/swr/use-login';
+import { useValidateLogin } from '@/hooks/use-validate-login';
+//import { useLogin } from '@/hooks/useLogin';
+
 import mainLogo from '@/public/logo/logo-main.svg';
 
 const Login: React.FC = () => {
-  const { login, errors } = useLogin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { validateLogin, errors } = useValidateLogin();
+
+  // server state
+  const { data, login } = useLogin(email, password);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await login(email, password);
+    try {
+      await validateLogin(email, password);
+      await login(email, password);
+      console.log(data);
+     } catch (e) {
+      console.log("에러 발생")
+    }
   };
 
   return (
