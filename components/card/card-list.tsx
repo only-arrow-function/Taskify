@@ -1,7 +1,7 @@
+import AddCard from '@/components/card/add-card';
+import CardListHeader from '@/components/card/card-list-header';
 import { TaskCardProp } from '@/components/card/card-type';
 import TaskCard from '@/components/card/task-card';
-import AddCard from './add-card';
-import CardListHeader from './card-list-header';
 
 const mockData: TaskCardProp[] = [
   {
@@ -61,8 +61,8 @@ const mockData: TaskCardProp[] = [
 ];
 const CardList = () => {
   return (
-    <div className="w-full xl:w-[350px] flex flex-col gap-[10px] sm:gap-[16px]">
-      <CardListHeader />
+    <div className="w-full xl:w-[350px] flex flex-col gap-[10px] sm:gap-[16px] p-[12px] sm:p-[20px] border-b-2 border-b-grayscale-30 xl:border-r-2 xl:border-b-0 xl:border-r-grayscale-30">
+      <CardListHeader title="test" count={mockData.length} />
       <AddCard />
       {mockData.map((data) => {
         return (

@@ -1,4 +1,4 @@
-import { Color } from '@/types/color';
+import { Color } from '@/components/chips/color.type';
 
 export interface DashBoardProps {
   id: number;
