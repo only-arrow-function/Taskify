@@ -1,11 +1,18 @@
 import Image from "next/image"
+// import { useRouter } from "next/router"
 
 import BasicButton from "../buttons/basic-button"
+//import { useGetInviteUsers } from "@/hooks/swr/useInviteUsers"
 
 import NoEmailIcon from "@/public/icon/no-email.svg"
 
 const InviteTable = () => {
-  // useSWR을 통해, state를 가질 것이므로, 일단은 구현을 미루겠습니다.
+  // const { route } = useRouter();
+  //const { id } = query;
+  // console.log(route);
+
+  // const { data, mutate } = useGetInviteUsers("0"); 
+  // console.log(data);
 
   return (
     <div className="flex w-full h-[406px] px-[28px] py-[32px] flex-col gap-[3.7rem] rounded-md bg-white">
