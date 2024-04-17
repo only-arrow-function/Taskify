@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
@@ -10,6 +11,9 @@ import { useValidateLogin } from '@/hooks/use-validate-login';
 import mainLogo from '@/public/logo/logo-main.svg';
 
 const Login: React.FC = () => {
+  const router = useRouter();
+  
+  // client state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { validateLogin, errors } = useValidateLogin();
@@ -22,7 +26,9 @@ const Login: React.FC = () => {
     try {
       await validateLogin(email, password);
       await login(email, password);
-      console.log(data);
+
+      localStorage.setItem('accessToken', data.accessToken);
+      router.push('/');
      } catch (e) {
       console.log("에러 발생")
     }
