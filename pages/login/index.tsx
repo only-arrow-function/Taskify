@@ -1,39 +1,46 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
-import { useLogin } from '@/hooks/swr/use-login';
-import { useValidateLogin } from '@/hooks/use-validate-login';
-//import { useLogin } from '@/hooks/useLogin';
+//import { useLogin } from '@/hooks/swr/use-login';
+//import { useValidateLogin } from '@/hooks/use-validate-login';
+import { useLogin } from '@/hooks/useLogin';
 
 import mainLogo from '@/public/logo/logo-main.svg';
 
 const Login: React.FC = () => {
-  const router = useRouter();
+  //const router = useRouter();
   
   // client state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { validateLogin, errors } = useValidateLogin();
+  //const { validateLogin, errors } = useValidateLogin();
+  const { login, errors } = useLogin();
 
   // server state
-  const { data, login } = useLogin(email, password);
+  //const { data, login } = useLogin(email, password);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      await validateLogin(email, password);
-      await login(email, password);
+    await login(email, password);
+    // try {
+    //   await validateLogin(email, password);
+    //   await login(email, password);
 
-      localStorage.setItem('accessToken', data.accessToken);
-      router.push('/');
-     } catch (e) {
-      console.log("에러 발생")
-    }
+    //   const userTokenData = {
+    //     [data.users.email]: data.accessToken
+    //   };
+    //   const serializedData = JSON.stringify(userTokenData);
+    //   localStorage.setItem('userToken', serializedData);
+    //   //router.push('/');
+    //  } catch (e) {
+    //   console.log("에러 발생")
+    // }
   };
 
+  //console.log(data)
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">
       <div className="w-[120px] h-[167px] sm:w-[200px] sm:h-[279px]">
