@@ -10,7 +10,7 @@ const DashboardBase = ({ children, purpose }: Props) => {
     'flex items-center justify-center border border-grayscale-40 rounded-md';
   const bgVariantClasses =
     purpose === 'dashboard-delete' ? 'bg-grayscale-20' : 'bg-white';
-  const responseSizeClasses = 'w-full h-[70px] lg:w-full';
+  const responseSizeClasses = 'w-full h-[70px]';
 
   return (
     <button
