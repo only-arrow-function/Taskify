@@ -10,9 +10,11 @@ const ModalButtonGroup = ({
   disabled?: boolean;
 }) => {
   return (
-    <div className="flex justify-end gap-3">
-      <ModalButton purpose="negative">취소</ModalButton>
-      <ModalButton purpose="positive" disabled={disabled}>
+    <div className="flex justify-center gap-3 sm:justify-end">
+      <ModalButton purpose="negative" disabled={false}>
+        취소
+      </ModalButton>
+      <ModalButton purpose="positive" disabled={!!disabled}>
         {positiveName}
       </ModalButton>
     </div>
