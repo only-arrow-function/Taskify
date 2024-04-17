@@ -2,14 +2,11 @@ import { PropsWithChildren } from 'react';
 import BackDrop from './backdrop';
 import ModalLayout from './modal-layout';
 
-const Modal = ({
-  children,
-  purpose,
-}: PropsWithChildren<{ purpose?: 'newCard' }>) => {
+const Modal = ({ children }: PropsWithChildren) => {
   return (
     <>
       <BackDrop />
-      <ModalLayout purpose={purpose}>{children}</ModalLayout>
+      <ModalLayout>{children}</ModalLayout>
     </>
   );
 };

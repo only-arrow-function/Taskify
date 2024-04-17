@@ -1,7 +1,8 @@
 import { PropsWithChildren } from 'react';
 
-const ModalLayout = ({ children }: PropsWithChildren) => {
-  const sizeStyles = 'w-[327px] px-5 py-7 sm:w-[540px] sm:px-7 sm:pt-8 sm:pb-7';
+const ModalNewTodoLayout = ({ children }: PropsWithChildren) => {
+  const sizeStyles =
+    'w-[327px] px-5 py-7 pb-5 sm:w-[506px] sm:px-7 sm:pt-8 sm:pb-7';
 
   return (
     <div
@@ -12,4 +13,4 @@ const ModalLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default ModalLayout;
+export default ModalNewTodoLayout;
