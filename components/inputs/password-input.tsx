@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { PasswordInputProps } from './password-input-type';
+import { InputFieldProps } from './input-field-type';
 import HidePasswordIcon from '@/public/icon/eye-off.svg';
 import ShowPasswordIcon from '@/public/icon/eye-on.svg';
 
@@ -10,7 +10,7 @@ const PasswordInput = ({
   placeholder,
   onChange,
   error,
-}: PasswordInputProps) => {
+}: InputFieldProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const toggleShowPassword = () => {
@@ -19,7 +19,9 @@ const PasswordInput = ({
 
   return (
     <div className="flex flex-col">
-      <label className="text-grayscale-80 mb-[0.5rem]">{label}</label>
+      <label htmlFor="passwordInput" className="text-grayscale-80 mb-[0.5rem]">
+        {label}
+      </label>
       <div className="relative w-[32.5rem]">
         <input
           type={showPassword ? 'text' : 'password'}
