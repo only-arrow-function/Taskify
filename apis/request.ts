@@ -53,6 +53,18 @@ const requests = Object.freeze({
   },
 
   // 다른 API 요청도 여기에 추가 가능
+
+  getMembers: async () => {
+    try {
+      const accessToken = window.localStorage.getItem('accessToken');
+      const { data } = await axios.get('members?page=1&size=20&dashboardId=5994', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      return data;
+    } catch (error) {
+      console.log(ERROR_MESSAGE, error);
+    }
+  },
 });
 
 export default requests;
