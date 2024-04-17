@@ -1,5 +1,6 @@
+import { Color } from '@/components/chips/color-type';
 import SideMenuDashBoard from '@/components/side-menu/side-menu-dash-boards';
-import { Color } from '@/types/color';
+
 const mockData: {
   id: number;
   title: string;
