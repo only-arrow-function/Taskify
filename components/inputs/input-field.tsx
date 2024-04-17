@@ -4,6 +4,7 @@ import { InputFieldProps } from './input-field-type';
 const InputField = ({
   label,
   type,
+  id,
   value,
   placeholder,
   onChange,
@@ -11,9 +12,12 @@ const InputField = ({
 }: InputFieldProps) => {
   return (
     <div className="flex flex-col">
-      <label className="text-grayscale-80 mb-[0.5rem]">{label}</label>
+      <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
+        {label}
+      </label>
       <input
         type={type}
+        id={id}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
