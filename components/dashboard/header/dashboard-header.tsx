@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import DashboardHeaderButton from './dashboard-header-button';
-import DashboardHeaderMembers from './dashboard-header-members';
-import DashboardHeaderProfile from './dashboard-header-profile';
+import DashboardHeaderButton from '@/components/dashboard/header/dashboard-header-button';
+import DashboardHeaderMembers from '@/components/dashboard/header/dashboard-header-members';
+import DashboardHeaderProfile from '@/components/dashboard/header/dashboard-header-profile';
 import dashboardInviteIcon from '@/public/dashboard/dashboard-invite.svg';
 import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg';
 

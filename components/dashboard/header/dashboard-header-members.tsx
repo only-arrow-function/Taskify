@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import ProfileBadge from '../../profile/profile-badge';
+import ProfileBadge from '@/components/profile/profile-badge';
 
 const DashboardHeaderMembers = (props: { users: string[] }) => {
   const router = useRouter();

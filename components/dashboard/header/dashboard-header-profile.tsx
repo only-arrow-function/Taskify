@@ -1,5 +1,5 @@
-import ProfileBadge from '../../profile/profile-badge';
-import ProfileUsername from '../../profile/profile-username';
+import ProfileBadge from '@/components/profile/profile-badge';
+import ProfileUsername from '@/components/profile/profile-username';
 
 const DashboardHeaderProfile = (props: { username: string }) => {
   return (
