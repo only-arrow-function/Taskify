@@ -1,7 +1,9 @@
 import InviteTable from '@/components/tables/invite-table';
 
 const TemporaryEansu = () => {
-  return <InviteTable />;
+  return (
+    <InviteTable />
+  )
 };
 
 export default TemporaryEansu;
