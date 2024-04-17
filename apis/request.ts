@@ -27,9 +27,7 @@ const requests = Object.freeze({
       const { data } = await axios.get(
         'dashboards?navigationMethod=infiniteScroll',
         {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY5NywidGVhbUlkIjoiNC0zIiwiaWF0IjoxNzEzMzQ3MjA1LCJpc3MiOiJzcC10YXNraWZ5In0.D7ycYRnInDkhAQ89zz3s-Jag3bw0LwMSNROW4KHtrtU`,
-          },
+          headers: {},
         },
       );
       return data;
