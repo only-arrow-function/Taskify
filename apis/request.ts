@@ -69,6 +69,15 @@ const requests = Object.freeze({
       };
     }
   },
+
+  deleteMembers: async (memberId: number) => {
+    try {
+      await axios.delete(`/members/${memberId}`);
+    } catch (error) {
+      const err = error as Error;
+      throw new Error(err.message);
+    }
+  },
 });
 
 export default requests;
