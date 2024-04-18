@@ -57,7 +57,7 @@ const requests = Object.freeze({
   getMembers: async () => {
     try {
       const accessToken = window.localStorage.getItem('accessToken');
-      const { data } = await axios.get('members?page=1&size=20&dashboardId=5994', {
+      const { data } = await axios.get(`members?page=1&size=4&dashboardId=${dashboardId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       return data;
