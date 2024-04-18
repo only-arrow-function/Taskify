@@ -26,12 +26,8 @@ const Login: React.FC = () => {
       await validateLogin(email, password);
       await trigger();
 
-      const userTokenData = {
-        [data.users.email]: data.accessToken
-      };
-      const serializedData = JSON.stringify(userTokenData);
-      localStorage.setItem('userToken', serializedData);
-      //router.push('/');
+      localStorage.setItem('accessToken', data.accessToken);
+      router.push('/');
      } catch (e) {
       console.log("에러 발생")
     }
