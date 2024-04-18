@@ -54,7 +54,7 @@ const InputWithTag = ({
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
         {label}
       </label>
-      <div className="flex flex-wrap items-center gap-[6px] w-full h-[3.125rem] px-4 rounded-lg border">
+      <div className="flex flex-wrap items-center gap-[6px] w-full pt-[13px] pb-3 px-4 rounded-lg border sm:pt-[15px] sm:pb-[14px]">
         {tagList?.map((tag) => (
           <TagChip color="green" key={tag}>
             {tag}
@@ -67,7 +67,7 @@ const InputWithTag = ({
           placeholder={placeholder}
           onChange={handleChangeTag}
           onKeyUp={handleKeyUp}
-          className="focus:outline-none"
+          className="flex-grow focus:outline-none"
         />
       </div>
     </div>
