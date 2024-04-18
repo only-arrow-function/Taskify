@@ -23,16 +23,18 @@ const StateDropdown = () => {
   }
 
   return (
-    <div className="flex flex-col gap-[10px]">
-      <label className="text-grayscale-80 text-base font-medium">
-        담당자
-      </label>
-      <div className="flex w-full h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50" onClick={handleOpenDropdown}>
-        <input className="w-full outline-none"/>
-        <Image src={ArrowDownIcon} alt="아래 화살표" className="relative"/>
+    <>
+      <div className="flex flex-col">
+        <label className="text-grayscale-80 text-base font-medium">
+          상태
+        </label>
+        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50" onClick={handleOpenDropdown}>
+          <input className="w-full outline-none"/>
+          <Image src={ArrowDownIcon} alt="아래 화살표" className="relative"/>
+        </div>
       </div>
       {isOpenDropdown && 
-        <div className="flex w-full px-4 rounded-lg border absolute top-[90px]">
+        <div className="flex sm:w-[217px] w-[287px] px-4 rounded-lg border absolute mt-1 bg-white">
           <ul className="flex flex-col gap-[13px]">
             {CURRENT_STATE.map(state => (
               <ProgressChip>{state.name}</ProgressChip>
@@ -40,7 +42,8 @@ const StateDropdown = () => {
           </ul>
         </div>
       }
-    </div>
+      <div className="flex w-full h-[1.5rem]"/>
+      </>
   )
 }
 

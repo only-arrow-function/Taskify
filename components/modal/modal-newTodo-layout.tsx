@@ -1,6 +1,6 @@
-import { PropsWithChildren } from 'react';
+import { ReactNode } from "react";
 
-const ModalNewTodoLayout = ({ children }: PropsWithChildren) => {
+const ModalNewTodoLayout = ({ children, closeDropdown }: {children: ReactNode, closeDropdown: () => void}) => {
   const sizeStyles =
     'w-[327px] px-5 py-7 pb-5 sm:w-[506px] sm:px-7 sm:pt-8 sm:pb-7';
 

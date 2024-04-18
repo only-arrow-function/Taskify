@@ -64,6 +64,7 @@ const InputWithTag = ({
           className="flex-grow focus:outline-none"
         />
       </div>
+      <div className="flex w-full h-[1.5rem]"/>
     </div>
   );
 };
