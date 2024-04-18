@@ -1,4 +1,3 @@
-// import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import requests from '@/apis/request';
 import { DashboardColors } from '@/types/color.type';
