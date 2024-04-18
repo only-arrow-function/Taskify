@@ -1,0 +1,47 @@
+import { useState } from "react"
+import Image from "next/image";
+
+import ProgressChip from "@/components/chips/progress-chip";
+import ArrowDownIcon from "@/public/icon/arrow-drop-down.svg"
+
+const CURRENT_STATE =  Object.freeze([
+  { name : "To Do" },
+  { name : "On_Progress" },
+  { name : "Done" },
+]); // 현재 상태에 대한 종류를 더욱 세분화하여 추가할 수 있습니다.
+
+const StateDropdown = () => {
+  //const [currentState, setCurrentState] = useState(null);
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
+
+  const handleOpenDropdown = () => {
+    setIsOpenDropdown(true);
+  }
+
+  const handleCloseDropdown = () => {
+    setIsOpenDropdown(false);
+  }
+
+  return (
+    <div className="flex flex-col gap-[10px]">
+      <label className="text-grayscale-80 text-base font-medium">
+        담당자
+      </label>
+      <div className="flex w-full h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50" onClick={handleOpenDropdown}>
+        <input className="w-full outline-none"/>
+        <Image src={ArrowDownIcon} alt="아래 화살표" className="relative"/>
+      </div>
+      {isOpenDropdown && 
+        <div className="flex w-full px-4 rounded-lg border absolute top-[90px]">
+          <ul className="flex flex-col gap-[13px]">
+            {CURRENT_STATE.map(state => (
+              <ProgressChip>{state.name}</ProgressChip>
+            ))}
+          </ul>
+        </div>
+      }
+    </div>
+  )
+}
+
+export default StateDropdown

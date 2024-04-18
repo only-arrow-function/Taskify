@@ -26,7 +26,7 @@ const ManagerDropdown = ({ placeholder }: { placeholder: string }) => {
       {isOpenDropdown && 
         <div className="flex w-full h-[3.125rem] px-4 rounded-lg border absolute top-[90px]"></div>
       }
-    </div>
+    </div> // 내부 로직은 초대가 완료된 이후에 넣겠습니다.
   )
 }
 
