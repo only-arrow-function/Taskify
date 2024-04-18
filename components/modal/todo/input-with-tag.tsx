@@ -1,4 +1,4 @@
-import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
+import { KeyboardEventHandler, useState } from 'react';
 import TagChip from '@/components/chips/tag-chip';
 
 const InputWithTag = ({
@@ -12,13 +12,7 @@ const InputWithTag = ({
   type: string;
   placeholder: string;
 }) => {
-  const [tag, setTag] = useState('');
   const [tagList, setTagList] = useState<string[]>([]);
-
-  const handleChangeTag: ChangeEventHandler = (e) => {
-    const target = e.target as HTMLInputElement;
-    setTag(target.value);
-  };
 
   const handleKeyUp: KeyboardEventHandler = (e) => {
     e.preventDefault();
@@ -35,8 +29,10 @@ const InputWithTag = ({
         return;
       }
 
-      setTagList((prevTagList) => [...prevTagList, target.value]);
-      setTag('');
+      const addTagName = target.value;
+      setTagList((prevTagList) => [...prevTagList, addTagName]);
+      target.value = '';
+
       return;
     }
 
@@ -63,9 +59,7 @@ const InputWithTag = ({
         <input
           id={id}
           type={type}
-          value={tag}
           placeholder={placeholder}
-          onChange={handleChangeTag}
           onKeyUp={handleKeyUp}
           className="flex-grow focus:outline-none"
         />
