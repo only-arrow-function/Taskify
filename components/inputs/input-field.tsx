@@ -1,16 +1,7 @@
 import React from 'react';
 import { InputFieldProps } from './input-field-type';
 
-const InputField = ({
-  label,
-  type,
-  id,
-  value,
-  placeholder,
-  autoComplete,
-  onChange,
-  error,
-}: InputFieldProps) => {
+const InputField = ({ label, type, id, value, placeholder, autoComplete, onChange, error }: InputFieldProps) => {
   return (
     <div className="flex flex-col w-full">
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
@@ -23,17 +14,9 @@ const InputField = ({
         onChange={onChange}
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className={`w-full h-[3.125rem] px-4 rounded-lg border ${
-          error ? 'border-red-50' : 'border-grayscale-40'
-        }`}
+        className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'}`}
       />
-      <p
-        className={`text-red-50 text-sm mt-[0.5rem] h-5 ${
-          error ? '' : 'opacity-0'
-        }`}
-      >
-        {error || ' '}
-      </p>
+      <p className={`text-red-50 text-sm mt-[0.5rem] h-5 ${error ? '' : 'opacity-0'}`}>{error || ' '}</p>
     </div>
   );
 };
