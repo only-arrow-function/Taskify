@@ -11,11 +11,11 @@ const ManagerDropdown = ({ placeholder, openDropdown, isOpenDropdown }: { placeh
         </label>
         <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50" onClick={openDropdown}>
           <input placeholder={placeholder} className="w-full outline-none"/>
-          <Image src={ArrowDownIcon} alt="아래 화살표" className="relative"/>
+          <Image src={ArrowDownIcon} alt="아래 화살표" />
         </div>
       </div>
       {isOpenDropdown &&
-        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] rounded-lg border mt-1 absolute bg-white"></div>
+        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] rounded-lg border mt-1 absolute bg-white sm:top-[167px] sm:right-[36px]"></div>
       }
       <div className="flex w-full h-[1.5rem]"/>
     </>
