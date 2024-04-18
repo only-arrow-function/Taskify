@@ -1,5 +1,5 @@
 import { useSWRConfig } from 'swr';
-import { Member } from './members-type';
+import type { Member } from './members.type';
 import TableButton from './table-button';
 import requests from '@/apis/request';
 // import { useGetMembers } from '@/hooks/swr/use-members';
@@ -12,7 +12,7 @@ const TableListItem = ({ member, members }: { member: Member; members: Member[] 
       const newMembers = members.filter((member) => member.id !== deleteId);
       return { members: newMembers, totalCount: newMembers.length };
     };
-  
+
     try {
       await requests.deleteMembers(deleteId);
       mutate('members', updateMembers(deleteId));
