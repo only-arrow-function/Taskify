@@ -26,7 +26,7 @@ const requests = Object.freeze({
     }
   },
 
-  // 다른 API 요청도 여기에 추가 가능
+   // 다른 API 요청도 여기에 추가 가능
 });
 
 export default requests;
