@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
-import { useLogin } from '@/hooks/useLogin';
+import { useLogin } from '@/hooks/swr/use-login';
 import mainLogo from '@/public/logo/logo-main.svg';
 
 const Login: React.FC = () => {
-  const { login, errors } = useLogin();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { data, error, trigger } = useLogin(email, password);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await login(email, password);
+    try {
+      await trigger();
+      console.log('값나와라 뚝딱', data);
+    } catch {
+      console.error('로그인 실패', error);
+    }
   };
 
   return (
@@ -32,7 +37,6 @@ const Login: React.FC = () => {
           autoComplete="email"
           onChange={(e) => setEmail(e.target.value)}
           placeholder="이메일을 입력해 주세요"
-          error={errors.email}
         />
         <PasswordInput
           label="비밀번호"
@@ -42,7 +46,6 @@ const Login: React.FC = () => {
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="비밀번호를 입력해 주세요"
-          error={errors.password}
         />
         <button
           className="w-[351px] sm:w-[520px] h-[50px] py-[14px] bg-violet-50 rounded-md text-white text-lg font-500"
