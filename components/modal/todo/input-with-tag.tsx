@@ -1,24 +1,52 @@
 import { ChangeEventHandler, KeyboardEventHandler, useState } from 'react';
 import TagChip from '@/components/chips/tag-chip';
-// import InputField from '@/components/inputs/input-field';
 
-const InputWithTag = ({ label, id, type, placeholder }: { label: string; type: string; placeholder: string }) => {
+const InputWithTag = ({
+  label,
+  id,
+  type,
+  placeholder,
+}: {
+  id: string;
+  label: string;
+  type: string;
+  placeholder: string;
+}) => {
   const [tag, setTag] = useState('');
   const [tagList, setTagList] = useState<string[]>([]);
 
   const handleChangeTag: ChangeEventHandler = (e) => {
     const target = e.target as HTMLInputElement;
-
     setTag(target.value);
   };
 
-  const handleKeyDown: KeyboardEventHandler = (e) => {
+  const handleKeyUp: KeyboardEventHandler = (e) => {
     e.preventDefault();
-    if (e.key === 'Enter') return;
-
     const target = e.target as HTMLInputElement;
 
-    setTagList((prevTagList) => [...prevTagList, target.value]);
+    if (e.key !== 'Enter' && e.key !== 'Backspace') return;
+
+    if (e.key === 'Enter') {
+      if (target.value.trim() === '') {
+        return;
+      }
+
+      if (tagList.includes(target.value)) {
+        return;
+      }
+
+      setTagList((prevTagList) => [...prevTagList, target.value]);
+      setTag('');
+      return;
+    }
+
+    if (e.key === 'Backspace') {
+      if (target.value === '' && tagList.length !== 0) {
+        setTagList((prevTagList) => prevTagList.slice(0, -1));
+        return;
+      }
+      return;
+    }
   };
 
   return (
@@ -26,14 +54,21 @@ const InputWithTag = ({ label, id, type, placeholder }: { label: string; type: s
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
         {label}
       </label>
-      <div className="flex w-full h-[3.125rem] px-4 rounded-lg border">
+      <div className="flex flex-wrap items-center gap-[6px] w-full h-[3.125rem] px-4 rounded-lg border">
         {tagList?.map((tag) => (
           <TagChip color="green" key={tag}>
             {tag}
           </TagChip>
         ))}
-        {/* <input type={type} value={tag} placeholder={placeholder} onChange={handleChangeTag} onKeyDown={handleKeyDown} /> */}
-        <input type={type} value={tag} placeholder={placeholder} onChange={handleChangeTag} onKeyDown={handleKeyDown} />
+        <input
+          id={id}
+          type={type}
+          value={tag}
+          placeholder={placeholder}
+          onChange={handleChangeTag}
+          onKeyUp={handleKeyUp}
+          className="focus:outline-none"
+        />
       </div>
     </div>
   );
