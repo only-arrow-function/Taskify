@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, useState } from 'react';
+import { KeyboardEventHandler } from 'react';
 import TagChip from '@/components/chips/tag-chip';
 
 const InputWithTag = ({
@@ -6,13 +6,21 @@ const InputWithTag = ({
   id,
   type,
   placeholder,
+  name,
+  tags,
+  onAddTag,
+  onRemoveTag,
 }: {
   id: string;
   label: string;
   type: string;
   placeholder: string;
+  name: string;
+  tags: string[];
+  onAddTag: (newTag: string) => void;
+  onRemoveTag: () => void;
 }) => {
-  const [tagList, setTagList] = useState<string[]>([]);
+  // const [tagList, setTagList] = useState<string[]>([]);
 
   const handleKeyUp: KeyboardEventHandler = (e) => {
     e.preventDefault();
@@ -25,20 +33,20 @@ const InputWithTag = ({
         return;
       }
 
-      if (tagList.includes(target.value)) {
+      if (tags.includes(target.value)) {
         return;
       }
 
-      const addTagName = target.value;
-      setTagList((prevTagList) => [...prevTagList, addTagName]);
+      const addTag = target.value;
+      onAddTag(addTag);
       target.value = '';
 
       return;
     }
 
     if (e.key === 'Backspace') {
-      if (target.value === '' && tagList.length !== 0) {
-        setTagList((prevTagList) => prevTagList.slice(0, -1));
+      if (target.value === '' && tags.length !== 0) {
+        onRemoveTag();
         return;
       }
       return;
@@ -51,7 +59,7 @@ const InputWithTag = ({
         {label}
       </label>
       <div className="flex flex-wrap items-center gap-[6px] w-full pt-[13px] pb-3 px-4 rounded-lg border sm:pt-[15px] sm:pb-[14px]">
-        {tagList?.map((tag) => (
+        {tags?.map((tag) => (
           <TagChip color="green" key={tag}>
             {tag}
           </TagChip>
@@ -60,11 +68,12 @@ const InputWithTag = ({
           id={id}
           type={type}
           placeholder={placeholder}
+          name={name}
           onKeyUp={handleKeyUp}
           className="flex-grow focus:outline-none"
         />
       </div>
-      <div className="flex w-full h-[1.5rem]"/>
+      <div className="flex w-full h-[1.5rem]" />
     </div>
   );
 };
