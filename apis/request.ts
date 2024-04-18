@@ -1,6 +1,7 @@
 import axios from './axios';
 import getToken from './localStorage';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+import { Members } from '@/components/tables/members-type';
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -54,15 +55,18 @@ const requests = Object.freeze({
 
   // 다른 API 요청도 여기에 추가 가능
 
-  getMembers: async () => {
+  getMembers: async (dashboardId: string): Promise<Members> => {
     try {
-      const accessToken = window.localStorage.getItem('accessToken');
-      const { data } = await axios.get(`members?page=1&size=4&dashboardId=${dashboardId}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+
+      const { data } = await axios.get(`members?page=1&size=4&dashboardId=${dashboardId}`, headers);
       return data;
     } catch (error) {
       console.log(ERROR_MESSAGE, error);
+      return {
+        members: [],
+        totalCount: 0,
+      };
     }
   },
 });
