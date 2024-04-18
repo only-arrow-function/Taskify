@@ -4,6 +4,9 @@ import DashboardPagination from '@/components/dashboard/pagination/dashboard-pag
 import { useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
 
 const DashboardList = () => {
+  // const token = localStorage.getItem('accessToken');
+  // console.log(token);
+
   const { data } = useDashboards();
 
   return (
@@ -12,7 +15,7 @@ const DashboardList = () => {
         <li>
           <NewDashboardAddButton />
         </li>
-        {data?.dashboards.map((dashboard) => (
+        {data?.dashboards?.map((dashboard) => (
           <li key={dashboard.id} className="relative">
             <DashboardOpenButton color={dashboard.color}>
               {dashboard.title}
