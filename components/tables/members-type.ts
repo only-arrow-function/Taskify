@@ -11,5 +11,5 @@ export interface Member {
 
 export interface Members {
   members: Member[];
-  totalCount: 0;
+  totalCount: number;
 }
