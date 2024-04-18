@@ -3,12 +3,12 @@ import axios from './axios';
 const ERROR_MESSAGE = '에러 발생:';
 
 const requests = Object.freeze({
-  getInviteUsers: async (dashboardid: string, token: string|null) => {
+  getInviteUsers: async (dashboardid: string, token: string | null) => {
     if (!token) return;
-    
+
     try {
       const { data } = await axios.get(`dashboards/${dashboardid}`, {
-        headers: { Authorization: 'Bearer ' + token }
+        headers: { Authorization: 'Bearer ' + token },
       });
       return data;
     } catch (error) {
@@ -19,6 +19,19 @@ const requests = Object.freeze({
   login: async (email: string, password: string) => {
     try {
       const { data } = await axios.post('auth/login', { email, password });
+      return data;
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+      throw error;
+    }
+  },
+  signup: async (email: string, nickname: string, password: string) => {
+    try {
+      const { data } = await axios.post('users', {
+        email,
+        nickname,
+        password,
+      });
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
