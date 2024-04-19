@@ -18,7 +18,7 @@ export interface StatesData {
   description: string;
   dueDate: string;
   tags: string[];
-  imageUrl: File | null;
+  imageUrl: string;
 }
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
@@ -32,17 +32,17 @@ const ModalNewTodo = () => {
     description: '',
     dueDate: '',
     tags: [],
-    imageUrl: null,
+    imageUrl: '',
   });
   const [isDisabled, setIsDisabled] = useState(true);
 
   const isValidateStates = () => {
     const statesKeys = Object.keys(states) as (keyof StatesData)[];
-
+    console.log(statesKeys);
     for (const key of statesKeys) {
+      console.log(key);
       if (key === 'tags' && states[key].length === 0) return false;
       if (!states[key]) return false;
-      // console.log(!states[key]);
     }
 
     return true;
@@ -52,24 +52,25 @@ const ModalNewTodo = () => {
     return date.replaceAll('T', ' ');
   };
 
-  const handleStateChange = (e: ChangeEvent) => {
+  const handleStateChange = (e: ChangeEvent, newState?: string) => {
     e.preventDefault();
     const target = e.target as HTMLInputElement;
-    if (target.name === 'imageUrl') {
-      const file = target.files?.[0];
-      setStates((prevStates) => ({
-        ...prevStates,
-        [target.name]: file,
-      }));
+    // if (target.name === 'imageUrl') {
+    //   setStates((prevStates) => ({
+    //     ...prevStates,
+    //     [target.name]: newState,
+    //   }));
 
-      isValidateStates();
-      return;
-    }
+    //   return;
+    // }
 
     setStates((prevStates) => ({
       ...prevStates,
-      [target.name]: target.value,
+      [target.name]: newState || target.value,
     }));
+
+    console.log(isValidateStates());
+    setIsDisabled(isValidateStates());
   };
 
   const handleBlur = () => {
@@ -104,19 +105,11 @@ const ModalNewTodo = () => {
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
 
-    const statesArray = Object.entries(states);
-
-    if (!statesArray.every(([, value]) => !!value)) return;
-
-    const formData = new FormData();
-    formData.append('image', states.imageUrl);
-
-    const imageUrl = await requests.postCardImage(states.columnId, formData);
+    if (!isValidateStates()) return;
 
     const postStates = {
       ...states,
       dueDate: formatDate(states.dueDate),
-      imageUrl: imageUrl,
     };
 
     await requests.postCard(postStates);
