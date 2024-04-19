@@ -10,6 +10,7 @@ const InputWithTag = ({
   tags,
   onAddTag,
   onRemoveTag,
+  onBlur,
 }: {
   id: string;
   label: string;
@@ -19,6 +20,7 @@ const InputWithTag = ({
   tags: string[];
   onAddTag: (newTag: string) => void;
   onRemoveTag: () => void;
+  onBlur: () => void;
 }) => {
   // const [tagList, setTagList] = useState<string[]>([]);
 
@@ -71,6 +73,7 @@ const InputWithTag = ({
           name={name}
           onKeyUp={handleKeyUp}
           className="flex-grow focus:outline-none"
+          onBlur={onBlur}
         />
       </div>
       <div className="flex w-full h-[1.5rem]" />
