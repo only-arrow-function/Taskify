@@ -14,7 +14,7 @@ const ModalButtonGroup = ({
       <ModalButton purpose="negative" disabled={false}>
         취소
       </ModalButton>
-      <ModalButton purpose="positive" disabled={!!disabled}>
+      <ModalButton purpose="positive" disabled={!disabled}>
         {positiveName}
       </ModalButton>
     </div>

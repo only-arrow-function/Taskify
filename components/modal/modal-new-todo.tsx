@@ -9,7 +9,8 @@ import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
 import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
-import { isFormFilled } from '@/lib/domain/is-form-filled';
+import { useIsFormFilled } from '@/hooks/use-is-form-filled';
+import { formatDate } from '@/lib/format-date';
 
 export interface StatesData {
   columnId: number;
@@ -24,6 +25,10 @@ export interface StatesData {
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = () => {
+  const { title, description, dueDate, tags, isFilled,
+    setTitle, setDescription, setDueDate, setTags } = useIsFormFilled();
+  
+  const [isDisabled, setIsDisabled] = useState(true);
   const [formStates, setStates] = useState<StatesData>({
     columnId: 20004,
     assigneeUserId: 1546,
@@ -34,33 +39,10 @@ const ModalNewTodo = () => {
     tags: [],
     imageUrl: '',
   });
-  const [isDisabled, setIsDisabled] = useState(true);
 
-  const isFilled = isFormFilled(formStates);
-
-  const formatDate = (date: string) => {
-    return date.replaceAll('T', ' ');
-  };
-
-  const handleStateChange = (e: ChangeEvent, newState?: string) => {
-    e.preventDefault();
-    const target = e.target as HTMLInputElement;
-    // if (target.name === 'imageUrl') {
-    //   setStates((prevStates) => ({
-    //     ...prevStates,
-    //     [target.name]: newState,
-    //   }));
-
-    //   return;
-    // }
-
-    setStates((prevStates) => ({
-      ...prevStates,
-      [target.name]: newState || target.value,
-    }));
-
-    console.log(isFilled, "hi");
-    setIsDisabled(isFilled);
+  const handleStateChange = (event: ChangeEvent, setter: () => void) => {
+    event.preventDefault();
+    setter(event.target.value); // 혹시 타입 에러 잡아주실 수 있을까요?
   };
 
   const handleBlur = () => {
@@ -120,8 +102,8 @@ const ModalNewTodo = () => {
             id="title"
             placeholder="제목을 입력해주세요"
             name="title"
-            value={formStates.title}
-            onChange={handleStateChange}
+            value={title}
+            onChange={(e) => handleStateChange(e, setTitle)}
             onBlur={handleBlur}
           />
           <InputField
@@ -130,8 +112,8 @@ const ModalNewTodo = () => {
             id="context"
             placeholder="설명을 입력해주세요"
             name="description"
-            value={formStates.description}
-            onChange={handleStateChange}
+            value={description}
+            onChange={(e) => handleStateChange(e, setDescription)}
             onBlur={handleBlur}
           />
           <InputField
@@ -140,8 +122,8 @@ const ModalNewTodo = () => {
             id="calendar"
             placeholder="날짜를 입력해주세요"
             name="dueDate"
-            value={formStates.dueDate}
-            onChange={handleStateChange}
+            value={dueDate}
+            onChange={(e) => handleStateChange(e, setDueDate)}
             onBlur={handleBlur}
           />
           <InputWithTag
@@ -150,19 +132,19 @@ const ModalNewTodo = () => {
             type="text"
             placeholder="입력 후 Enter"
             name="tags"
-            tags={formStates.tags}
+            tags={tags}
             onAddTag={handleTagAdd}
             onRemoveTag={handleTagRemove}
             onBlur={handleBlur}
           />
-          <InputWithImg
+          {/* <InputWithImg
             label="이미지"
             id="image"
             name="imageUrl"
-            value={formStates.imageUrl}
-            onChange={handleStateChange}
-          />
-          <ModalButtonGroup positiveName="생성" disabled={isDisabled} />
+            value={imageUrl}
+            onChange={(e) => handleStateChange(e, setImageUrl)}
+          /> */}
+          <ModalButtonGroup positiveName="생성" disabled={isFilled} />
         </form>
       </ModalNewTodoLayout>
     </>
