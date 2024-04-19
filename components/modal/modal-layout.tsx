@@ -5,7 +5,7 @@ const ModalLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <div
-      className={`fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg ${sizeStyles}`}
+      className={`z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg ${sizeStyles}`}
     >
       {children}
     </div>
