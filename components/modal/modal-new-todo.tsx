@@ -36,7 +36,7 @@ const ModalNewTodo = () => {
 
   const isValidateStates = () => {
     const statesKeys = Object.keys(states) as (keyof StatesData)[];
-    console.log(statesKeys);
+    //console.log(statesKeys);
     for (const key of statesKeys) {
       console.log(key);
       if (key === 'tags' && states[key].length === 0) return false;
@@ -67,7 +67,7 @@ const ModalNewTodo = () => {
       [target.name]: newState || target.value,
     }));
 
-    console.log(isValidateStates());
+    console.log(isValidateStates(), "hi");
     setIsDisabled(isValidateStates());
   };
 
