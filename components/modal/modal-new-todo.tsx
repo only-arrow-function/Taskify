@@ -8,7 +8,6 @@ import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
 import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
-import { useHandleDropdown } from '@/hooks/use-handle-dropdown';
 
 export interface StatesData {
   columnId: number;
@@ -23,7 +22,6 @@ export interface StatesData {
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = () => {
-  const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown } = useHandleDropdown();
   const [states, setStates] = useState<StatesData>({
     columnId: 20004,
     assigneeUserId: 1546,
@@ -118,13 +116,11 @@ const ModalNewTodo = () => {
   return (
     <>
       <BackDrop />
-      <ModalNewTodoLayout closeDropdown={handleCloseDropdown}>
+      <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
         <form onSubmit={handleSubmit}>
           <ManagerDropdown
             placeholder="이름을 입력해 주세요"
-            openDropdown={handleOpenDropdown}
-            isOpenDropdown={isOpenDropdown}
           />
           <InputField
             label="제목"

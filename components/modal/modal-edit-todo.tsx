@@ -8,20 +8,15 @@ import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
 
-import { useHandleDropdown } from '@/hooks/use-handle-dropdown';
-
-
 const ModalEditTodo = () => {
-  const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown } = useHandleDropdown();
-  
   return (
     <>
       <BackDrop />
-      <ModalNewTodoLayout closeDropdown={handleCloseDropdown}>
+      <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
           <GridLayout>
-            <StateDropdown />
-            <ManagerDropdown placeholder='이름을 입력해 주세요' openDropdown={handleOpenDropdown} isOpenDropdown={isOpenDropdown}/>
+            <StateDropdown/>
+            <ManagerDropdown placeholder='이름을 입력해 주세요'/>
           </GridLayout>
           <InputField label="제목" type="text" id="title" placeholder="제목을 입력해주세요" />
           <InputField label="설명" type="" id="context" placeholder="설명을 입력해주세요" />
