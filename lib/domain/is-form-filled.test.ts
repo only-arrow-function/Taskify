@@ -31,7 +31,7 @@ describe("객체 검사 함수 테스트", () => {
       title: '굿',
       description: '굿',
       dueDate: '굿',
-      tags: [0, 1],
+      tags: ["안녕", "굿"],
       imageUrl: '굿',
     }, true],
   ])("각 결과에 맞게 boolean을 리턴한다.", (data, result) => {

@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEventHandler, useState } from 'react';
+
 import BackDrop from './backdrop';
 import ModalNewTodoLayout from './modal-newTodo-layout';
 import InputWithImg from './todo/input-with-img';
@@ -8,6 +9,7 @@ import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
 import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
+import { isFormFilled } from '@/lib/domain/is-form-filled';
 
 export interface StatesData {
   columnId: number;
@@ -22,7 +24,7 @@ export interface StatesData {
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = () => {
-  const [states, setStates] = useState<StatesData>({
+  const [formStates, setStates] = useState<StatesData>({
     columnId: 20004,
     assigneeUserId: 1546,
     dashboardId: 5947,
@@ -34,17 +36,7 @@ const ModalNewTodo = () => {
   });
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const isValidateStates = () => {
-    const statesKeys = Object.keys(states) as (keyof StatesData)[];
-    //console.log(statesKeys);
-    for (const key of statesKeys) {
-      console.log(key);
-      if (key === 'tags' && states[key].length === 0) return false;
-      if (!states[key]) return false;
-    }
-
-    return true;
-  };
+  const isFilled = isFormFilled(formStates);
 
   const formatDate = (date: string) => {
     return date.replaceAll('T', ' ');
@@ -67,12 +59,12 @@ const ModalNewTodo = () => {
       [target.name]: newState || target.value,
     }));
 
-    console.log(isValidateStates(), "hi");
-    setIsDisabled(isValidateStates());
+    console.log(isFilled, "hi");
+    setIsDisabled(isFilled);
   };
 
   const handleBlur = () => {
-    if (isValidateStates()) {
+    if (isFilled) {
       setIsDisabled(false);
       return;
     }
@@ -86,7 +78,7 @@ const ModalNewTodo = () => {
       tags: [...prevStates.tags, newTag],
     }));
 
-    setIsDisabled(isValidateStates());
+    setIsDisabled(isFilled);
   };
 
   const handleTagRemove = () => {
@@ -95,7 +87,7 @@ const ModalNewTodo = () => {
       tags: prevStates.tags.slice(0, -1),
     }));
 
-    if (states.tags.length < 2) {
+    if (formStates.tags.length < 2) {
       setIsDisabled(true);
     }
   };
@@ -103,11 +95,11 @@ const ModalNewTodo = () => {
   const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
 
-    if (!isValidateStates()) return;
+    if (!isFilled) return;
 
     const postStates = {
-      ...states,
-      dueDate: formatDate(states.dueDate),
+      ...formStates,
+      dueDate: formatDate(formStates.dueDate),
     };
 
     await requests.postCard(postStates);
@@ -128,7 +120,7 @@ const ModalNewTodo = () => {
             id="title"
             placeholder="제목을 입력해주세요"
             name="title"
-            value={states.title}
+            value={formStates.title}
             onChange={handleStateChange}
             onBlur={handleBlur}
           />
@@ -138,7 +130,7 @@ const ModalNewTodo = () => {
             id="context"
             placeholder="설명을 입력해주세요"
             name="description"
-            value={states.description}
+            value={formStates.description}
             onChange={handleStateChange}
             onBlur={handleBlur}
           />
@@ -148,7 +140,7 @@ const ModalNewTodo = () => {
             id="calendar"
             placeholder="날짜를 입력해주세요"
             name="dueDate"
-            value={states.dueDate}
+            value={formStates.dueDate}
             onChange={handleStateChange}
             onBlur={handleBlur}
           />
@@ -158,7 +150,7 @@ const ModalNewTodo = () => {
             type="text"
             placeholder="입력 후 Enter"
             name="tags"
-            tags={states.tags}
+            tags={formStates.tags}
             onAddTag={handleTagAdd}
             onRemoveTag={handleTagRemove}
             onBlur={handleBlur}
@@ -167,7 +159,7 @@ const ModalNewTodo = () => {
             label="이미지"
             id="image"
             name="imageUrl"
-            value={states.imageUrl}
+            value={formStates.imageUrl}
             onChange={handleStateChange}
           />
           <ModalButtonGroup positiveName="생성" disabled={isDisabled} />
