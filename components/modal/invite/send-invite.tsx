@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import requests from '@/apis/request';
@@ -44,6 +45,18 @@ const SendInvite = () => {
           초대
         </ModalButton>
       </div>
+=======
+import InputField from '@/components/inputs/input-field';
+import ModalButtonGroup from '@/components/modal/modal-button-group';
+import ModalTitle from '@/components/modal/modal-title';
+
+const SendInvite = () => {
+  return (
+    <>
+      <ModalTitle>초대하기</ModalTitle>
+      <InputField label="이메일" type="email" id="email" placeholder="codeit@codeit.com" />
+      <ModalButtonGroup positiveName={'초대'} />
+>>>>>>> 3d9f79e (feat [김재성]: 컬럼모달,초대모달 ui)
     </>
   );
 };
