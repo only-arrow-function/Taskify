@@ -4,10 +4,10 @@ import InputField from '@/components/inputs/input-field';
 import Modal from '@/components/modal/modal';
 import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
-import { useBoundStore } from '@/store';
+import { useDashboardsStore } from '@/store/dashboard';
 
 const NewDashboardModal = () => {
-  const { handleInputChange } = useBoundStore((state) => state);
+  const handleInputChange = useDashboardsStore((state) => state.handleInputChange);
 
   return (
     <Modal>

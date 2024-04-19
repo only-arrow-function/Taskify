@@ -2,7 +2,7 @@ import useSWR from 'swr';
 import requests from '@/apis/request';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 
-interface DashboardItem {
+export interface DashboardItem {
   color: DashboardColors;
   createdAt: string;
   createdByMe: boolean;
