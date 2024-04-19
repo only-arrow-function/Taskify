@@ -35,7 +35,7 @@ const InputWithImg = ({
         {!preview && <Image width={28} height={28} src={AddIcon} alt="이미지 추가하기" />}
         {preview && <Image fill src={preview} alt="이미지 미리보기" style={{ objectFit: 'cover' }} />}
       </label>
-      <input id={id} type="file" name={name} onChange={onChange} accept="image/*" className="hidden" ref={inputRef} />
+      <input id={id} type="file" accept="image/*" name={name} onChange={onChange} className="hidden" ref={inputRef} />
     </div>
   );
 };
