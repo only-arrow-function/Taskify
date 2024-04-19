@@ -22,9 +22,8 @@ const InputWithTag = ({
   onRemoveTag: () => void;
   onBlur: () => void;
 }) => {
-  // const [tagList, setTagList] = useState<string[]>([]);
-
-  const handleKeyUp: KeyboardEventHandler = (e) => {
+  const handleKeyDown: KeyboardEventHandler = (e) => {
+    e.stopPropagation();
     e.preventDefault();
     const target = e.target as HTMLInputElement;
 
@@ -71,7 +70,7 @@ const InputWithTag = ({
           type={type}
           placeholder={placeholder}
           name={name}
-          onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
           className="flex-grow focus:outline-none"
           onBlur={onBlur}
         />
