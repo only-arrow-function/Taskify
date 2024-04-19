@@ -59,8 +59,8 @@ const config: Config = {
         px: '1px',
       },
       boxShadow: {
-        'b-inner-30': 'inset 0 -1px #EEEEEE'
-      }
+        'b-inner-30': 'inset 0 -1px #EEEEEE',
+      },
     },
     corePlugins: {
       fontSize: false, // 폰트 사이즈 기본 플러그인 비활성화
