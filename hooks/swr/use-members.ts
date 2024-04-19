@@ -1,10 +1,10 @@
 import useSWR from 'swr';
 import requests from '@/apis/request';
 
-export const useGetMembers = (dashboardId: string) => {
+export const useGetMembers = (dashboardId: string, currentPage: number) => {
   const { data, error, isLoading, mutate } = useSWR(
-    `members?dashboardId=${dashboardId}`,
-    () => requests.getMembers(dashboardId),
+    `members?page=${currentPage}&dashboardId=${dashboardId}`,
+    () => requests.getMembers(dashboardId, currentPage),
     {
       revalidateOnFocus: false,
       revalidateIfStale: false,
