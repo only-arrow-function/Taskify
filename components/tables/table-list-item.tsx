@@ -4,7 +4,17 @@ import TableButton from './table-button';
 import requests from '@/apis/request';
 // import { useGetMembers } from '@/hooks/swr/use-members';
 
-const TableListItem = ({ member, members }: { member: Member; members: Member[] }) => {
+const TableListItem = ({
+  member,
+  members,
+  currentPage,
+  dashboardId,
+}: {
+  member: Member;
+  members: Member[];
+  currentPage: number;
+  dashboardId: string;
+}) => {
   const { mutate } = useSWRConfig();
 
   const handleDeleteMember = (deleteId: number) => async () => {
@@ -15,7 +25,7 @@ const TableListItem = ({ member, members }: { member: Member; members: Member[] 
 
     try {
       await requests.deleteMembers(deleteId);
-      mutate('members', updateMembers(deleteId));
+      mutate(`members?page=${currentPage}&dashboardId=${dashboardId}`, updateMembers(deleteId));
     } catch (error) {
       console.log(error);
     }
