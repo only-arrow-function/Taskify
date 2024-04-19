@@ -2,6 +2,7 @@ import { ChangeEvent, FormEventHandler, useState } from 'react';
 import BackDrop from './backdrop';
 import ModalNewTodoLayout from './modal-newTodo-layout';
 import InputWithImg from './todo/input-with-img';
+import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
 import ModalButtonGroup from '@/components/modal/modal-button-group';
@@ -9,9 +10,10 @@ import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useHandleDropdown } from '@/hooks/use-handle-dropdown';
 
-interface StatesData {
+export interface StatesData {
   columnId: number;
   assigneeUserId: number;
+  dashboardId: number;
   title: string;
   description: string;
   dueDate: string;
@@ -23,14 +25,32 @@ interface StatesData {
 const ModalNewTodo = () => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown } = useHandleDropdown();
   const [states, setStates] = useState<StatesData>({
-    columnId: 0,
-    assigneeUserId: 0,
+    columnId: 20004,
+    assigneeUserId: 1546,
+    dashboardId: 5947,
     title: '',
     description: '',
     dueDate: '',
     tags: [],
     imageUrl: null,
   });
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const isValidateStates = () => {
+    const statesKeys = Object.keys(states) as (keyof StatesData)[];
+
+    for (const key of statesKeys) {
+      if (key === 'tags' && states[key].length === 0) return false;
+      if (!states[key]) return false;
+      // console.log(!states[key]);
+    }
+
+    return true;
+  };
+
+  const formatDate = (date: string) => {
+    return date.replaceAll('T', ' ');
+  };
 
   const handleStateChange = (e: ChangeEvent) => {
     e.preventDefault();
@@ -41,6 +61,8 @@ const ModalNewTodo = () => {
         ...prevStates,
         [target.name]: file,
       }));
+
+      isValidateStates();
       return;
     }
 
@@ -50,11 +72,22 @@ const ModalNewTodo = () => {
     }));
   };
 
+  const handleBlur = () => {
+    if (isValidateStates()) {
+      setIsDisabled(false);
+      return;
+    }
+
+    setIsDisabled(true);
+  };
+
   const handleTagAdd = (newTag: string) => {
     setStates((prevStates) => ({
       ...prevStates,
       tags: [...prevStates.tags, newTag],
     }));
+
+    setIsDisabled(isValidateStates());
   };
 
   const handleTagRemove = () => {
@@ -62,9 +95,32 @@ const ModalNewTodo = () => {
       ...prevStates,
       tags: prevStates.tags.slice(0, -1),
     }));
+
+    if (states.tags.length < 2) {
+      setIsDisabled(true);
+    }
   };
 
-  const handleSubmit: FormEventHandler = (e) => e.preventDefault();
+  const handleSubmit: FormEventHandler = async (e) => {
+    e.preventDefault();
+
+    const statesArray = Object.entries(states);
+
+    if (!statesArray.every(([, value]) => !!value)) return;
+
+    const formData = new FormData();
+    formData.append('image', states.imageUrl);
+
+    const imageUrl = await requests.postCardImage(states.columnId, formData);
+
+    const postStates = {
+      ...states,
+      dueDate: formatDate(states.dueDate),
+      imageUrl: imageUrl,
+    };
+
+    await requests.postCard(postStates);
+  };
 
   return (
     <>
@@ -85,6 +141,7 @@ const ModalNewTodo = () => {
             name="title"
             value={states.title}
             onChange={handleStateChange}
+            onBlur={handleBlur}
           />
           <InputField
             label="설명"
@@ -94,6 +151,7 @@ const ModalNewTodo = () => {
             name="description"
             value={states.description}
             onChange={handleStateChange}
+            onBlur={handleBlur}
           />
           <InputField
             label="마감일"
@@ -103,6 +161,7 @@ const ModalNewTodo = () => {
             name="dueDate"
             value={states.dueDate}
             onChange={handleStateChange}
+            onBlur={handleBlur}
           />
           <InputWithTag
             label="태그"
@@ -113,6 +172,7 @@ const ModalNewTodo = () => {
             tags={states.tags}
             onAddTag={handleTagAdd}
             onRemoveTag={handleTagRemove}
+            onBlur={handleBlur}
           />
           <InputWithImg
             label="이미지"
@@ -121,7 +181,7 @@ const ModalNewTodo = () => {
             value={states.imageUrl}
             onChange={handleStateChange}
           />
-          <ModalButtonGroup positiveName="생성" />
+          <ModalButtonGroup positiveName="생성" disabled={isDisabled} />
         </form>
       </ModalNewTodoLayout>
     </>
