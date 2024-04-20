@@ -12,7 +12,7 @@ const useFormStore = create(set => ({
 
   tags: ["1", "2"],
   setTags: (newTags: string[]) => set(() => ({ title: newTags })),
-
+  
   // imageUrl: '',
   // setImageUrl: (newImageUrl: string) => set(() => ({ imageUrl: newImageUrl })),
 
