@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import Link from 'next/link';
 import NewDashboardModal from '../modal/new-dashboard-modal';
 import DashboardOpenButton from '@/components/buttons/domain/dashboard-open-button';
 import NewDashboardAddButton from '@/components/buttons/domain/new-dashboard-add-button';
@@ -31,7 +32,9 @@ const DashboardList = () => {
           </li>
           {sliceData.map((dashboard) => (
             <li key={dashboard.id} className="relative">
-              <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
+              <Link href={`/dashboard/${dashboard.id}`}>
+                <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
+              </Link>
             </li>
           ))}
         </ul>
