@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler, useState } from 'react';
+import { ChangeEvent, FormEventHandler } from 'react';
 
 import BackDrop from './backdrop';
 import ModalNewTodoLayout from './modal-newTodo-layout';
@@ -23,22 +23,15 @@ export interface StatesData {
   imageUrl: string;
 }
 
+const temporaryPostId = {
+  columnId: 20004,
+  assigneeUserId: 1546,
+  dashboardId: 5947,
+};
+
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = () => {
-  const { title, description, dueDate, tags, isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag } =
-    useIsFormFilled();
-    
-  const [isDisabled, setIsDisabled] = useState(true);
-  const [formStates, setStates] = useState<StatesData>({
-    columnId: 20004,
-    assigneeUserId: 1546,
-    dashboardId: 5947,
-    title: '',
-    description: '',
-    dueDate: '',
-    tags: [],
-    imageUrl: '',
-  });
+  const { isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, ...formState } = useIsFormFilled();
 
   const handleStateChange = (event: ChangeEvent, setter: (value: string) => void) => {
     event.preventDefault();
@@ -53,8 +46,9 @@ const ModalNewTodo = () => {
     if (!isFilled) return;
 
     const postStates = {
-      ...formStates,
-      dueDate: formatDate(formStates.dueDate),
+      ...temporaryPostId,
+      ...formState,
+      dueDate: formatDate(formState.dueDate),
     };
 
     await requests.postCard(postStates);
@@ -72,8 +66,7 @@ const ModalNewTodo = () => {
             type="text"
             id="title"
             placeholder="제목을 입력해주세요"
-            name="title"
-            value={title}
+            value={formState.title}
             onChange={(e) => handleStateChange(e, setTitle)}
           />
           <InputField
@@ -81,8 +74,7 @@ const ModalNewTodo = () => {
             type=""
             id="context"
             placeholder="설명을 입력해주세요"
-            name="description"
-            value={description}
+            value={formState.description}
             onChange={(e) => handleStateChange(e, setDescription)}
           />
           <InputField
@@ -90,8 +82,7 @@ const ModalNewTodo = () => {
             type="datetime-local"
             id="calendar"
             placeholder="날짜를 입력해주세요"
-            name="dueDate"
-            value={dueDate}
+            value={formState.dueDate}
             onChange={(e) => handleStateChange(e, setDueDate)}
           />
           <InputWithTag
@@ -99,17 +90,11 @@ const ModalNewTodo = () => {
             id="tag"
             type="text"
             placeholder="입력 후 Enter"
-            tags={tags}
+            tags={formState.tags}
             onAddTag={setAddTag}
             onRemoveTag={setRemoveTag}
           />
-          {/* <InputWithImg
-            label="이미지"
-            id="image"
-            name="imageUrl"
-            value={imageUrl}
-            onChange={(e) => handleStateChange(e, setImageUrl)}
-          /> */}
+          <InputWithImg label="이미지" id="image" />
           <ModalButtonGroup positiveName="생성" disabled={isFilled} />
         </form>
       </ModalNewTodoLayout>

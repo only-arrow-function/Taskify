@@ -1,31 +1,27 @@
+import { ChangeEvent } from 'react';
 import Image from 'next/image';
 import requests from '@/apis/request';
+import { useIsFormFilled } from '@/hooks/use-is-form-filled';
 import AddIcon from '@/public/chips/add.svg';
 
 const tempColumnId = 20004;
 
-const InputWithImg = ({
-  label,
-  id,
-  name,
-  value,
-  onChange,
-}: {
-  label: string;
-  id: string;
-  name: string;
-  value: string;
-  onChange: (e, imageUrl) => void;
-}) => {
-  const handleChange = async (e) => {
-    const file = e.target.files?.[0];
+const InputWithImg = ({ label, id }: { label: string; id: string }) => {
+  const { imageUrl, setImageUrl } = useIsFormFilled();
+
+  const handleChange = async (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+
+    if (!target.files) return;
+
+    const file = target.files?.[0];
 
     const formData = new FormData();
     formData.append('image', file);
 
     const imageUrl = await requests.postCardImage(tempColumnId, formData);
 
-    onChange(e, imageUrl);
+    setImageUrl(imageUrl);
   };
 
   return (
@@ -35,10 +31,10 @@ const InputWithImg = ({
         htmlFor={id}
         className="relative flex justify-center items-center w-[76px] h-[76px] rounded-md bg-[#F5F5F5] overflow-hidden"
       >
-        {!value && <Image width={28} height={28} src={AddIcon} alt="이미지 추가하기" />}
-        {value && <Image fill src={value} alt="이미지 미리보기" style={{ objectFit: 'cover' }} />}
+        {!imageUrl && <Image width={28} height={28} src={AddIcon} alt="이미지 추가하기" />}
+        {imageUrl && <Image fill src={imageUrl} alt="이미지 미리보기" style={{ objectFit: 'cover' }} />}
       </label>
-      <input id={id} type="file" accept="image/*" name={name} onChange={handleChange} className="hidden" />
+      <input id={id} type="file" accept="image/*" onChange={handleChange} className="hidden" />
     </div>
   );
 };
