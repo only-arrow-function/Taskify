@@ -10,25 +10,13 @@ const RendingHeaderLogo = (props: DarkmodeProps) => {
   return (
     <h1 className="relative w-[121px] h-[39px] max-sm:w-[24px] max-sm:h-[27px]">
       <Link href="/" className="block">
-        <picture>
-          <source
-            media={`(max-width: 640px)`}
-            srcSet={!props.isDarkmode && smallLogoImage.src}
-          />
-          <source
-            media={`(max-width: 640px)`}
-            srcSet={props.isDarkmode && darkmodeSmallLogoImage.src}
-          />
-          <source
-            media={`(max-width: 1280px)`}
-            srcSet={!props.isDarkmode && largeLogoImage.src}
-          />
-          <source
-            media={`(max-width: 1280px)`}
-            srcSet={props.isDarkmode && darkmodeLargeLogoImage.src}
-          />
-          <Image src={largeLogoImage} alt="Taskify 아이콘" fill />
-        </picture>
+        {!props.isDarkmode && <source media={`(max-width: 640px)`} srcSet={smallLogoImage.src} />}
+        {props.isDarkmode && <source media={`(max-width: 640px)`} srcSet={darkmodeSmallLogoImage.src} />}
+        {!props.isDarkmode && <source media={`(max-width: 1280px)`} srcSet={largeLogoImage.src} />}
+        {props.isDarkmode && (
+          <source media={`(max-width: 1280px)`} srcSet={props.isDarkmode && darkmodeLargeLogoImage.src} />
+        )}
+        <Image src={darkmodeLargeLogoImage} alt="Taskify 아이콘" fill />
       </Link>
     </h1>
   );
