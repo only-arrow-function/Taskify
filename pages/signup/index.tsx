@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
-import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
 
@@ -129,7 +128,6 @@ const Signup = () => {
           로그인하기
         </Link>
       </p>
-      <NotificationModal />
     </div>
   );
 };
