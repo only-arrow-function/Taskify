@@ -1,22 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
+import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
-import { useLogin } from '@/hooks/swr/use-login';
+import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { data, error, trigger } = useLogin(email, password);
+const Login = () => {
+  const { email, password, setEmail, setPassword, validateEmail, validatePassword } = useFormValidation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    if (!isEmailValid || !isPasswordValid) {
+      return;
+    }
+
     try {
-      await trigger();
-      console.log('값나와라 뚝딱', data);
-    } catch {
-      console.error('로그인 실패', error);
+      const response = await requests.login(email.value, password.value);
+      localStorage.setItem('accessToken', response.accessToken);
+    } catch (err: any) {
+      console.error('Login failed:', err.response.data.message);
     }
   };
 
@@ -33,19 +38,23 @@ const Login: React.FC = () => {
           label="이메일"
           id="email"
           type="email"
-          value={email}
-          autoComplete="email"
+          value={email.value}
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={validateEmail}
+          autoComplete="email"
           placeholder="이메일을 입력해 주세요"
+          error={email.error}
         />
         <PasswordInput
           label="비밀번호"
           id="password"
           type="password"
-          value={password}
-          autoComplete="current-password"
+          value={password.value}
           onChange={(e) => setPassword(e.target.value)}
+          onBlur={validatePassword}
+          autoComplete="current-password"
           placeholder="비밀번호를 입력해 주세요"
+          error={password.error}
         />
         <button
           className="w-[351px] sm:w-[520px] h-[50px] py-[14px] bg-violet-50 rounded-md text-white text-lg font-500"
