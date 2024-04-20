@@ -15,8 +15,16 @@ const DashboardPagination = (props: DashboardPaginationProps) => {
         {props.totalPages} 페이지중 {props.currentPage}
       </span>
       <div className="flex">
-        <DashboardPaginationButton position="left" isDisabled={false} onClick={props.prevCurrentPage} />
-        <DashboardPaginationButton position="right" isDisabled={false} onClick={props.nextCurrentPage} />
+        <DashboardPaginationButton
+          position="left"
+          isDisabled={props.currentPage === 1}
+          onClick={props.prevCurrentPage}
+        />
+        <DashboardPaginationButton
+          position="right"
+          isDisabled={props.currentPage === props.totalPages}
+          onClick={props.nextCurrentPage}
+        />
       </div>
     </div>
   );
