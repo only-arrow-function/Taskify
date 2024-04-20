@@ -1,12 +1,30 @@
 import DashboardPaginationButton from '@/components/buttons/pagination/dashboard-pagination-button';
+import { useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
 
-const DashboardPagination = () => {
+interface DashboardPaginationProps {
+  totalPages: number;
+  currentPage: number;
+  prevCurrentPage: () => void;
+  nextCurrentPage: () => void;
+}
+
+const DashboardPagination = (props: DashboardPaginationProps) => {
   return (
     <div className="flex justify-end items-center gap-4 mt-3">
-      <span className="text-sm text-grayscale-80">1페이지중 1</span>
+      <span className="text-sm text-grayscale-80">
+        {props.totalPages} 페이지중 {props.currentPage}
+      </span>
       <div className="flex">
-        <DashboardPaginationButton position="left" isDisabled={false} />
-        <DashboardPaginationButton position="right" isDisabled={false} />
+        <DashboardPaginationButton
+          position="left"
+          isDisabled={props.currentPage === 1}
+          onClick={props.prevCurrentPage}
+        />
+        <DashboardPaginationButton
+          position="right"
+          isDisabled={props.currentPage === props.totalPages}
+          onClick={props.nextCurrentPage}
+        />
       </div>
     </div>
   );

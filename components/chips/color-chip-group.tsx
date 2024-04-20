@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import type { Color } from './color.type';
 import ColorChip from './color-chip';
 import { DashboardColors } from '../dashboard/dashboard.constants';
-import { useBoundStore } from '@/store';
+import { useDashboardsStore } from '@/store/dashboard';
 
 const colors: Color[] = ['green', 'purple', 'orange', 'blue', 'pink'];
 const hexColors = {
@@ -14,7 +14,7 @@ const hexColors = {
 };
 
 const ColorChipGroup = () => {
-  const { handleColorChange } = useBoundStore((state) => state);
+  const handleColorChange = useDashboardsStore((state) => state.handleColorChange);
   const [checkedColor, setCheckedColor] = useState(colors[0]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>, color: string) => {

@@ -1,13 +1,15 @@
 import ModalButton from './modal-button';
-import { useBoundStore } from '../../store/index';
 import requests from '@/apis/request';
 import { useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
+import { useDashboardsStore } from '@/store/dashboard';
+import { useToggleStore } from '@/store/toggle-store';
 
 type PositiveName = '생성' | '확인' | '수정' | '변경' | '삭제';
 
 const ModalButtonGroup = ({ positiveName, disabled }: { positiveName: PositiveName; disabled?: boolean }) => {
   const { data, error, mutate } = useDashboards();
-  const { color, title, handleCloseToggle } = useBoundStore((state) => state);
+  const { color, title } = useDashboardsStore((state) => ({ color: state.color, title: state.title }));
+  const handleCloseToggle = useToggleStore((state) => state.handleCloseToggle);
 
   if (error) {
     return <p>Error 발생</p>;

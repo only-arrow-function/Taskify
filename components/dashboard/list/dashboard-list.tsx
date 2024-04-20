@@ -1,14 +1,22 @@
+import Link from 'next/link';
 import NewDashboardModal from '../modal/new-dashboard-modal';
 import DashboardOpenButton from '@/components/buttons/domain/dashboard-open-button';
 import NewDashboardAddButton from '@/components/buttons/domain/new-dashboard-add-button';
 import DashboardPagination from '@/components/dashboard/pagination/dashboard-pagination';
 
-import { useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
-import { useBoundStore } from '@/store';
+import { DashboardItem, useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
+import usePagination from '@/hooks/use-pagination';
+import { useToggleStore } from '@/store/toggle-store';
 
 const DashboardList = () => {
   const { data } = useDashboards();
-  const { isToggle, handleOpenToggle } = useBoundStore((state) => state);
+
+  const isToggle = useToggleStore((state) => state.isToggle);
+  const handleOpenToggle = useToggleStore((state) => state.handleOpenToggle);
+
+  const { totalPages, currentPage, sliceData, nextCurrentPage, prevCurrentPage } = usePagination<DashboardItem>(
+    data!.dashboards,
+  );
 
   return (
     <>
@@ -18,13 +26,20 @@ const DashboardList = () => {
           <li>
             <NewDashboardAddButton onOpenModal={handleOpenToggle} />
           </li>
-          {data?.dashboards?.map((dashboard) => (
+          {sliceData.map((dashboard) => (
             <li key={dashboard.id} className="relative">
-              <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
+              <Link href={`/dashboard/${dashboard.id}`}>
+                <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
+              </Link>
             </li>
           ))}
         </ul>
-        <DashboardPagination />
+        <DashboardPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          prevCurrentPage={prevCurrentPage}
+          nextCurrentPage={nextCurrentPage}
+        />
       </section>
     </>
   );
