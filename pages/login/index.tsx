@@ -1,15 +1,21 @@
-import React from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
+import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
+import { useToggleStore } from '@/store/toggle-store';
 
 const Login = () => {
+  const router = useRouter();
+  const { isToggle, handleOpenToggle } = useToggleStore();
   const { email, password, setEmail, setPassword, validateEmail, validatePassword } = useFormValidation();
+  const [notificationMessage, setnotificationMessage] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isEmailValid = validateEmail();
     const isPasswordValid = validatePassword();
@@ -20,8 +26,10 @@ const Login = () => {
     try {
       const response = await requests.login(email.value, password.value);
       localStorage.setItem('accessToken', response.accessToken);
+      router.push('/dashboard');
     } catch (err: any) {
-      console.error('Login failed:', err.response.data.message);
+      handleOpenToggle();
+      setnotificationMessage(err.response.data.message || '알수없는 오류로 로그인에 실패하였습니다.');
     }
   };
 
@@ -69,6 +77,7 @@ const Login = () => {
           회원가입하기
         </Link>
       </p>
+      {isToggle && <NotificationModal message={notificationMessage} />}
     </div>
   );
 };
