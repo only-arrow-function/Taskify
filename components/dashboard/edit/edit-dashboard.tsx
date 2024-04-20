@@ -2,29 +2,24 @@ import { ChangeEvent } from 'react';
 
 import { useRouter } from 'next/router';
 
+import requests from '@/apis/request';
 import BasicButton from '@/components/buttons/basic-button';
 import ColorChipGroup from '@/components/chips/color-chip-group';
 import InputField from '@/components/inputs/input-field';
-//import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
-import requests from '@/apis/request';
 
-import { useRenameStore } from '@/store/dashboard/edit/rename-store';
+import { useDashboardsStore } from '@/store/dashboard';
 
-const RenameDashboard = () => {
+const EditDashboard = () => {
   const router = useRouter();
-  const { name, setName } = useRenameStore();
-
-  const handleInputChange = (event: ChangeEvent) => {
-    event.preventDefault();
-
-    setName(event.target.value);
-  }
+  const { title, color, handleInputChange, resetTitle } = useDashboardsStore();
 
   const handlePostRename = async () => {
     if (typeof router.query.id !== 'string') return;
 
-    const result = await requests.editDashboard(router.query.id, { title: name, color: '#760DDE' });
+    const result = await requests.editDashboard(router.query.id, { title: title, color: color });
+
+    resetTitle();
   }
 
   return (
@@ -39,6 +34,7 @@ const RenameDashboard = () => {
         id="new-dashboard"
         placeholder="변경할 프로젝트 이름을 입력하세요."
         onChange={handleInputChange}
+        value={title}
       />
       <div className='flex justify-end'>
         <BasicButton purpose='positive' eventHandler={handlePostRename}>변경</BasicButton>
@@ -47,4 +43,4 @@ const RenameDashboard = () => {
   )
 }
 
-export default RenameDashboard
+export default EditDashboard
