@@ -5,7 +5,7 @@ import useFormStore from '@/store/form-store';
 
 export const useIsFormFilled = () => {
   const { title, description, dueDate, tags, isFilled,
-    setTitle, setDescription, setDueDate, setTags, setIsFilled } = useFormStore();
+    setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, setIsFilled } = useFormStore();
   const formStates = { title, description, dueDate, tags }
 
   useEffect(() => {
@@ -18,5 +18,5 @@ export const useIsFormFilled = () => {
   }, [title, description, dueDate, tags]);
 
   return { title, description, dueDate, tags, isFilled,
-    setTitle, setDescription, setDueDate, setTags }
+    setTitle, setDescription, setDueDate,  setAddTag, setRemoveTag }
 }

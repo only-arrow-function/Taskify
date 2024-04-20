@@ -10,8 +10,9 @@ const useFormStore = create(set => ({
   dueDate: '',
   setDueDate: (newDueDate: string) => set(() => ({ dueDate: newDueDate })),
 
-  tags: ["1", "2"],
-  setTags: (newTags: string[]) => set(() => ({ title: newTags })),
+  tags: [],
+  setAddTag: (newTag: string) => set(({ tags }) => ({ tags: [...tags, newTag] })),
+  setRemoveTag: () => set(({ tags }) => ({ tags: tags.slice(0, -1) })),
 
   // imageUrl: '',
   // setImageUrl: (newImageUrl: string) => set(() => ({ imageUrl: newImageUrl })),

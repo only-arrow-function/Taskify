@@ -6,21 +6,17 @@ const InputWithTag = ({
   id,
   type,
   placeholder,
-  name,
   tags,
   onAddTag,
   onRemoveTag,
-  onBlur,
 }: {
   id: string;
   label: string;
   type: string;
   placeholder: string;
-  name: string;
   tags: string[];
   onAddTag: (newTag: string) => void;
   onRemoveTag: () => void;
-  onBlur: () => void;
 }) => {
   const handleKeyDown: KeyboardEventHandler = (e) => {
     e.stopPropagation();
@@ -69,10 +65,8 @@ const InputWithTag = ({
           id={id}
           type={type}
           placeholder={placeholder}
-          name={name}
           onKeyDown={handleKeyDown}
-          className="flex-grow focus:outline-none"
-          onBlur={onBlur}
+          className="flex-grow w-3/12 focus:outline-none"
         />
       </div>
       <div className="flex w-full h-[1.5rem]" />

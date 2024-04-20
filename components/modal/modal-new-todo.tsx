@@ -25,9 +25,9 @@ export interface StatesData {
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = () => {
-  const { title, description, dueDate, tags, isFilled,
-    setTitle, setDescription, setDueDate, setTags } = useIsFormFilled();
-  
+  const { title, description, dueDate, tags, isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag } =
+    useIsFormFilled();
+    
   const [isDisabled, setIsDisabled] = useState(true);
   const [formStates, setStates] = useState<StatesData>({
     columnId: 20004,
@@ -40,38 +40,11 @@ const ModalNewTodo = () => {
     imageUrl: '',
   });
 
-  const handleStateChange = (event: ChangeEvent, setter: () => void) => {
+  const handleStateChange = (event: ChangeEvent, setter: (value: string) => void) => {
     event.preventDefault();
-    setter(event.target.value); // 혹시 타입 에러 잡아주실 수 있을까요?
-  };
 
-  const handleBlur = () => {
-    if (isFilled) {
-      setIsDisabled(false);
-      return;
-    }
-
-    setIsDisabled(true);
-  };
-
-  const handleTagAdd = (newTag: string) => {
-    setStates((prevStates) => ({
-      ...prevStates,
-      tags: [...prevStates.tags, newTag],
-    }));
-
-    setIsDisabled(isFilled);
-  };
-
-  const handleTagRemove = () => {
-    setStates((prevStates) => ({
-      ...prevStates,
-      tags: prevStates.tags.slice(0, -1),
-    }));
-
-    if (formStates.tags.length < 2) {
-      setIsDisabled(true);
-    }
+    const target = event.target as HTMLInputElement;
+    setter(target.value);
   };
 
   const handleSubmit: FormEventHandler = async (e) => {
@@ -93,9 +66,7 @@ const ModalNewTodo = () => {
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
         <form onSubmit={handleSubmit}>
-          <ManagerDropdown
-            placeholder="이름을 입력해 주세요"
-          />
+          <ManagerDropdown placeholder="이름을 입력해 주세요" />
           <InputField
             label="제목"
             type="text"
@@ -104,7 +75,6 @@ const ModalNewTodo = () => {
             name="title"
             value={title}
             onChange={(e) => handleStateChange(e, setTitle)}
-            onBlur={handleBlur}
           />
           <InputField
             label="설명"
@@ -114,7 +84,6 @@ const ModalNewTodo = () => {
             name="description"
             value={description}
             onChange={(e) => handleStateChange(e, setDescription)}
-            onBlur={handleBlur}
           />
           <InputField
             label="마감일"
@@ -124,18 +93,15 @@ const ModalNewTodo = () => {
             name="dueDate"
             value={dueDate}
             onChange={(e) => handleStateChange(e, setDueDate)}
-            onBlur={handleBlur}
           />
           <InputWithTag
             label="태그"
             id="tag"
             type="text"
             placeholder="입력 후 Enter"
-            name="tags"
             tags={tags}
-            onAddTag={handleTagAdd}
-            onRemoveTag={handleTagRemove}
-            onBlur={handleBlur}
+            onAddTag={setAddTag}
+            onRemoveTag={setRemoveTag}
           />
           {/* <InputWithImg
             label="이미지"
