@@ -8,8 +8,6 @@ import { DashboardItem, useDashboards } from '@/hooks/swr/dashboard/use-dashboar
 import usePagination from '@/hooks/use-pagination';
 import { useToggleStore } from '@/store/toggle-store';
 
-const PAGE_DASHBOARD_COUNT = 5;
-
 const DashboardList = () => {
   const { data } = useDashboards();
 
