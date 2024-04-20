@@ -1,13 +1,15 @@
-import { PropsWithChildren } from 'react';
 import type { Color } from '@/components/chips/color.type';
 import { tagColorConfig } from '@/components/chips/color-constants';
 
-const TagChip = ({ children, color }: PropsWithChildren<{ color: Color }>) => {
+const TagChip = ({ tag }: { tag: string }) => {
+  const [name, colorString] = tag.split('$');
+  const color = (colorString as Color) || 'green';
+
   return (
     <span
       className={`flex-shrink-0 px-[8px] py-[4px] text-[10px] rounded-[4px] ${tagColorConfig[color].color} ${tagColorConfig[color].bgColor} sm:text-xs`}
     >
-      {children}
+      {name}
     </span>
   );
 };

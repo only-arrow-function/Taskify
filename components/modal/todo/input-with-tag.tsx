@@ -1,5 +1,4 @@
 import { KeyboardEventHandler } from 'react';
-import type { Color } from '@/components/chips/color.type';
 import TagChip from '@/components/chips/tag-chip';
 import { chooseRandomColor } from '@/util/randomColor';
 
@@ -59,14 +58,7 @@ const InputWithTag = ({
       </label>
       <div className="flex flex-wrap items-center gap-[6px] w-full pt-[13px] pb-3 px-4 rounded-lg border sm:pt-[15px] sm:pb-[14px]">
         {tags?.map((tag) => {
-          const [name, colorString] = tag.split('$');
-          const color = colorString as Color;
-
-          return (
-            <TagChip color={color} key={tag}>
-              {name}
-            </TagChip>
-          );
+          return <TagChip tag={tag} />;
         })}
         <input
           id={id}
