@@ -22,7 +22,7 @@ const DashboardHeader = () => {
 
         <div className="flex items-center">
           <div>
-            <Link href="dashboard/edit">
+            <Link href="/dashboard/edit">
               <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
             </Link>
           </div>
