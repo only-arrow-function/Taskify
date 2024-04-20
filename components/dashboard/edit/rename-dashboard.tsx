@@ -1,12 +1,30 @@
+import { ChangeEvent } from 'react';
+
+import { useRouter } from 'next/router';
+
 import BasicButton from '@/components/buttons/basic-button';
 import ColorChipGroup from '@/components/chips/color-chip-group';
 import InputField from '@/components/inputs/input-field';
-import ModalButtonGroup from '@/components/modal/modal-button-group';
+//import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
+import requests from '@/apis/request';
+
+import { useRenameStore } from '@/store/dashboard/edit/rename-store';
 
 const RenameDashboard = () => {
-  const handleInputChange = () => {
-    console.log("hi")
+  const router = useRouter();
+  const { name, setName } = useRenameStore();
+
+  const handleInputChange = (event: ChangeEvent) => {
+    event.preventDefault();
+
+    setName(event.target.value);
+  }
+
+  const handlePostRename = async () => {
+    if (typeof router.query.id !== 'string') return;
+
+    const result = await requests.editDashboard(router.query.id, { title: name, color: '#760DDE' });
   }
 
   return (
@@ -23,7 +41,7 @@ const RenameDashboard = () => {
         onChange={handleInputChange}
       />
       <div className='flex justify-end'>
-        <BasicButton purpose='positive'>변경</BasicButton>
+        <BasicButton purpose='positive' eventHandler={handlePostRename}>변경</BasicButton>
       </div>
     </section>
   )

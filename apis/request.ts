@@ -43,15 +43,24 @@ const requests = Object.freeze({
       return error;
     }
   },
-  createDashboard: async (dashbaordData: { title: string; color: DashboardColors }) => {
+
+  createDashboard: async (dashboardData: { title: string; color: DashboardColors }) => {
     try {
-      const { data } = await axios.post('dashboards', dashbaordData, headers);
+      const { data } = await axios.post('dashboards', dashboardData, headers);
       return data;
     } catch (error) {
       return error;
     }
   },
 
+  editDashboard: async (dashboardid: string, dashboardData: { title: string; color: DashboardColors }) => {
+    try {
+      const { data } = await axios.put(`dashboards/${dashboardid}`, dashboardData, headers);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }
   // 다른 API 요청도 여기에 추가 가능
 });
 
