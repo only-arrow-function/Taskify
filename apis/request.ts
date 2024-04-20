@@ -1,3 +1,4 @@
+import type { Members } from '@/components/tables/members.type';
 import axios from './axios';
 import getToken from './localStorage';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
@@ -62,6 +63,30 @@ const requests = Object.freeze({
     }
   }
   // 다른 API 요청도 여기에 추가 가능
+
+  getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
+    try {
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+
+      const { data } = await axios.get(`members?page=${currentPage}&size=4&dashboardId=${dashboardId}`, headers);
+      return data;
+    } catch (error) {
+      console.log(ERROR_MESSAGE, error);
+      return {
+        members: [],
+        totalCount: 0,
+      };
+    }
+  },
+
+  deleteMembers: async (memberId: number) => {
+    try {
+      await axios.delete(`members/${memberId}`, headers);
+    } catch (error) {
+      const err = error as Error;
+      throw new Error(err.message);
+    }
+  },
 });
 
 export default requests;
