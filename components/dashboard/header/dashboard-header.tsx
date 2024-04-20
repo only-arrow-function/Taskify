@@ -22,7 +22,9 @@ const DashboardHeader = () => {
 
         <div className="flex items-center">
           <div>
-            <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
+            <Link href="dashboard/edit">
+              <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
+            </Link>
           </div>
           <div className="ml-4">
             <DashboardHeaderButton imageSource={dashboardInviteIcon.src}>초대하기</DashboardHeaderButton>
