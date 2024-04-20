@@ -1,5 +1,3 @@
-import { ChangeEvent } from 'react';
-
 import { useRouter } from 'next/router';
 
 import requests from '@/apis/request';
