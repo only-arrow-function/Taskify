@@ -14,14 +14,14 @@ const ModalEditTodo = () => {
       <BackDrop />
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
-          <GridLayout>
-            <StateDropdown/>
-            <ManagerDropdown placeholder='이름을 입력해 주세요'/>
-          </GridLayout>
-          <InputField label="제목" type="text" id="title" placeholder="제목을 입력해주세요" />
-          <InputField label="설명" type="" id="context" placeholder="설명을 입력해주세요" />
-          <InputField label="마감일" type="datetime-local" id="calendar" placeholder="날짜를 입력해주세요" />
-          <InputWithTag label="태그" id="tag" type="text" placeholder="입력 후 Enter" />
+        <GridLayout>
+          <StateDropdown />
+          <ManagerDropdown placeholder="이름을 입력해 주세요" />
+        </GridLayout>
+        <InputField label="제목" type="text" id="title" placeholder="제목을 입력해주세요" />
+        <InputField label="설명" type="" id="context" placeholder="설명을 입력해주세요" />
+        <InputField label="마감일" type="datetime-local" id="calendar" placeholder="날짜를 입력해주세요" />
+        {/* <InputWithTag label="태그" id="tag" type="text" placeholder="입력 후 Enter" /> */}
         <ModalButtonGroup positiveName="생성" />
       </ModalNewTodoLayout>
     </>
