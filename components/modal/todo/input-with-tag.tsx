@@ -57,9 +57,11 @@ const InputWithTag = ({
         {label}
       </label>
       <div className="flex flex-wrap items-center gap-[6px] w-full pt-[13px] pb-3 px-4 rounded-lg border sm:pt-[15px] sm:pb-[14px]">
-        {tags?.map((tag) => {
-          return <TagChip tag={tag} />;
-        })}
+        <ul className="flex gap-[6px]">
+          {tags?.map((tag) => {
+            return <TagChip tag={tag} key={tag} />;
+          })}
+        </ul>
         <input
           id={id}
           type={type}
