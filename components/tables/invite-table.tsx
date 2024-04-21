@@ -13,8 +13,8 @@ const InviteTable = () => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (
-    <div className="flex w-full h-[406px] px-[28px] py-[32px] flex-col gap-[3.7rem] rounded-md bg-white">
-      <div className="flex items-center justify-between">
+    <div className="flex w-full h-[406px] px-[28px] py-[32px] flex-col rounded-md bg-white">
+      <div className="flex items-center justify-between mb-[20px]">
         <span className="text-center text-lg font-bold">초대 내역</span>
         <BasicButton purpose="positive" eventHandler={handleOpenModal}>
           초대하기

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from './axios';
 import getToken from './localStorage';
 
@@ -49,3 +50,5 @@ const inviteRequests = Object.freeze({
 });
 
 export default inviteRequests;
+=======
+>>>>>>> 6be2eae (feat [노은수] : swr을 이용한 페이지네이션 구현)
