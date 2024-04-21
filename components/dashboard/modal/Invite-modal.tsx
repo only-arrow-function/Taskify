@@ -20,7 +20,7 @@ const InviteModal = ({ handleCloseModal }: InviteModalType) => {
   const router = useRouter();
   const [input, setInput] = useState('');
 
-  const { data, mutate } = useGetInviteUsers(router.query.id);
+  const { data, mutate } = useGetInviteUsers(router.query.id, 1);
 
   const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -31,10 +31,10 @@ const InviteModal = ({ handleCloseModal }: InviteModalType) => {
     if (typeof router.query.id !== "string") return;
 
     const isDuplicate = validateInviteIUserDuplicate(data.invitations, input);
-    if (isDuplicate) {
-      console.log("중복되었습니다.")
-      return
-    } // 에러 처리
+    // if (isDuplicate) {
+    //   console.log("중복되었습니다.")
+    //   return
+    // } // 에러 처리
 
     await requests.inviteUserInDashboard(router.query.id, { email: input });
 

@@ -1,9 +1,9 @@
 import useSWR from 'swr';
 
-import requests from '@/apis/request';
+import inviteRequests from '@/apis/invite-request';
 
-export const useGetInviteUsers = (dashboardid: string | string[] | undefined) => {
-  const { data, error, isLoading, mutate } = useSWR(`${dashboardid}/invitations`, () => requests.getInviteUsers(`${dashboardid}`) , {
+export const useGetInviteUsers = (dashboardId: string | string[] | undefined, page: number) => {
+  const { data, error, isLoading, mutate } = useSWR(`${dashboardId}/invitations?page=${page}`, () => inviteRequests.getInviteUsers(`${dashboardId}`, page) , {
     revalidateOnFocus: false,
     revalidateIfStale: false,
   });

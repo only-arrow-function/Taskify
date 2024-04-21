@@ -3,10 +3,10 @@ import { useState } from 'react';
 
 import TableListItem from './table-list-item';
 import DashboardPaginationButton from '../buttons/pagination/dashboard-pagination-button';
-import { DashboardIdProps } from '@/constant/type/dashboard.type';
+import { DashboardIdProps } from '@/constant/type/data/dashboard.type';
 import { useGetMembers } from '@/hooks/swr/use-members';
 
-const MembersTable = ({dashboardId}: DashboardIdProps) => {
+const MembersTable = ({ dashboardId }: DashboardIdProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data } = useGetMembers(dashboardId, currentPage);
@@ -47,7 +47,13 @@ const MembersTable = ({dashboardId}: DashboardIdProps) => {
       <h4 className="px-5 text-sm leading-[17px] text-grayscale-50 sm:text-base sm:px-7 sm:leading-[19px]">이름</h4>
       <ul>
         {members?.map((member) => (
-          <TableListItem key={member.id} member={member} members={members} currentPage={currentPage} dashboardId={dashboardId} />
+          <TableListItem
+            key={member.id}
+            member={member}
+            members={members}
+            currentPage={currentPage}
+            dashboardId={dashboardId}
+          />
         ))}
       </ul>
     </div>
