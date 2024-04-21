@@ -13,7 +13,7 @@ export interface NewDashboardModalState {
 export const newDashboardModalSlice: StateCreator<NewDashboardModalState> = (set) => ({
   title: '',
   color: '#7AC555',
-  resetTitle: () => set(() => ({ title: ''})),
+  resetTitle: () => set(() => ({ title: '' })),
   handleInputChange: (event) => set(() => ({ title: event.target.value })),
   handleColorChange: (color: DashboardColors) => set(() => ({ color })),
 });

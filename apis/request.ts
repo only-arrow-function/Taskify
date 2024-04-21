@@ -11,19 +11,6 @@ const headers = {
 };
 
 const requests = Object.freeze({
-  getInviteUsers: async (dashboardid: string, token: string | null) => {
-    if (!token) return;
-
-    try {
-      const { data } = await axios.get(`dashboards/${dashboardid}`, {
-        headers: { Authorization: 'Bearer ' + token },
-      });
-      return data;
-    } catch (error) {
-      console.error(ERROR_MESSAGE, error);
-    }
-  },
-
   login: async (email: string, password: string) => {
     try {
       const { data } = await axios.post('auth/login', { email, password });
@@ -89,6 +76,27 @@ const requests = Object.freeze({
     }
   },
 
+  getInviteUsers: async (dashboardid: string, token: string | null) => {
+    if (!token) return;
+
+    try {
+      const { data } = await axios.get(`dashboards/${dashboardid}`, {
+        headers: { Authorization: 'Bearer ' + token },
+      });
+      return data;
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+    }
+  },
+
+  inviteUserInDashboard: async (inviteUserEmail:string, dashboardid: string) => {
+    try {
+      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, inviteUserEmail, headers);
+      return data;
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+    }
+  },
   // 다른 API 요청도 여기에 추가 가능
 });
 
