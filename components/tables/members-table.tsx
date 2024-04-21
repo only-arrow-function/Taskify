@@ -1,16 +1,12 @@
 // import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
 import TableListItem from './table-list-item';
 import DashboardPaginationButton from '../buttons/pagination/dashboard-pagination-button';
+import { DashboardIdProps } from '@/constant/type/dashboard.type';
 import { useGetMembers } from '@/hooks/swr/use-members';
 
-const MembersTable = () => {
-  const router = useRouter();
-  const dashboardId = router.query.id;
-  if (typeof dashboardId !== 'string') return;
-
+const MembersTable = ({dashboardId}: DashboardIdProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data } = useGetMembers(dashboardId, currentPage);
