@@ -39,7 +39,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
     <div className="flex w-full px-[28px] py-[32px] flex-col rounded-md bg-white">
       <div className="flex items-center justify-between mb-[20px]">
         <span className="text-center text-lg font-bold">초대 내역</span>
-<<<<<<< HEAD
         <div className="flex items-center gap-[10px]">
           <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
           {data && !!data.totalPages && (
@@ -50,19 +49,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
                 isDisabled={currentPage >= data.totalPages}
                 position="right"
               />
-=======
-          {data && !!data.totalPages && (
-            <div className="flex items-center gap-[10px]">
-              <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
-              <div className="flex">
-                <DashboardPaginationButton onClick={prevPage} isDisabled={currentPage === 1} position="left" />
-                <DashboardPaginationButton
-                  onClick={nextPage}
-                  isDisabled={currentPage >= data.totalPages}
-                  position="right"
-                />
-              </div>
->>>>>>> 268eb2b (fix [노은수] : 초대 테이블 버그 수정, 미초대 시, 보일 컴포넌트 보이도록 적용)
             </div>
           )}
       </div>
@@ -73,7 +59,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-<<<<<<< HEAD
         {isPending && <InviteTableSkeleton />}
         {!data || !data.pages[currentPage - 1] ? (
           <>
@@ -81,9 +66,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
             <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
           </>
         ) : (
-=======
-        {data && data.pages[currentPage - 1] && data.totalPages && !isPending ? (
->>>>>>> 268eb2b (fix [노은수] : 초대 테이블 버그 수정, 미초대 시, 보일 컴포넌트 보이도록 적용)
           data.pages[currentPage - 1].invitations.map(
             ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
               <li
@@ -97,18 +79,18 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
               </li>
             ),
           )
-        ) : (
+        )} : (
           <>
             <Image src={NoEmailIcon} alt="빈 이메일" />
             <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
           </>
-        )}
+        )
       </ul>
       {isOpenModal && (
         <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={data.totalPages} />
       )}
     </div>
-  );
+  )
 };
 
 export default InviteTable;
