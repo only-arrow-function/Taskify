@@ -4,7 +4,7 @@ import { useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
 import { useDashboardsStore } from '@/store/dashboard';
 import { useToggleStore } from '@/store/toggle-store';
 
-type PositiveName = '생성' | '확인' | '수정' | '변경' | '삭제';
+type PositiveName = '생성' | '확인' | '수정' | '변경' | '삭제' | '초대';
 
 const ModalButtonGroup = ({ positiveName, disabled }: { positiveName: PositiveName; disabled?: boolean }) => {
   const { data, error, mutate } = useDashboards();

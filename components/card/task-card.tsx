@@ -35,8 +35,8 @@ const TaskCard = (prop: TaskCardProp) => {
           </div>
           <div className="flex justify-between items-center">
             <div className="flex gap-[6px] justify-start items-center">
-              <div className="flex justify-start items-center gap-[6px]">
-                <div className="hidden xl:hidden sm:flex sm:gap-[6px] sm:mr-2">
+              <div className="hidden justify-start items-center gap-[6px] xl:hidden sm:flex sm:gap-[6px] sm:mr-2">
+                <div className="flex gap-[6px]">
                   {prop.tags &&
                     prop.tags.map((data, idx) => {
                       return (

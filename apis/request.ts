@@ -51,6 +51,10 @@ const requests = Object.freeze({
       return error;
     }
   },
+  fetchColumns: async (dashboardId: string) => {
+    try {
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+
 
   getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
     try {
@@ -91,6 +95,22 @@ const requests = Object.freeze({
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
+    }
+  },
+  createColumn: async (columnData: { title: string; dashboardId: string }) => {
+    try {
+      const { data } = await axios.post('columns', columnData, headers);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
+  sendInvite: async (emailData: { email: string }, dashboardId: string) => {
+    try {
+      const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, emailData, headers);
+      return data;
+    } catch (error) {
+      return error;
     }
   },
   // 다른 API 요청도 여기에 추가 가능
