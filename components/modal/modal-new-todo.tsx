@@ -31,7 +31,8 @@ const temporaryPostId = {
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = () => {
-  const { isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, ...formState } = useIsFormFilled();
+  const { isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, setImageUrl, ...formState } =
+    useIsFormFilled();
 
   const handleStateChange = (event: ChangeEvent, setter: (value: string) => void) => {
     event.preventDefault();
@@ -94,8 +95,8 @@ const ModalNewTodo = () => {
             onAddTag={setAddTag}
             onRemoveTag={setRemoveTag}
           />
-          <InputWithImg label="이미지" id="image" />
-          <ModalButtonGroup positiveName="생성" disabled={isFilled} />
+          <InputWithImg label="이미지" id="image" value={formState.imageUrl} onChangeImageURL={setImageUrl} />
+          <ModalButtonGroup positiveName="생성" disabled={!isFilled} />
         </form>
       </ModalNewTodoLayout>
     </>
