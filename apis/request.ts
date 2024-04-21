@@ -68,7 +68,6 @@ const requests = Object.freeze({
       return error;
     }
   },
-
   fetchColumns: async (dashboardId: string) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
@@ -110,9 +109,9 @@ const requests = Object.freeze({
     }
   },
 
-  inviteUserInDashboard: async (dashboardid: string, {email : inviteUserEmail} : {email: string}) => {
+  inviteUserInDashboard: async (dashboardid: string, { email: inviteUserEmail }: { email: string }) => {
     try {
-      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, {email : inviteUserEmail}, headers);
+      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, { email: inviteUserEmail }, headers);
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
@@ -127,7 +126,7 @@ const requests = Object.freeze({
       return error;
     }
   },
-  
+
   sendInvite: async (emailData: { email: string }, dashboardId: string) => {
     try {
       const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, emailData, headers);
