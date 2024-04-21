@@ -76,22 +76,18 @@ const requests = Object.freeze({
     }
   },
 
-  getInviteUsers: async (dashboardid: string, token: string | null) => {
-    if (!token) return;
-
+  getInviteUsers: async (dashboardid: string) => {
     try {
-      const { data } = await axios.get(`dashboards/${dashboardid}`, {
-        headers: { Authorization: 'Bearer ' + token },
-      });
+      const { data } = await axios.get(`dashboards/${dashboardid}/invitations`, headers);
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
     }
   },
 
-  inviteUserInDashboard: async (inviteUserEmail:string, dashboardid: string) => {
+  inviteUserInDashboard: async (dashboardid: string, {email : inviteUserEmail} : {email: string}) => {
     try {
-      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, inviteUserEmail, headers);
+      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, {email : inviteUserEmail}, headers);
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);

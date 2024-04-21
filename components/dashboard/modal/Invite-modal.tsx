@@ -9,6 +9,9 @@ import InputField from '@/components/inputs/input-field';
 import ModalTitle from '@/components/modal/modal-title';
 import ModalWithDimmed from '@/components/modal/modal-with-dimmed';
 
+import { useGetInviteUsers } from "@/hooks/swr/use-Invite-users"
+import validateInviteIUserDuplicate from "@/lib/domain/validate-invite-user-dublicate";
+
 interface InviteModalType {
   handleCloseModal: () => void;
 }
@@ -16,6 +19,8 @@ interface InviteModalType {
 const InviteModal = ({ handleCloseModal }: InviteModalType) => {
   const router = useRouter();
   const [input, setInput] = useState('');
+
+  const { data, mutate } = useGetInviteUsers(router.query.id);
 
   const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -25,8 +30,17 @@ const InviteModal = ({ handleCloseModal }: InviteModalType) => {
   const handleClickForInvite = async () => {
     if (typeof router.query.id !== "string") return;
 
-    const result = await requests.inviteUserInDashboard(router.query.id, "test123@test.com ");
-    console.log(result);
+    const isDuplicate = validateInviteIUserDuplicate(data.invitations, input);
+    if (isDuplicate) {
+      console.log("중복되었습니다.")
+      return
+    } // 에러 처리
+
+    await requests.inviteUserInDashboard(router.query.id, { email: input });
+
+    mutate(`${router.query.id}/invitations`)
+
+    handleCloseModal();
   }
 
   return (
