@@ -16,6 +16,7 @@ const EditDashboard = () => {
     if (typeof router.query.id !== 'string') return;
 
     const result = await requests.editDashboard(router.query.id, { title: title, color: color });
+    // 여기에 토스트 처리 추가 가능.
 
     resetTitle();
   }

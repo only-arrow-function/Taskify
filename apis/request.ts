@@ -55,14 +55,15 @@ const requests = Object.freeze({
   },
 
   editDashboard: async (dashboardid: string, dashboardData: { title: string; color: DashboardColors }) => {
+    if (!dashboardData.title || dashboardData.color) return;
+
     try {
       const { data } = await axios.put(`dashboards/${dashboardid}`, dashboardData, headers);
       return data;
     } catch (error) {
       return error;
     }
-  }
-  // 다른 API 요청도 여기에 추가 가능
+  },
 
   getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
     try {
@@ -87,6 +88,8 @@ const requests = Object.freeze({
       throw new Error(err.message);
     }
   },
+
+  // 다른 API 요청도 여기에 추가 가능
 });
 
 export default requests;
