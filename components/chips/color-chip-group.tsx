@@ -24,8 +24,8 @@ const ColorChipGroup = () => {
 
   return (
     <div className="flex gap-[10px]">
-      {colors.map((color) => (
-        <>
+      {colors.map((color, index) => (
+        <div key={index} className={`cursor-pointer ${index === 0 ? 'block' : 'hidden sm:block'}`}>
           <input
             className="hidden"
             type="radio"
@@ -35,10 +35,10 @@ const ColorChipGroup = () => {
             checked={checkedColor === color}
             onChange={(e) => onChange(e, hexColors[color])}
           />
-          <label htmlFor={color} className="cursor-pointer">
+          <label htmlFor={color} className={`cursor-pointer ${index === 0 ? 'block' : 'hidden sm:block'}`}>
             <ColorChip color={color} checked={checkedColor === color} />
           </label>
-        </>
+        </div>
       ))}
     </div>
   );

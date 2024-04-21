@@ -13,7 +13,7 @@ const DashboardList = () => {
 
   const isToggle = useToggleStore((state) => state.isToggle);
   const handleOpenToggle = useToggleStore((state) => state.handleOpenToggle);
-
+  console.log(isToggle);
   const { totalPages, currentPage, sliceData, nextCurrentPage, prevCurrentPage } = usePagination<DashboardItem>(
     data!.dashboards,
   );
