@@ -4,16 +4,18 @@ import { useRouter } from "next/router"
 import BasicButton from "../buttons/basic-button"
 import InviteModal from "../dashboard/modal/Invite-modal"
 
+import { DashboardIdProps } from "@/constant/type/dashboard.type"
+
 import { useGetInviteUsers } from "@/hooks/swr/use-Invite-users"
 import { useHandleModal } from "@/hooks/use-handle-modal"
 
 import NoEmailIcon from "@/public/icon/no-email.svg"
 
-const InviteTable = () => {
-  const router = useRouter();
+const InviteTable = ({dashboardId}: DashboardIdProps) => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
-  const { data, error, isLoading, mutate } = useGetInviteUsers(router.query.id);
+  // server state
+  const { data, error, isLoading, mutate } = useGetInviteUsers(dashboardId);
   console.log(data);
 
   return (

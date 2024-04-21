@@ -1,4 +1,20 @@
-export default function index() {
+import { GetServerSideProps } from 'next';
+
+interface Props {
+  id: string;
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+
+  return {
+    props: {
+      id
+    }
+  };
+}
+
+export default function index({ id }: Props) {
   return (
     <></>
   );
