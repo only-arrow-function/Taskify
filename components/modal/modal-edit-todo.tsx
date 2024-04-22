@@ -3,6 +3,7 @@ import BackDrop from './backdrop';
 import GridLayout from './dropdown/grid-layout';
 import StateDropdown from './dropdown/state-dropdown';
 import ModalNewTodoLayout from './modal-newTodo-layout';
+import InputWithCalendar from './todo/input-with-calendar';
 import InputWithImg from './todo/input-with-img';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
@@ -63,14 +64,7 @@ const ModalEditTodo = () => {
           onChange={handleValueChange('description')}
           placeholder="설명을 입력해주세요"
         />
-        <InputField
-          label="마감일"
-          type="datetime-local"
-          value={dueDate}
-          onChange={handleValueChange('dueDate')}
-          id="calendar"
-          placeholder="날짜를 입력해주세요"
-        />
+        <InputWithCalendar label="마감일" value={dueDate} onChange={handleValueChange('dueDate')} />
         <InputWithTag
           label="태그"
           id="tag"

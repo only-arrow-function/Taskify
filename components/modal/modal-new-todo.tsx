@@ -2,6 +2,7 @@ import { ChangeEvent, FormEventHandler } from 'react';
 
 import BackDrop from './backdrop';
 import ModalNewTodoLayout from './modal-newTodo-layout';
+import InputWithCalendar from './todo/input-with-calendar';
 import InputWithImg from './todo/input-with-img';
 import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
@@ -78,11 +79,8 @@ const ModalNewTodo = () => {
             value={formState.description}
             onChange={(e) => handleStateChange(e, setDescription)}
           />
-          <InputField
+          <InputWithCalendar
             label="마감일"
-            type="datetime-local"
-            id="calendar"
-            placeholder="날짜를 입력해주세요"
             value={formState.dueDate}
             onChange={(e) => handleStateChange(e, setDueDate)}
           />
