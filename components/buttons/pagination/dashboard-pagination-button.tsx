@@ -8,12 +8,12 @@ interface DashboardPaginationButtonProps extends ButtonHTMLAttributes<HTMLButton
 
 const DashboardPaginationButton = (props: DashboardPaginationButtonProps) => {
   const position = props.position === 'left' ? 'scale-[-1]' : '';
-  const pathStyle = props.isDisabled ? 'fill-grayscale-40 cursor-not-allowed' : 'fill-grayscale-80';
+  const pathStyle = props.isDisabled ? 'fill-grayscale-40' : 'fill-grayscale-80';
 
   return (
     <button
       disabled={props.isDisabled}
-      className={`${position} rounded-tr rounded-br w-10 h-10 border border-grayscale-40 flex justify-center items-center`}
+      className={`${position} rounded-tr rounded-br w-10 h-10 border border-grayscale-40 flex justify-center items-center disabled:cursor-not-allowed`}
       onClick={props.onClick}
     >
       <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">

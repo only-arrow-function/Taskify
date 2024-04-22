@@ -1,22 +1,14 @@
-import Link from 'next/link';
+import React, { PropsWithChildren, useState } from 'react';
+import DashboardListItem from './dashboard-list-item';
 import NewDashboardModal from '../modal/new-dashboard-modal';
-import DashboardOpenButton from '@/components/buttons/domain/dashboard-open-button';
+import DashboardPagination from '../pagination/dashboard-pagination';
 import NewDashboardAddButton from '@/components/buttons/domain/new-dashboard-add-button';
-import DashboardPagination from '@/components/dashboard/pagination/dashboard-pagination';
-
-import { DashboardItem, useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
-import usePagination from '@/hooks/use-pagination';
 import { useToggleStore } from '@/store/toggle-store';
 
 const DashboardList = () => {
-  const { data } = useDashboards();
-
   const isToggle = useToggleStore((state) => state.isToggle);
   const handleOpenToggle = useToggleStore((state) => state.handleOpenToggle);
-
-  const { totalPages, currentPage, sliceData, nextCurrentPage, prevCurrentPage } = usePagination<DashboardItem>(
-    data!.dashboards,
-  );
+  const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <>
@@ -26,20 +18,9 @@ const DashboardList = () => {
           <li>
             <NewDashboardAddButton onOpenModal={handleOpenToggle} />
           </li>
-          {sliceData.map((dashboard) => (
-            <li key={dashboard.id} className="relative">
-              <Link href={`/dashboard/${dashboard.id}`}>
-                <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
-              </Link>
-            </li>
-          ))}
+          <DashboardListItem currentPage={currentPage} />
         </ul>
-        <DashboardPagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          prevCurrentPage={prevCurrentPage}
-          nextCurrentPage={nextCurrentPage}
-        />
+        <DashboardPagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </section>
     </>
   );
