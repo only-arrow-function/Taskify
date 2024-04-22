@@ -61,7 +61,12 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {!isLoading ? (
+        {!data || !data.invitations || isLoading ? (
+          <>
+            <Image src={NoEmailIcon} alt="빈 이메일" />
+            <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
+          </>
+        ) : (
           data.invitations.map(({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
             <li
               key={id}
@@ -73,11 +78,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
               </TableButton>
             </li>
           ))
-        ) : (
-          <>
-            <Image src={NoEmailIcon} alt="빈 이메일" />
-            <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
-          </>
         )}
       </ul>
       {isOpenModal && <InviteModal handleCloseModal={handleCloseModal} />}
