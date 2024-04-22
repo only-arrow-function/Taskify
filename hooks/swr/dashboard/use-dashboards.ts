@@ -18,8 +18,10 @@ interface DashboardResponse {
   totalCount: number;
 }
 
-export const useDashboards = () => {
-  const { data, isLoading, error, mutate } = useSWR<DashboardResponse>('/dashboards', requests.fetchDashboards);
+export const useDashboards = (page: number) => {
+  const { data, isLoading, error, mutate } = useSWR<DashboardResponse>(`/dashboards/${page}`, () =>
+    requests.fetchDashboards(page),
+  );
 
   return {
     data,
