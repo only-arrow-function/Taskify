@@ -33,7 +33,7 @@ const InputWithImg = ({
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <h3 className="text-grayscale-80">{label}</h3>
+      <h3 className="text-grayscale-80 font-medium">{label}</h3>
       <label
         htmlFor={id}
         className="relative flex justify-center items-center w-[76px] h-[76px] rounded-md bg-[#F5F5F5] overflow-hidden"

@@ -53,7 +53,7 @@ const InputWithTag = ({
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <label htmlFor={id} className="text-grayscale-80">
+      <label htmlFor={id} className="text-grayscale-80 font-medium">
         {label}
       </label>
       <div className="flex flex-wrap items-center gap-[6px] w-full pt-[13px] pb-3 px-4 rounded-lg border sm:pt-[15px] sm:pb-[14px]">
