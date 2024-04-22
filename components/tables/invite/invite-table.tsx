@@ -29,7 +29,10 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const handleDeleteInviteUsers = async (invitationId: string) => {
     const result = await inviteRequests.deleteInvitedUser(dashboardId, invitationId);
     console.log(result);
-    mutate(`${dashboardId}/invitations?page=${currentPage}`);
+    
+    for (let i = 0; i < totalPages; i++) {
+      mutate(`${dashboardId}/invitations?page=${i}`);
+    }
   };
 
   return (
@@ -80,7 +83,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
           ))
         )}
       </ul>
-      {isOpenModal && <InviteModal handleCloseModal={handleCloseModal} />}
+      {isOpenModal && <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={totalPages}/>}
     </div>
   );
 };
