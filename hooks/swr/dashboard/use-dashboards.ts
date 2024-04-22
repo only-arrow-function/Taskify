@@ -1,8 +1,8 @@
 import useSWR from 'swr';
 import requests from '@/apis/request';
-import { DashboardColors } from '@/types/color.type';
+import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 
-interface DashboardItem {
+export interface DashboardItem {
   color: DashboardColors;
   createdAt: string;
   createdByMe: boolean;
@@ -19,10 +19,7 @@ interface DashboardResponse {
 }
 
 export const useDashboards = () => {
-  const { data, isLoading, error, mutate } = useSWR<DashboardResponse>(
-    '/dashboards',
-    requests.fetchDashboards,
-  );
+  const { data, isLoading, error, mutate } = useSWR<DashboardResponse>('/dashboards', requests.fetchDashboards);
 
   return {
     data,

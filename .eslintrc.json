@@ -15,6 +15,7 @@
     // "no-console": ["error", { "allow": ["warn", "error", "info"] }], // console.log() 금지
     // "eqeqeq": "error", // 일치 연산자 사용 필수
     //"no-unused-vars": "error", // 사용하지 않는 변수 금지
+    "no-unused-vars": "off",
     "import/order": [
       "warn",
       {
