@@ -4,7 +4,7 @@ import { InputFieldProps } from './input-field-type';
 import HidePasswordIcon from '@/public/icon/eye-off.svg';
 import ShowPasswordIcon from '@/public/icon/eye-on.svg';
 
-const PasswordInput = ({ label, value, id, placeholder, autoComplete, onChange, error }: InputFieldProps) => {
+const PasswordInput = ({ label, value, id, placeholder, autoComplete, onBlur, onChange, error }: InputFieldProps) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const toggleShowPassword = () => {
@@ -16,12 +16,13 @@ const PasswordInput = ({ label, value, id, placeholder, autoComplete, onChange, 
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
         {label}
       </label>
-      <div className="relative w-[351px] sm:w-[520px]">
+      <div className="relative w-full sm:w-[520px]">
         <input
           id={id}
           type={showPassword ? 'text' : 'password'}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           autoComplete={autoComplete}
           placeholder={placeholder}
           className={`w-full h-[3.125rem] pl-4 pr-10 rounded-lg border border-solid ${

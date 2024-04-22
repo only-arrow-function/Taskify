@@ -32,6 +32,19 @@ const requests = Object.freeze({
       throw error;
     }
   },
+  signup: async (email: string, nickname: string, password: string) => {
+    try {
+      const { data } = await axios.post('users', {
+        email,
+        nickname,
+        password,
+      });
+      return data;
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+      throw error;
+    }
+  },
 
   fetchDashboards: async () => {
     try {
