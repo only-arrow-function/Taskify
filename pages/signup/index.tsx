@@ -6,6 +6,7 @@ import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
+import { useToggleStore } from '@/store/toggle-store';
 
 const Signup = () => {
   const router = useRouter();
@@ -23,7 +24,9 @@ const Signup = () => {
     validatePassword,
     validateConfirmPassword,
   } = useFormValidation();
+  const { isToggle, handleOpenToggle } = useToggleStore();
   const [termsAgreed, setTermsAgreed] = useState(false);
+  const [notificationMessage, setnotificationMessage] = useState('');
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTermsAgreed(event.target.checked);
@@ -32,7 +35,8 @@ const Signup = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!termsAgreed) {
-      alert('약관 동의가 필요합니다.');
+      handleOpenToggle();
+      setnotificationMessage('약관동의가 필요합니다.');
       return;
     }
     const isEmailValid = validateEmail();
@@ -43,14 +47,13 @@ const Signup = () => {
       return;
     }
 
-    const response = await requests
-      .signup(email.value, nickname.value, password.value)
-      .then((res) => {
-        console.log('성공', res);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    try {
+      await requests.signup(email.value, nickname.value, password.value);
+      router.push('/');
+    } catch (err: any) {
+      handleOpenToggle();
+      setnotificationMessage(err.response.data.message || '알수없는 오류로 로그인에 실패하였습니다.');
+    }
   };
 
   return (
@@ -128,6 +131,7 @@ const Signup = () => {
           로그인하기
         </Link>
       </p>
+      {isToggle && <NotificationModal message={notificationMessage} />}
     </div>
   );
 };
