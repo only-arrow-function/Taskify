@@ -8,6 +8,7 @@ const InputField = ({
   value,
   placeholder,
   autoComplete,
+  onBlur,
   onChange,
   error,
 }: InputFieldProps) => {
@@ -21,19 +22,12 @@ const InputField = ({
         id={id}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className={`w-full h-[3.125rem] px-4 rounded-lg border ${
-          error ? 'border-red-50' : 'border-grayscale-40'
-        }`}
+        className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'}`}
       />
-      <p
-        className={`text-red-50 text-sm mt-[0.5rem] h-5 ${
-          error ? '' : 'opacity-0'
-        }`}
-      >
-        {error || ' '}
-      </p>
+      <p className={`text-red-50 text-sm mt-[0.5rem] h-5 ${error ? '' : 'opacity-0'}`}>{error || ' '}</p>
     </div>
   );
 };
