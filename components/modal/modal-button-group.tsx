@@ -9,7 +9,7 @@ const ModalButtonGroup = ({
 }: {
   positiveName: PositiveName;
   disabled: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }) => {
   return (
     <div className="flex justify-center gap-3 sm:justify-end">
