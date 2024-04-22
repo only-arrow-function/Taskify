@@ -12,15 +12,15 @@ export interface DashboardItem {
   userId: number;
 }
 
-interface DashboardResponse {
+export interface DashboardResponse {
   cursorId: null;
   dashboards: DashboardItem[];
   totalCount: number;
 }
 
-export const useDashboards = (page: number) => {
+export const useDashboards = ({ page }: { page: number }) => {
   const { data, isLoading, error, mutate } = useSWR<DashboardResponse>(`/dashboards/${page}`, () =>
-    requests.fetchDashboards(page),
+    requests.fetchDashboards({ page }),
   );
 
   return {

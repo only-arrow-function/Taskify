@@ -33,14 +33,18 @@ const requests = Object.freeze({
     }
   },
 
-  fetchDashboards: async (page: number) => {
+  fetchDashboards: async ({ page }: { page: number }) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
       const { data } = await axios.get(`dashboards?page=${page}&size=5&navigationMethod=pagination`, headers);
       await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
       return data;
     } catch (error) {
-      return error;
+      const err = error as Error;
+      return {
+        success: false,
+        error: err.message,
+      };
     }
   },
   createDashboard: async (dashbaordData: { title: string; color: DashboardColors }) => {

@@ -3,9 +3,14 @@ import DashboardListItemSkeleton from './dashboard-list-item-skeleton';
 import DashboardOpenButton from '@/components/buttons/domain/dashboard-open-button';
 import { useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
 
-const DashboardListItem = (props: { currentPage: number }) => {
-  const { data, isLoading } = useDashboards(props.currentPage);
+interface DashboardListItemProps {
+  currentPage: number;
+}
+
+const DashboardListItem = (props: DashboardListItemProps) => {
+  const { data, isLoading } = useDashboards({ page: props.currentPage });
   if (!data || isLoading) return <DashboardListItemSkeleton />;
+
   return (
     <>
       {data.dashboards.map((dashboard) => (
