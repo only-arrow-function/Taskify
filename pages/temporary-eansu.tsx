@@ -1,9 +1,7 @@
-import InviteTable from '@/components/tables/invite-table';
+import InviteTable from '@/components/tables/invite/invite-table';
 
 const TemporaryEansu = () => {
-  return (
-    <InviteTable />
-  )
+  return <InviteTable />;
 };
 
 export default TemporaryEansu;

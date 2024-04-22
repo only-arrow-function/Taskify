@@ -2,14 +2,19 @@ import { useState, useRef } from 'react';
 
 import Image from 'next/image';
 
-import TableButton from './table-button';
-import BasicButton from '../buttons/basic-button';
-import DashboardPaginationButton from '../buttons/pagination/dashboard-pagination-button';
-import InviteModal from '../dashboard/modal/Invite-modal';
+import BasicButton from '../../buttons/basic-button';
+import DashboardPaginationButton from '../../buttons/pagination/dashboard-pagination-button';
+import InviteModal from '../../dashboard/modal/Invite-modal';
+import TableButton from '../table-button';
+
+import inviteRequests from '@/apis/invite-request';
 
 import { DashboardIdProps, InvitationsDataProps, InviteeType } from '@/constant/type/data/dashboard.type';
+
 import { useGetInviteUsers } from '@/hooks/swr/use-Invite-users';
 import { useHandleModal } from '@/hooks/use-handle-modal';
+
+import { pagesCalculate } from '@/lib/pages-calculate';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
 
@@ -19,9 +24,13 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
 
   // server state
   const { data, error, isLoading, mutate } = useGetInviteUsers(dashboardId, currentPage);
-  if (isLoading) return;
+  const totalPages = pagesCalculate(data, isLoading);
 
-  const handleDeleteInviteUsers = () => {};
+  const handleDeleteInviteUsers = async (invitationId: string) => {
+    const result = await inviteRequests.deleteInvitedUser(dashboardId, invitationId);
+    console.log(result);
+    mutate(`${dashboardId}/invitations?page=${currentPage}`);
+  };
 
   return (
     <div className="flex w-full px-[28px] py-[32px] flex-col rounded-md bg-white">
@@ -38,7 +47,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
               />
               <DashboardPaginationButton
                 onClick={() => setCurrentPage(currentPage + 1)}
-                isDisabled={data && data.invitations.length !== 10}
+                isDisabled={currentPage === totalPages}
                 position="right"
               />
             </div>
@@ -52,14 +61,14 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {data ? (
+        {!isLoading ? (
           data.invitations.map(({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
             <li
               key={id}
               className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
             >
               <span>{invitee.email}</span>
-              <TableButton purpose="negative" onClick={handleDeleteInviteUsers}>
+              <TableButton purpose="negative" onClick={() => handleDeleteInviteUsers(id)}>
                 취소
               </TableButton>
             </li>

@@ -10,13 +10,14 @@ const headers = {
 
 const inviteRequests = Object.freeze({
   getInviteUsers: async (dashboardId: string, page: number) => {
-    console.log("들어갔습니다.")
+    console.log('들어갔습니다.');
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           page,
-        }
+          size: 5,
+        },
       });
       return data;
     } catch (error) {
@@ -24,14 +25,23 @@ const inviteRequests = Object.freeze({
     }
   },
 
-  inviteUserInDashboard: async (dashboardId: string, {email : inviteUserEmail} : {email: string}) => {
+  inviteUserInDashboard: async (dashboardId: string, { email: inviteUserEmail }: { email: string }) => {
     try {
-      const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, {email : inviteUserEmail}, headers);
+      const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, { email: inviteUserEmail }, headers);
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
     }
   },
-})
+
+  deleteInvitedUser: async (dashboardId: string, invitationId: string) => {
+    try {
+      const { data } = await axios.delete(`dashboards/${dashboardId}/invitations/${invitationId}`, headers);
+      return data;
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+    }
+  },
+});
 
 export default inviteRequests;
