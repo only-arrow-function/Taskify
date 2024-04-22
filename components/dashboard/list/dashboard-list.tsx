@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Link from 'next/link';
 import NewDashboardModal from '../modal/new-dashboard-modal';
 import DashboardOpenButton from '@/components/buttons/domain/dashboard-open-button';
@@ -9,8 +7,6 @@ import DashboardPagination from '@/components/dashboard/pagination/dashboard-pag
 import { DashboardItem, useDashboards } from '@/hooks/swr/dashboard/use-dashboards';
 import usePagination from '@/hooks/use-pagination';
 import { useToggleStore } from '@/store/toggle-store';
-
-const PAGE_DASHBOARD_COUNT = 5;
 
 const DashboardList = () => {
   const { data } = useDashboards();
