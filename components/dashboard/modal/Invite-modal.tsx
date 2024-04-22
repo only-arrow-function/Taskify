@@ -14,13 +14,14 @@ import validateInviteIUserDuplicate from "@/lib/domain/validate-invite-user-dubl
 
 interface InviteModalType {
   handleCloseModal: () => void;
+  dashboardId: string;
+  totalPages: number;
 }
 
-const InviteModal = ({ handleCloseModal }: InviteModalType) => {
-  const router = useRouter();
+const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalType) => {
   const [input, setInput] = useState('');
 
-  const { data, mutate } = useGetInviteUsers(router.query.id, 1);
+  const { data, mutate } = useGetInviteUsers(dashboardId, 1);
 
   const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -28,17 +29,17 @@ const InviteModal = ({ handleCloseModal }: InviteModalType) => {
   }
 
   const handleClickForInvite = async () => {
-    if (typeof router.query.id !== "string") return;
-
     const isDuplicate = validateInviteIUserDuplicate(data.invitations, input);
     // if (isDuplicate) {
     //   console.log("중복되었습니다.")
     //   return
     // } // 에러 처리
 
-    await requests.inviteUserInDashboard(router.query.id, { email: input });
+    await requests.inviteUserInDashboard(dashboardId, { email: input });
 
-    mutate(`${router.query.id}/invitations`)
+    for (let i = 0; i < totalPages; i++) {
+      mutate(`${dashboardId}/invitations/${i}`)
+    }
 
     handleCloseModal();
   }
