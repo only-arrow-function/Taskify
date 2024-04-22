@@ -19,42 +19,51 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
 
   // server state
   const { data, error, isLoading, mutate } = useGetInviteUsers(dashboardId, currentPage);
-  console.log(data);
   if (isLoading) return;
 
-
-  const handleDeleteInviteUsers = () => {
-
-  }
+  const handleDeleteInviteUsers = () => {};
 
   return (
-    <div className="flex w-full h-[406px] px-[28px] py-[32px] flex-col rounded-md bg-white">
+    <div className="flex w-full px-[28px] py-[32px] flex-col rounded-md bg-white">
       <div className="flex items-center justify-between mb-[20px]">
         <span className="text-center text-lg font-bold">초대 내역</span>
-        <div className='flex items-center gap-[10px]'>
-          <span className="text-xs text-grayscale-80 sm:text-sm">
-            페이지 중
-          </span>
-          <div className="flex">
-            <DashboardPaginationButton onClick={() => setCurrentPage(currentPage - 1)} isDisabled={currentPage === 1} position="left" />
-            <DashboardPaginationButton onClick={() => setCurrentPage(currentPage + 1)} isDisabled={data && data.invitations.length !== 10} position="right" />
-          </div>
+        <div className="flex items-center gap-[10px]">
+          <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
+          {data && (
+            <div className="flex">
+              <DashboardPaginationButton
+                onClick={() => setCurrentPage(currentPage - 1)}
+                isDisabled={currentPage === 1}
+                position="left"
+              />
+              <DashboardPaginationButton
+                onClick={() => setCurrentPage(currentPage + 1)}
+                isDisabled={data && data.invitations.length !== 10}
+                position="right"
+              />
+            </div>
+          )}
         </div>
       </div>
-      <div className='flex justify-between items-center mb-[10px]'>
-        <span className='text-grayscale-50 text-sm font-normal leading-normal'>이메일</span>
+      <div className="flex justify-between items-center mb-[10px]">
+        <span className="text-grayscale-50 text-sm font-normal leading-normal">이메일</span>
         <BasicButton purpose="positive" eventHandler={handleOpenModal}>
           초대하기
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
         {data ? (
-          data.invitations.map(({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => 
-            <li key={id} className='w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]'>
+          data.invitations.map(({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
+            <li
+              key={id}
+              className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
+            >
               <span>{invitee.email}</span>
-              <TableButton purpose="negative" onClick={handleDeleteInviteUsers}>취소</TableButton>
+              <TableButton purpose="negative" onClick={handleDeleteInviteUsers}>
+                취소
+              </TableButton>
             </li>
-          )
+          ))
         ) : (
           <>
             <Image src={NoEmailIcon} alt="빈 이메일" />
