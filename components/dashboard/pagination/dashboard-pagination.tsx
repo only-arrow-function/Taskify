@@ -10,7 +10,7 @@ interface DashboardPaginationProps {
 const PAGE_DASHBOARD_COUNT = 5;
 
 const DashboardPagination = (props: DashboardPaginationProps) => {
-  const { data, isLoading, error } = useDashboards(props.currentPage);
+  const { data } = useDashboards({ page: props.currentPage });
 
   if (!data) return null;
 
