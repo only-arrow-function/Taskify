@@ -7,6 +7,7 @@ import PasswordInput from '@/components/inputs/password-input';
 import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
+import { useAuthenticationStore } from '@/store/auth';
 import { useToggleStore } from '@/store/toggle-store';
 
 const Login = () => {
@@ -14,6 +15,8 @@ const Login = () => {
   const { isToggle, handleOpenToggle } = useToggleStore();
   const { email, password, setEmail, setPassword, validateEmail, validatePassword } = useFormValidation();
   const [notificationMessage, setnotificationMessage] = useState('');
+
+  const setAuthentication = useAuthenticationStore((state) => state.setAuthentication);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,6 +29,7 @@ const Login = () => {
     try {
       const response = await requests.login(email.value, password.value);
       localStorage.setItem('accessToken', response.accessToken);
+      setAuthentication(response.user);
       router.push('/dashboard');
     } catch (err: any) {
       handleOpenToggle();
