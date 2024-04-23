@@ -20,15 +20,32 @@ const requests = Object.freeze({
       throw error;
     }
   },
-
-  fetchDashboards: async () => {
+  signup: async (email: string, nickname: string, password: string) => {
     try {
-      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
-
-      const { data } = await axios.get('dashboards?navigationMethod=infiniteScroll', headers);
+      const { data } = await axios.post('users', {
+        email,
+        nickname,
+        password,
+      });
       return data;
     } catch (error) {
-      return error;
+      console.error(ERROR_MESSAGE, error);
+      throw error;
+    }
+  },
+
+  fetchDashboards: async ({ page }: { page: number }) => {
+    try {
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+      const { data } = await axios.get(`dashboards?page=${page}&size=5&navigationMethod=pagination`, headers);
+      await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
+      return data;
+    } catch (error) {
+      const err = error as Error;
+      return {
+        success: false,
+        error: err.message,
+      };
     }
   },
 
