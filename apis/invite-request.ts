@@ -10,8 +10,11 @@ const headers = {
 
 const inviteRequests = Object.freeze({
   getInviteUsers: async (dashboardId: string, page: unknown | number) => {
+<<<<<<< HEAD
     console.log('들어갔습니다.');
     await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
+=======
+>>>>>>> e84a234 (feat [노은수] : 사이드바 리액트 쿼리 데이터 연동)
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
         headers: { Authorization: `Bearer ${token}` },

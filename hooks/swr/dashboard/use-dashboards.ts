@@ -20,7 +20,7 @@ export interface DashboardResponse {
 
 export const useDashboards = ({ page }: { page: number }) => {
   const { data, isLoading, error, mutate } = useSWR<DashboardResponse>(`/dashboards/${page}`, () =>
-    requests.fetchDashboards({ page: 1 }),
+    requests.fetchDashboards({ page }),
   );
 
   return {
