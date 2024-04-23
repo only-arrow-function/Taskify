@@ -91,16 +91,7 @@ const requests = Object.freeze({
       };
     }
   },
-  fetchColumns: async (dashboardId: string) => {
-    try {
-      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
-      const { data } = await axios.get(`columns?dashboardId=${dashboardId}`, headers);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  },
-  createColumn: async (columnData: { title: string; dashboardId: string }) => {
+  createColumn: async (columnData: { title: string; dashboardId: number }) => {
     try {
       const { data } = await axios.post('columns', columnData, headers);
       return data;

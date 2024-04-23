@@ -1,70 +1,21 @@
 import AddCard from '@/components/card/add-card';
 import CardListHeader from '@/components/card/card-list-header';
-import { TaskCardProp } from '@/components/card/card-type';
+import CardListLayout from '@/components/card/card-list-layout';
 import TaskCard from '@/components/card/task-card';
+import { useCards } from '@/hooks/swr/card/use-card';
 
-const mockData: TaskCardProp[] = [
-  {
-    id: 0,
-    title: 'test1',
-    dueDate: '2024-04-17',
-    tags: ['test', 'test2'],
-    assignee: {
-      nickname: 'test',
-      id: 0,
-    },
-    imageUrl: '/pubilc',
-  },
-  {
-    id: 1,
-    title: 'test2',
-    dueDate: '2024-04-17',
-    tags: ['test', 'test2'],
-    assignee: {
-      profileImageUrl: '22',
-      nickname: 'test',
-      id: 1,
-    },
-    imageUrl: '/pubilc',
-  },
-  {
-    id: 2,
-    title: 'test3',
-    dueDate: '2024-04-17',
-    tags: ['test', 'test2'],
-    assignee: {
-      nickname: 'test',
-      id: 2,
-    },
-    imageUrl: '/pubilc',
-  },
-  {
-    id: 3,
-    title: 'test4',
-    dueDate: '2024-04-17',
-    tags: ['test', 'test2'],
-    assignee: {
-      nickname: 'test',
-      id: 3,
-    },
-  },
-  {
-    id: 4,
-    title: 'test5',
-    dueDate: '2024-04-17',
-    tags: ['test', 'test2'],
-    assignee: {
-      nickname: 'test',
-      id: 4,
-    },
-  },
-];
-const CardList = () => {
+interface CardListProps {
+  id: string;
+  title: string;
+}
+const CardList = (props: CardListProps) => {
+  const { data } = useCards(props.id);
+
   return (
-    <div className="w-full xl:w-[350px] flex flex-col gap-[10px] sm:gap-[16px] p-[12px] sm:p-[20px] border-b-2 border-b-grayscale-30 xl:border-r-2 xl:border-b-0 xl:border-r-grayscale-30">
-      <CardListHeader title="test" count={mockData.length} />
+    <CardListLayout>
+      <CardListHeader title={props.title} count={Number(data?.totalCount)} />
       <AddCard />
-      {mockData.map((data) => {
+      {data?.cards.map((data) => {
         return (
           <TaskCard
             key={data.id}
@@ -77,7 +28,7 @@ const CardList = () => {
           />
         );
       })}
-    </div>
+    </CardListLayout>
   );
 };
 

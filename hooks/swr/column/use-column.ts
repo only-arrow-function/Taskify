@@ -11,7 +11,7 @@ export interface ColumnItem {
   dashboardId: string;
 }
 
-interface ColumnResponse {
+export interface ColumnResponse {
   result: string;
   data: ColumnItem[];
 }
