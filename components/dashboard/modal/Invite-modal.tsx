@@ -38,6 +38,13 @@ const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalT
       handleCloseModal();
     } catch (error) {
       console.error('에러 발생:', error);
+      await mutateAsync({dashboardId, input}, {
+        onSuccess: () => {},
+      });
+
+      handleCloseModal();
+    } catch (error) {
+      console.error("에러 발생:", error);
     }
   };
 

@@ -144,7 +144,6 @@ const requests = Object.freeze({
       return data;
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
-      return error;
     }
   },
   // 다른 API 요청도 여기에 추가 가능
