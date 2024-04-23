@@ -6,8 +6,14 @@ import DashboardSectionLayout from '@/components/dashboard/layout/dashboard-sect
 import DashboardList from '@/components/dashboard/list/dashboard-list';
 import SideMenu from '@/components/side-menu/side-menu';
 import { DashboardResponse } from '@/hooks/swr/dashboard/use-dashboards';
+import { useAuthenticationStore } from '@/store/auth';
 
 const MyDashboard = () => {
+  const nickname = useAuthenticationStore((state) => state.nickname);
+  const profileImage = useAuthenticationStore((state) => state.profileImageUrl);
+
+  console.log(nickname, profileImage);
+
   return (
     <DashboardSectionLayout>
       <DashboardHeader />
