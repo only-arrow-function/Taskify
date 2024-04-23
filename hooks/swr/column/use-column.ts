@@ -17,6 +17,7 @@ export interface ColumnResponse {
 }
 
 export const useColumns = (dashboardId: string | string[] | undefined) => {
+  if (typeof dashboardId !== 'string') return;
   const { data, isLoading, error, mutate } = useSWR<ColumnResponse>(
     '/columns',
     () => requests.fetchColumns(dashboardId),
