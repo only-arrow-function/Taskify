@@ -1,20 +1,16 @@
-import { useState, useRef } from 'react';
-
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
+import InviteCancelButton from './invite-cancel-button';
 import BasicButton from '../../buttons/basic-button';
 import DashboardPaginationButton from '../../buttons/pagination/dashboard-pagination-button';
 import InviteModal from '../../dashboard/modal/Invite-modal';
-import TableButton from '../table-button';
-
-import inviteRequests from '@/apis/invite-request';
 
 import { DashboardIdProps, InvitationsDataProps, InviteeType } from '@/constant/type/data/dashboard.type';
 
-import { useGetInviteUsers } from '@/hooks/swr/use-Invite-users';
+import { useInfiniteInviteUsersQuery } from '@/hooks/react-query/use-query-invite-users';
 import { useHandleModal } from '@/hooks/use-handle-modal';
-
-import { pagesCalculate } from '@/lib/pages-calculate';
+import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
 
@@ -23,17 +19,20 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // server state
-  const { data, error, isLoading, mutate } = useGetInviteUsers(dashboardId, currentPage);
-  const totalPages = pagesCalculate(data, isLoading);
+  const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
 
-  const handleDeleteInviteUsers = async (invitationId: string) => {
-    const result = await inviteRequests.deleteInvitedUser(dashboardId, invitationId);
-    console.log(result);
-    
-    for (let i = 0; i < totalPages; i++) {
-      mutate(`${dashboardId}/invitations?page=${i}`);
+  const nextPage = () => {
+    setCurrentPage((currentPage) => currentPage + 1);
+    if (hasNextPage) {
+      fetchNextPage();
     }
   };
+
+  const prevPage = () => {
+    setCurrentPage((currentPage) => currentPage - 1);
+  };
+
+  useRevalidatePages(data, currentPage, setCurrentPage); // 최종 페이지 길이 최신화
 
   return (
     <div className="flex w-full px-[28px] py-[32px] flex-col rounded-md bg-white">
@@ -41,16 +40,12 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         <span className="text-center text-lg font-bold">초대 내역</span>
         <div className="flex items-center gap-[10px]">
           <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
-          {data && (
+          {data && data.totalPages && (
             <div className="flex">
+              <DashboardPaginationButton onClick={prevPage} isDisabled={currentPage === 1} position="left" />
               <DashboardPaginationButton
-                onClick={() => setCurrentPage(currentPage - 1)}
-                isDisabled={currentPage === 1}
-                position="left"
-              />
-              <DashboardPaginationButton
-                onClick={() => setCurrentPage(currentPage + 1)}
-                isDisabled={currentPage === totalPages}
+                onClick={nextPage}
+                isDisabled={currentPage >= data.totalPages}
                 position="right"
               />
             </div>
@@ -64,26 +59,30 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {!data || !data.invitations || isLoading ? (
+        {!data || !data.pages[currentPage - 1] || isPending ? (
           <>
             <Image src={NoEmailIcon} alt="빈 이메일" />
             <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
           </>
         ) : (
-          data.invitations.map(({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
-            <li
-              key={id}
-              className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
-            >
-              <span>{invitee.email}</span>
-              <TableButton purpose="negative" onClick={() => handleDeleteInviteUsers(id)}>
-                취소
-              </TableButton>
-            </li>
-          ))
+          data.pages[currentPage - 1].invitations.map(
+            ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
+              <li
+                key={id}
+                className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
+              >
+                <span>{invitee.email}</span>
+                <InviteCancelButton purpose="negative" invitationId={id} dashboardId={dashboardId}>
+                  취소
+                </InviteCancelButton>
+              </li>
+            ),
+          )
         )}
       </ul>
-      {isOpenModal && <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={totalPages}/>}
+      {isOpenModal && (
+        <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={data.totalPages} />
+      )}
     </div>
   );
 };

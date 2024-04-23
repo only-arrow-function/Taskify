@@ -1,16 +1,12 @@
 import { ChangeEvent, useState } from "react";
-
-import { useRouter } from "next/router"
-
-import requests from "@/apis/request"
+import { useQueryClient } from "@tanstack/react-query";
 
 import BasicButton from '@/components/buttons/basic-button';
 import InputField from '@/components/inputs/input-field';
 import ModalTitle from '@/components/modal/modal-title';
 import ModalWithDimmed from '@/components/modal/modal-with-dimmed';
 
-import { useGetInviteUsers } from "@/hooks/swr/use-Invite-users"
-import validateInviteIUserDuplicate from "@/lib/domain/validate-invite-user-dublicate";
+import { useInvitationsMutation } from "@/hooks/react-query/use-query-invite-users";
 
 interface InviteModalType {
   handleCloseModal: () => void;
@@ -21,7 +17,9 @@ interface InviteModalType {
 const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalType) => {
   const [input, setInput] = useState('');
 
-  const { data, mutate } = useGetInviteUsers(dashboardId, 1);
+  // server state
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useInvitationsMutation(dashboardId, { email: input }, queryClient)
 
   const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -29,20 +27,16 @@ const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalT
   }
 
   const handleClickForInvite = async () => {
-    const isDuplicate = validateInviteIUserDuplicate(data.invitations, input);
-    // if (isDuplicate) {
-    //   console.log("중복되었습니다.")
-    //   return
-    // } // 에러 처리
+    try {
+      await mutateAsync({dashboardId, input}, {
+        onSuccess: () => {},
+      });
 
-    await requests.inviteUserInDashboard(dashboardId, { email: input });
-
-    for (let i = 0; i < totalPages; i++) {
-      mutate(`${dashboardId}/invitations/${i}`)
+      handleCloseModal();
+    } catch (error) {
+      console.error("에러 발생:", error);
     }
-
-    handleCloseModal();
-  }
+  };
 
   return (
     <ModalWithDimmed handleCloseModal={handleCloseModal}>

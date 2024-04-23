@@ -10,3 +10,12 @@ export const pagesCalculate = (data: any, isLoading:boolean) => {
 
   return totalPages;
 }
+
+export const totalPagesCalculate = (data: any) => {
+  const totalPages =
+      data.totalCount % PAGE_DASHBOARD_COUNT === 0
+      ? data.totalCount / PAGE_DASHBOARD_COUNT
+      : Math.ceil(data.totalCount / PAGE_DASHBOARD_COUNT);
+
+  return totalPages;
+}
