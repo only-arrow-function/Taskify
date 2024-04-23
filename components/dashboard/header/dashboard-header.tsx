@@ -9,6 +9,7 @@ import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg'
 const DashboardHeader = () => {
   const router = useRouter();
   const isPathMyDashboard = router.pathname.match('my');
+
   const beforeStyles = isPathMyDashboard
     ? ''
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
@@ -31,7 +32,7 @@ const DashboardHeader = () => {
             <DashboardHeaderMembers users={['윤아영', '노은수', '김재성', '구승모', '동현이', '이은수']} />
           </div>
           <div className={`ml-7 md:ml-8 lg:ml-16 relative ${beforeStyles}`}>
-            <DashboardHeaderProfile username="동현이" />
+            <DashboardHeaderProfile />
           </div>
         </div>
       </div>
