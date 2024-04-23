@@ -1,4 +1,3 @@
-import React from 'react';
 import ColorChipGroup from '@/components/chips/color-chip-group';
 import InputField from '@/components/inputs/input-field';
 import Modal from '@/components/modal/modal';

@@ -15,6 +15,7 @@ const DashboardPaginationButton = (props: DashboardPaginationButtonProps) => {
       disabled={props.isDisabled}
       className={`${position} rounded-tr rounded-br w-10 h-10 border border-grayscale-40 flex justify-center items-center disabled:cursor-not-allowed`}
       onClick={props.onClick}
+      type="button"
     >
       <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
