@@ -10,7 +10,6 @@ const headers = {
 
 const inviteRequests = Object.freeze({
   getInviteUsers: async (dashboardId: string, page: unknown | number) => {
-    console.log('들어갔습니다.');
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
         headers: { Authorization: `Bearer ${token}` },
