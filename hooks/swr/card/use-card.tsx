@@ -27,7 +27,9 @@ interface CardResponse {
 }
 
 export const useCards = (columnId: string) => {
-  const { data, isLoading, error, mutate } = useSWR<CardResponse>('/cards', () => requests.fetchCards(columnId));
+  const { data, isLoading, error, mutate } = useSWR<CardResponse>(`/cards/${columnId}`, () =>
+    requests.fetchCards(columnId),
+  );
 
   return {
     data,

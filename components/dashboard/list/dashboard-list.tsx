@@ -8,10 +8,7 @@ import { useToggleStore } from '@/store/toggle-store';
 const DashboardList = () => {
   const isToggle = useToggleStore((state) => state.isToggle);
   const handleOpenToggle = useToggleStore((state) => state.handleOpenToggle);
-  console.log(isToggle);
-  const { totalPages, currentPage, sliceData, nextCurrentPage, prevCurrentPage } = usePagination<DashboardItem>(
-    data!.dashboards,
-  );
+  const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <>

@@ -4,7 +4,7 @@ export interface TaskCardProp {
   dueDate: string;
   tags?: string[];
   assignee: {
-    profileImageUrl?: string;
+    profileImageUrl?: string | null | undefined;
     nickname: string;
     id: number;
   };
