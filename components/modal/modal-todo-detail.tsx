@@ -23,7 +23,13 @@ const ModalTodoDetail = () => {
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const { data } = useCard(tempCardId);
   const { comments, nextCursorId, fetchComments, addComment, updateComment, deleteComment } = useComment(5235);
-  const { data: commentsData, addComment } = useComment(tempCardId);
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (nextCursorId) {
+      fetchComments();
+    }
+  });
 
   if (!data) return;
 
