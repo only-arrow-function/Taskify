@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query'
 
 import dashboardRequest from '@/apis/dashboard-request'
+import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 
 const PAGE_DASHBOARD_COUNT = 5;
 
@@ -29,4 +30,16 @@ export const useInfiniteDashboardsQuery = () => {
   });
 
   return { data, isSuccess, isPending, hasNextPage, fetchNextPage };
+}
+
+export const useDashboardsMutation = (dashboardData: { title: string; color: DashboardColors }, queryClient: QueryClient) => {
+  const query = useMutation({
+    mutationFn: async () => await dashboardRequest.createDashboard(dashboardData),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`]})
+    },
+  });
+
+  return query;
 }
