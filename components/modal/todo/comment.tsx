@@ -1,18 +1,16 @@
 import { useState } from 'react';
 import ProfileImage from './profile-image';
-import useComment from '@/hooks/swr/use-comment';
 
-const formatDate = (date) => {
+const formatDate = (date: string) => {
   return date.slice(0, 16).replaceAll('T', ' ').replaceAll('-', '.');
 };
 
-const Comment = ({ id, content, createdAt, author }) => {
-  const { updateComment, deleteComment } = useComment(5001);
+const Comment = ({ id, content, createdAt, author, onUpdateComment, onDeleteComment }) => {
   const [changeContent, setChangeContent] = useState(content);
   const [isModify, setIsModify] = useState(false);
 
   const handleModifyComment = () => {
-    updateComment(id, changeContent);
+    onUpdateComment(id, changeContent);
     setIsModify(false);
   };
 
@@ -50,7 +48,7 @@ const Comment = ({ id, content, createdAt, author }) => {
               </button>
             </li>
             <li className="text-grayscale-50 text-[10px] md:text-xs">
-              <button className="underline underline-offset-1" onClick={() => deleteComment(id)}>
+              <button className="underline underline-offset-1" onClick={() => onDeleteComment(id)}>
                 삭제
               </button>
             </li>

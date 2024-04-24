@@ -11,23 +11,23 @@ import TextareaWithLabel from './todo/textarea-with-label';
 import ProgressChip from '../chips/progress-chip';
 import TagChip from '../chips/tag-chip';
 import useCard from '@/hooks/swr/use-card';
-import useComment from '@/hooks/swr/use-comment';
+import useComment from '@/hooks/use-comments';
+import useIntersect from '@/hooks/use-intersect';
 import CloseIcon from '@/public/icon/close.svg';
 import MoreIcon from '@/public/icon/more.svg';
 
-const tempCardId = 5001;
+const tempCardId = 5235;
 
 const ModalTodoDetail = () => {
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-  const [nextCursorId, setNextCursorId] = useState<number | null>();
   const { data } = useCard(tempCardId);
+  const { comments, nextCursorId, fetchComments, addComment, updateComment, deleteComment } = useComment(5235);
   const { data: commentsData, addComment } = useComment(tempCardId);
 
   if (!data) return;
 
   const { assignee, title, description, dueDate, imageUrl, tags } = data;
-  const goToEditPage = () => {};
 
   const handlePopoverClose = () => {
     setIsOpenPopover(false);
@@ -42,8 +42,8 @@ const ModalTodoDetail = () => {
     addComment({
       content: comment,
       cardId: tempCardId,
-      columnId: 20004,
-      dashboardId: 5947,
+      columnId: 20173,
+      dashboardId: 6000,
     });
   };
 
@@ -103,9 +103,15 @@ const ModalTodoDetail = () => {
               <section className="flex flex-wrap gap-4 w-full md:gap-5">
                 <TextareaWithLabel purpose="comment" onAddComment={handleCommentAdd} />
                 <ul className="flex flex-col w-full gap-3 h-16 overflow-y-scroll md:h-20">
-                  {commentsData?.comments.map((comment) => (
-                    <Comment key={comment.id} {...comment} />
+                  {comments.map((comment) => (
+                    <Comment
+                      key={comment.id}
+                      {...comment}
+                      onUpdateComment={updateComment}
+                      onDeleteComment={deleteComment}
+                    />
                   ))}
+                  {nextCursorId && <li ref={ref}>TARGET</li>}
                 </ul>
               </section>
             </div>
