@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import type { Comment } from '@/components/modal/todo/comment.type';
 import commentsRequests from '@/apis/comments-request';
 
 const useComment = (cardId: number) => {
-  const [comments, setComments] = useState<any>([]);
-  const [nextCursorId, setNextCursorId] = useState<number>();
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [nextCursorId, setNextCursorId] = useState<number | null>();
 
   const fetchComments = async () => {
     const data = await commentsRequests.getComments(cardId, nextCursorId);
