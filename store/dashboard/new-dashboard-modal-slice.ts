@@ -10,6 +10,7 @@ export interface NewDashboardModalState {
   handleColorChange: (color: DashboardColors) => void;
 }
 
+// only use for color!
 export const newDashboardModalSlice: StateCreator<NewDashboardModalState> = (set) => ({
   title: '',
   color: '#7AC555',
