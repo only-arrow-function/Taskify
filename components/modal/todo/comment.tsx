@@ -31,9 +31,11 @@ const Comment = ({ id, content, createdAt, author }) => {
         <div className="flex flex-col gap-2 w-full md:gap-3">
           {isModify ? (
             <textarea
-              className="w-full resize-none text-xs text-grayscale-80 bg-inherit border border-grayscale-40 md:text-sm"
+              className="w-full resize-none text-xs text-grayscale-80 bg-inherit md:text-sm focus:border-b focus:border-violet-50/50 focus:outline-none"
               value={changeContent}
               onChange={(e) => setChangeContent(e.target.value)}
+              rows={1}
+              autoFocus
             />
           ) : (
             <p className="text-xs text-grayscale-80 md:text-sm">{content}</p>
