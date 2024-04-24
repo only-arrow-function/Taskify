@@ -6,6 +6,7 @@ import ModalEditTodo from './modal-edit-todo';
 import ModalTitle from './modal-title';
 import ModalTodoDetailLayout from './modal-todo-detail-layout';
 import Comment from './todo/comment';
+import CommentSpinner from './todo/comment-spinner';
 import Popover from './todo/popover';
 import TextareaWithLabel from './todo/textarea-with-label';
 import ProgressChip from '../chips/progress-chip';
@@ -109,6 +110,7 @@ const ModalTodoDetail = () => {
               <section className="flex flex-wrap gap-4 w-full md:gap-5">
                 <TextareaWithLabel purpose="comment" onAddComment={handleCommentAdd} />
                 <ul className="flex flex-col w-full gap-3 h-16 overflow-y-scroll md:h-20">
+                  {/* <CommentSpinner /> */}
                   {comments.map((comment) => (
                     <Comment
                       key={comment.id}
@@ -117,7 +119,11 @@ const ModalTodoDetail = () => {
                       onDeleteComment={deleteComment}
                     />
                   ))}
-                  {nextCursorId && <li ref={ref}>TARGET</li>}
+                  {nextCursorId && (
+                    <li ref={ref} className="w-full">
+                      <CommentSpinner />
+                    </li>
+                  )}
                 </ul>
               </section>
             </div>
