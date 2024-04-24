@@ -47,7 +47,7 @@ const SideMenuDashBoardsList = () => {
       {data && data.totalPages && (
         <div className="flex items-center">
           <span className="text-center text-sm mx-[10px]">
-            {currentPage}페이지 중{data.totalPages}
+            {data.totalPages}페이지 중{currentPage}
           </span>
           <DashboardPaginationButton position="left" isDisabled={currentPage === 1} onClick={prevPage} />
           <DashboardPaginationButton position="right" isDisabled={currentPage >= data.totalPages} onClick={nextPage} />
