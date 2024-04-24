@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import InviteCancelButton from './invite-cancel-button';
+import InviteTableSkeleton from './invite-table-skeleton';
 import BasicButton from '../../buttons/basic-button';
 import DashboardPaginationButton from '../../buttons/pagination/dashboard-pagination-button';
 import InviteModal from '../../dashboard/modal/Invite-modal';
@@ -20,7 +21,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
 
   // server state
   const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
-  console.log(data);
+
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
     if (hasNextPage) {
@@ -41,14 +42,14 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
           {data && !!data.totalPages && (
             <div className="flex items-center gap-[10px]">
               <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
-              <div className="flex">
-                <DashboardPaginationButton onClick={prevPage} isDisabled={currentPage === 1} position="left" />
-                <DashboardPaginationButton
-                  onClick={nextPage}
-                  isDisabled={currentPage >= data.totalPages}
-                  position="right"
-                />
-              </div>
+                <div className="flex">
+                  <DashboardPaginationButton onClick={prevPage} isDisabled={currentPage === 1} position="left" />
+                  <DashboardPaginationButton
+                    onClick={nextPage}
+                    isDisabled={currentPage >= data.totalPages}
+                    position="right"
+                  />
+                </div>
             </div>
           )}
       </div>
@@ -59,25 +60,27 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {data && data.pages[currentPage - 1] && data.totalPages && !isPending ? (
-          data.pages[currentPage - 1].invitations.map(
-            ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
-              <li
-                key={id}
-                className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
-              >
-                <span>{invitee.email}</span>
-                <InviteCancelButton purpose="negative" invitationId={id} dashboardId={dashboardId}>
-                  취소
-                </InviteCancelButton>
-              </li>
-            ),
+        {isPending ? (<InviteTableSkeleton />) : (
+          data.pages[currentPage - 1].invitations.length ? (
+            data.pages[currentPage - 1].invitations.map(
+              ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
+                <li
+                  key={id}
+                  className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
+                >
+                  <span>{invitee.email}</span>
+                  <InviteCancelButton purpose="negative" invitationId={id} dashboardId={dashboardId}>
+                    취소
+                  </InviteCancelButton>
+                </li>
+              ),
+            )
+          ) : (
+            <>
+              <Image src={NoEmailIcon} alt="빈 이메일" />
+              <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
+            </>
           )
-        ) : (
-          <>
-            <Image src={NoEmailIcon} alt="빈 이메일" />
-            <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
-          </>
         )}
       </ul>
       {isOpenModal && (
