@@ -1,77 +1,51 @@
+import type { Comment, CommentResponse, PostCommentInfo } from '@/components/modal/todo/comment.type';
 import axios from './axios';
 
 const ERROR_MESSAGE = '에러 발생:';
 
-interface PostCommentInfo {
-  content: string;
-  cardId: number;
-  columnId: number;
-  dashboardId: number;
-}
-
 const commentsRequests = Object.freeze({
-  postComment: async (postCommentInfo: PostCommentInfo) => {
+  postComment: async (postCommentInfo: PostCommentInfo): Promise<Comment> => {
     const accessToken = window.localStorage.getItem('accessToken');
 
-    try {
-      const { data } = await axios.post('comments', postCommentInfo, {
-        headers: { Authorization: 'Bearer ' + accessToken },
-      });
+    const { data } = await axios.post('comments', postCommentInfo, {
+      headers: { Authorization: 'Bearer ' + accessToken },
+    });
 
-      return data;
-    } catch (error) {
-      const err = error as Error;
-      console.log(ERROR_MESSAGE, err.message);
-    }
+    return data;
   },
-  getComments: async (cardId: number, cursorId?: number) => {
+  getComments: async (cardId: number, cursorId?: number | null): Promise<CommentResponse> => {
     const accessToken = window.localStorage.getItem('accessToken');
 
-    try {
-      const { data } = await axios.get('comments', {
-        headers: { Authorization: 'Bearer ' + accessToken },
-        params: {
-          size: 5,
-          cardId,
-          cursorId,
-        },
-      });
+    const { data } = await axios.get('comments', {
+      headers: { Authorization: 'Bearer ' + accessToken },
+      params: {
+        size: 5,
+        cardId,
+        cursorId,
+      },
+    });
 
-      return data;
-    } catch (error) {
-      const err = error as Error;
-      console.log(ERROR_MESSAGE, err.message);
-    }
+    return data;
   },
-  putComment: async (commentId: number, comment: string) => {
+  putComment: async (commentId: number, comment: string): Promise<Comment> => {
     const accessToken = window.localStorage.getItem('accessToken');
 
-    try {
-      const { data } = await axios.put(
-        `comments/${commentId}`,
-        { content: comment },
-        {
-          headers: { Authorization: 'Bearer ' + accessToken },
-        },
-      );
+    const { data } = await axios.put(
+      `comments/${commentId}`,
+      { content: comment },
+      {
+        headers: { Authorization: 'Bearer ' + accessToken },
+      },
+    );
 
-      return data;
-    } catch (error) {
-      const err = error as Error;
-      console.log(ERROR_MESSAGE, err.message);
-    }
+    return data;
   },
   deleteComment: async (commentId: number) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
-    try {
-      await axios.delete(`comments/${commentId}`, {
-        headers: { Authorization: 'Bearer ' + accessToken },
-      });
-    } catch (error) {
-      const err = error as Error;
-      console.log(ERROR_MESSAGE, err.message);
-    }
+    await axios.delete(`comments/${commentId}`, {
+      headers: { Authorization: 'Bearer ' + accessToken },
+    });
   },
 });
 
