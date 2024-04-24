@@ -102,7 +102,7 @@ const ModalTodoDetail = () => {
               </section>
               <section className="flex flex-wrap gap-4 w-full md:gap-5">
                 <TextareaWithLabel purpose="comment" onAddComment={handleCommentAdd} />
-                <ul className="flex flex-col w-full gap-3">
+                <ul className="flex flex-col w-full gap-3 h-16 overflow-y-scroll md:h-20">
                   {commentsData?.comments.map((comment) => (
                     <Comment key={comment.id} {...comment} />
                   ))}
