@@ -30,7 +30,7 @@ const Login = () => {
       const response = await requests.login(email.value, password.value);
       localStorage.setItem('accessToken', response.accessToken);
       setAuthentication(response.user);
-      router.push('/dashboard');
+      router.push('/my-dashboard');
     } catch (err: any) {
       handleOpenToggle();
       setnotificationMessage(err.response.data.message || '알수없는 오류로 로그인에 실패하였습니다.');
