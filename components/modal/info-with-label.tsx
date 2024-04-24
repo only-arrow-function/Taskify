@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Image from 'next/image';
+import ProfileImage from './todo/profile-image';
 
 const InfoWithLabel = ({
   label,
@@ -19,11 +20,7 @@ const InfoWithLabel = ({
         {nickname && (
           <div className="relative size-[1.625rem] rounded-full overflow-hidden">
             {imageUrl && <Image src={imageUrl} alt="프로필 이미지" fill style={{ objectFit: 'cover' }} />}
-            {nickname && (
-              <span className="inline-flex justify-center items-center rounded-full text-xs font-[Montserrat] bg-[#A3C4A2] size-full text-white border-2 border-white">
-                {nickname.slice(0, 1)}
-              </span>
-            )}
+            {nickname && <ProfileImage imageUrl={imageUrl} nickname={nickname} />}
           </div>
         )}
         <span className="text-xs text-grayscale-80 leading-[26px]">{children}</span>
