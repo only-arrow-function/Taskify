@@ -94,14 +94,14 @@ const ModalTodoDetail = () => {
                   <ProgressChip>To Do</ProgressChip>
                   <div className="w-[1px] bg-grayscale-40" />
                   <ul className="flex gap-[6px]">
-                    {tags.map((tag) => (
+                    {tags?.map((tag) => (
                       <TagChip key={tag} tag={tag} />
                     ))}
                   </ul>
                 </div>
                 <p className="text-xs leading-[22px]">{description}</p>
                 {imageUrl && (
-                  <div className="relative h-44 md:h-60 lg:h-[262px]">
+                  <div className="relative h-44 rounded-md overflow-hidden md:h-60 lg:h-[262px]">
                     <Image src={imageUrl} alt="관련 이미지" fill className="object-cover" />
                   </div>
                 )}
