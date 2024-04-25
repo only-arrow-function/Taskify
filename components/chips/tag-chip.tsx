@@ -7,7 +7,8 @@ const TagChip = ({ tag }: { tag: string }) => {
 
   return (
     <li
-      className={`px-[8px] py-[4px] text-[10px] rounded-[4px] ${tagColorConfig[color].color} ${tagColorConfig[color].bgColor} list-none sm:text-xs`}
+
+      className={`flex-shrink-0 px-[8px] py-[4px] text-[10px] rounded-[4px] ${tagColorConfig[color].color} ${tagColorConfig[color].bgColor} sm:text-xs list-none`}
     >
       {name}
     </li>
