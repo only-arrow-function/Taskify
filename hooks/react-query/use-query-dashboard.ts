@@ -3,29 +3,14 @@ import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-quer
 import dashboardRequest from '@/apis/dashboard-request';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 
-interface Dashboards {
-  totalCount: number;
-  cursorId: null;
-  dashboards: {
-    id: number;
-    title: string;
-    color: DashboardColors;
-    userId: number;
-    createdAt: string;
-    updatedAt: string;
-    createdByMe: boolean;
-  }[];
-}
-
 const PAGE_DASHBOARD_COUNT = 5;
 
 export const useInfiniteDashboardsQuery = () => {
-  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery<Dashboards>({
+  const { data, isSuccess, isPending, hasNextPage, fetchNextPage, error } = useInfiniteQuery({
     queryKey: [`my-dashboard`],
     queryFn: async ({ pageParam = 1 }) =>
       await dashboardRequest.fetchDashboards({ page: pageParam, navigationMethod: 'pagination' }),
-
-    getNextPageParam: (lastPage: any, allPages: any) => {
+    getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
 
       const totalPages = Math.ceil(lastPage.totalCount / PAGE_DASHBOARD_COUNT);
@@ -37,6 +22,7 @@ export const useInfiniteDashboardsQuery = () => {
         return undefined;
       }
     },
+
     select: (data) => {
       // const flattenResults = data.pages.flatMap(page => page.invitations);
       const totalCount = data.pages[0]?.totalCount || 0;
@@ -45,7 +31,7 @@ export const useInfiniteDashboardsQuery = () => {
     },
   });
 
-  return { data, isSuccess, isPending, hasNextPage, fetchNextPage };
+  return { data, isSuccess, isPending, hasNextPage, fetchNextPage, error };
 };
 
 export const useDashboardsMutation = (

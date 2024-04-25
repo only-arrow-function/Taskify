@@ -11,7 +11,7 @@ const Layout = ({ children }: PropsWithChildren) => {
       <SideMenu />
       <main>{children}</main>
     </DashboardSectionLayout>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

@@ -11,7 +11,7 @@ const headers = {
 };
 
 const dashboardRequest = Object.freeze({
-  fetchDashboards: async ({ page, navigationMethod }: { page: number | unknown, navigationMethod: string }) => {
+  fetchDashboards: async ({ page, navigationMethod }: { page: number | unknown; navigationMethod: string }) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
       const { data } = await axios.get(`dashboards`, {
@@ -25,7 +25,6 @@ const dashboardRequest = Object.freeze({
 
       await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
       return data;
-
     } catch (error) {
       const err = error as Error;
 
