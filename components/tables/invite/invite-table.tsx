@@ -14,7 +14,6 @@ import { useHandleModal } from '@/hooks/use-handle-modal';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
-import InviteTableSkeleton from './invite-table-skeleton';
 
 const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
@@ -53,7 +52,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
                   />
                 </div>
             </div>
-          </div>
         )}
       </div>
       <div className="flex justify-between items-center mb-[10px]">

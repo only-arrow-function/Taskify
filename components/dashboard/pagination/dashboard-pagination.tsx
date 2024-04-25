@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Dispatch, SetStateAction } from 'react';
 
 import DashboardPaginationButton from '@/components/buttons/pagination/dashboard-pagination-button';
 
