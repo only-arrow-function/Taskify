@@ -1,1 +1,1 @@
-export const MEMBERS_PER_PAGE = 3;
+export const MEMBERS_PER_PAGE = 4;

@@ -10,18 +10,19 @@ import { useMembersQuery } from '@/hooks/react-query/use-query-members';
 const MembersTable = ({ dashboardId }: DashboardIdProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isFetchingNextPage, fetchNextPage } = useMembersQuery(dashboardId);
+  const { data, fetchNextPage } = useMembersQuery(dashboardId);
 
-  if (!data) return null;
-  if (isFetchingNextPage) return null;
+  const membersInfo = data?.[currentPage - 1];
+  const totalPage = membersInfo && Math.ceil(membersInfo.totalCount / MEMBERS_PER_PAGE);
 
-  const { members, totalCount } = data[currentPage - 1];
-  const totalPage = Math.ceil(totalCount / MEMBERS_PER_PAGE);
-
-  const handleNextPageClick = () => {
+  const handleNextPageClick = async () => {
     if (currentPage === totalPage) return;
-    setCurrentPage(currentPage + 1);
-    fetchNextPage();
+    try {
+      await fetchNextPage();
+      setCurrentPage(currentPage + 1);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handlePreviousPageClick = () => {
@@ -34,9 +35,11 @@ const MembersTable = ({ dashboardId }: DashboardIdProps) => {
       <header className="flex justify-between items-center px-5 mb-[18px] h-[36px] sm:px-7 sm:mb-[27px] sm:h-10">
         <h3 className="text-xl font-bold text-grayscale-80 sm:text-2xl">구성원</h3>
         <div className="flex items-center gap-3 sm:gap-4">
-          <span className="text-xs text-grayscale-80 sm:text-sm">
-            {currentPage} 페이지 중 {totalPage}
-          </span>
+          {totalPage && (
+            <span className="text-xs text-grayscale-80 sm:text-sm">
+              {currentPage} 페이지 중 {totalPage}
+            </span>
+          )}
           <div className="flex">
             <DashboardPaginationButton
               onClick={handlePreviousPageClick}
@@ -53,7 +56,7 @@ const MembersTable = ({ dashboardId }: DashboardIdProps) => {
       </header>
       <h4 className="px-5 text-sm leading-[17px] text-grayscale-50 sm:text-base sm:px-7 sm:leading-[19px]">이름</h4>
       <ul>
-        {members?.map((member) => (
+        {membersInfo?.members?.map((member) => (
           <TableListItem key={member.id} member={member} dashboardId={dashboardId} />
         ))}
       </ul>
