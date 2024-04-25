@@ -28,7 +28,7 @@ const CardList = (props: CardListProps) => {
       <CardListLayout>
         <CardListHeader title={props.title} count={Number(data?.totalCount)} onClick={handleOpenModal} />
         <AddCard />
-        {data &&
+        {data?.cards &&
           data?.cards.map((data) => {
             return (
               <TaskCard
