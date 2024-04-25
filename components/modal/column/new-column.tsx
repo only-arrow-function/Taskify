@@ -41,10 +41,18 @@ const NewColumn = ({ onClose, data }: NewColumnProp) => {
     }
   };
   const handleCreateBtnClick = async () => {
-    if (typeof dashboardId !== 'number') return;
-    await columnRequest.createColumn({ title: title, dashboardId: dashboardId });
-    data?.mutate();
-    onClose();
+    if (useColumnDuplicationTest(title, data?.data?.data)) {
+      setError('중복된 컬럼 이름입니다.');
+      return;
+    }
+    try {
+      if (typeof dashboardId !== 'number') return;
+      await columnRequest.createColumn({ title: title, dashboardId: dashboardId });
+      data?.mutate();
+      onClose();
+    } catch (error) {
+      setError('컬럼생성을 실패했습니다');
+    }
   };
   return (
     <div ref={modalRef}>

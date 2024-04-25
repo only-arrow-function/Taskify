@@ -41,12 +41,21 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
     } else {
       setError('');
     }
+    return;
   };
   const handleEditBtnClick = async () => {
-    if (typeof dashboardId !== 'number') return;
-    await columnRequest.updateColumn({ title: title }, columnId);
-    data?.mutate();
-    onClose();
+    if (useColumnDuplicationTest(title, data?.data?.data)) {
+      setError('중복된 컬럼 이름입니다.');
+      return;
+    }
+    try {
+      if (typeof dashboardId !== 'number') return;
+      await columnRequest.updateColumn({ title: title }, columnId);
+      data?.mutate();
+      onClose();
+    } catch (error) {
+      setError('업데이트를 실패했습니다.');
+    }
   };
   return (
     <div ref={modalRef}>
