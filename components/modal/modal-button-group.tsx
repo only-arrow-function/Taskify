@@ -6,7 +6,15 @@ import { useToggleStore } from '@/store/toggle-store';
 
 type PositiveName = '생성' | '확인' | '수정' | '변경' | '삭제' | '초대';
 
-const ModalButtonGroup = ({ positiveName, disabled }: { positiveName: PositiveName; disabled?: boolean }) => {
+const ModalButtonGroup = ({
+  positiveName,
+  disabled,
+  onClick,
+}: {
+  positiveName: PositiveName;
+  disabled?: boolean;
+  onClick?: () => void;
+}) => {
   const { data, error, mutate } = useDashboards({ page: 1 });
   const { color, title } = useDashboardsStore((state) => ({ color: state.color, title: state.title }));
   const handleCloseToggle = useToggleStore((state) => state.handleCloseToggle);
@@ -21,21 +29,12 @@ const ModalButtonGroup = ({ positiveName, disabled }: { positiveName: PositiveNa
     handleCloseToggle();
   };
 
-const ModalButtonGroup = ({
-  positiveName,
-  disabled,
-  onClick,
-}: {
-  positiveName: PositiveName;
-  disabled: boolean;
-  onClick?: () => void;
-}) => {
   return (
     <div className="flex justify-center gap-3 sm:justify-end">
       <ModalButton purpose="negative" disabled={false} onClick={handleCloseToggle}>
         취소
       </ModalButton>
-      <ModalButton purpose="positive" disabled={disabled} onClick={onClick}>
+      <ModalButton purpose="positive" disabled={!!disabled} onClick={createDashboard}>
         {positiveName}
       </ModalButton>
     </div>
