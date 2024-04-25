@@ -42,6 +42,9 @@ export const useDeleteMembers = (dashboardId: string, memberId: string, queryCli
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`${dashboardId}-members`] });
     },
+    onError: (error) => {
+      console.error('에러 발생:', error);
+    },
   });
 
   return query;
