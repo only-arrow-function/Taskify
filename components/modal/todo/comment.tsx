@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import type { CommentProps } from './comment.type';
 import ProfileImage from './profile-image';
 
 const formatDate = (date: string) => {
   return date.slice(0, 16).replaceAll('T', ' ').replaceAll('-', '.');
 };
 
-const Comment = ({ id, content, createdAt, author, onUpdateComment, onDeleteComment }) => {
+const Comment = ({ id, content, createdAt, author, onUpdateComment, onDeleteComment }: CommentProps) => {
   const [changeContent, setChangeContent] = useState(content);
   const [isModify, setIsModify] = useState(false);
 
@@ -19,7 +20,7 @@ const Comment = ({ id, content, createdAt, author, onUpdateComment, onDeleteComm
   };
 
   return (
-    <li id={id} className="flex w-full gap-2 md:gap-[10px]">
+    <li id={String(id)} className="flex w-full gap-2 md:gap-[10px]">
       <ProfileImage nickname={author.nickname} />
       <div className="flex flex-col items-start w-full">
         <div className="flex gap-[6px]">

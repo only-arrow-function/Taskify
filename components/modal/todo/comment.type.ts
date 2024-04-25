@@ -22,3 +22,8 @@ export interface PostCommentInfo {
   columnId: number;
   dashboardId: number;
 }
+
+export type CommentProps = Pick<Comment, 'id' | 'content' | 'createdAt' | 'author'> & {
+  onUpdateComment: (id: number, changeContent: string) => void;
+  onDeleteComment: (id: number) => void;
+};
