@@ -23,7 +23,7 @@ const dashboardRequest = Object.freeze({
         },
       });
 
-      await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
+      await new Promise((resolve) => setTimeout(() => resolve(1), 300));
       return data;
     } catch (error) {
       const err = error as Error;
@@ -38,6 +38,17 @@ const dashboardRequest = Object.freeze({
   createDashboard: async (dashboardData: { title: string; color: DashboardColors }) => {
     try {
       const { data } = await axios.post('dashboards', dashboardData, headers);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  editDashboard: async (dashboardId: string, dashboardData: { title: string; color: DashboardColors }) => {
+    if (!dashboardData.title || dashboardData.color) return;
+
+    try {
+      const { data } = await axios.put(`dashboards/${dashboardId}`, dashboardData, headers);
       return data;
     } catch (error) {
       return error;
