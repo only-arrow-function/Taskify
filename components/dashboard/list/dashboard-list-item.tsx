@@ -17,15 +17,15 @@ const DashboardListItem = (props: DashboardListItemProps) => {
   return (
     <>
       {data &&
-      data.pages[props.currentPage - 1] &&
-      data.pages[props.currentPage - 1].dashboards &&
-      data.pages[props.currentPage - 1].dashboards.map((dashboard) => (
-        <li key={dashboard.id} className="relative">
-          <Link href={`/dashboard/${dashboard.id}`}>
-            <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
-          </Link>
-        </li>
-      ))}
+        data.pages[props.currentPage - 1] &&
+        data.pages[props.currentPage - 1].dashboards &&
+        data.pages[props.currentPage - 1].dashboards.map((dashboard) => (
+          <li key={dashboard.id} className="relative">
+            <Link href={`/dashboard/${dashboard.id}`}>
+              <DashboardOpenButton color={dashboard.color}>{dashboard.title}</DashboardOpenButton>
+            </Link>
+          </li>
+        ))}
     </>
   );
 };

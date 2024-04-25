@@ -5,6 +5,7 @@ import axios from './axios';
 
 import getToken from './localStorage';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+import { Members } from '@/components/tables/members-type';
 
 
 const ERROR_MESSAGE = '에러 발생:';
@@ -87,15 +88,26 @@ const requests = Object.freeze({
       return error;
     }
   },
-
   fetchColumns: async (dashboardId: string) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+      const { data } = await axios.get(`/columns?dashboardId=${dashboardId}`, headers);
+      return data;
     } catch (error) {
       console.error(error);
+      return error;
     }
   },
-
+  fetchCards: async (columnId: string) => {
+    try {
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+      const { data } = await axios.get(`/cards?columnId=${columnId}`, headers);
+      return data;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  },
   getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
@@ -110,17 +122,7 @@ const requests = Object.freeze({
       };
     }
   },
-
-  deleteMembers: async (memberId: number) => {
-    try {
-      await axios.delete(`members/${memberId}`, headers);
-    } catch (error) {
-      const err = error as Error;
-      throw new Error(err.message);
-    }
-  },
-
-  createColumn: async (columnData: { title: string; dashboardId: string }) => {
+  createColumn: async (columnData: { title: string; dashboardId: number }) => {
     try {
       const { data } = await axios.post('columns', columnData, headers);
       return data;
@@ -128,13 +130,23 @@ const requests = Object.freeze({
       return error;
     }
   },
-  
+
   sendInvite: async (emailData: { email: string }, dashboardId: string) => {
     try {
       const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, emailData, headers);
+
       return data;
     } catch (error) {
       return error;
+    }
+  },
+
+  deleteMembers: async (memberId: number) => {
+    try {
+      await axios.delete(`members/${memberId}`, headers);
+    } catch (error) {
+      const err = error as Error;
+      throw new Error(err.message);
     }
   },
   // 다른 API 요청도 여기에 추가 가능
@@ -164,6 +176,7 @@ const requests = Object.freeze({
       return data;
     } catch (error) {
       console.log(ERROR_MESSAGE, error);
+
     }
   },
 });

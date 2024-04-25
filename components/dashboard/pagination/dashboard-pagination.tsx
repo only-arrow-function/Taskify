@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import DashboardPaginationButton from '@/components/buttons/pagination/dashboard-pagination-button';
 
@@ -10,10 +11,12 @@ interface DashboardPaginationProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
+const PAGE_DASHBOARD_COUNT = 5;
+
 const DashboardPagination = (props: DashboardPaginationProps) => {
   // server state
   const { data, hasNextPage, fetchNextPage } = useInfiniteDashboardsQuery();
-  
+
   const nextPage = () => {
     props.setCurrentPage((currentPage) => currentPage + 1);
     if (hasNextPage) {
