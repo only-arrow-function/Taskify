@@ -72,4 +72,13 @@
     font-family: 'Pretendard', sans-serif; /* Pretendard 폰트 적용 */
     font-style: normal;
   }
+
+  input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
 }

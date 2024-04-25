@@ -5,7 +5,6 @@ import { TaskCardProp } from '@/components/card/card-type';
 import TagChip from '@/components/chips/tag-chip';
 import ProfileBadge from '@/components/profile/profile-badge';
 import calenderImg from '@/public/icon/calendar.svg';
-import testImg from '@/public/test-image.svg';
 
 const TaskCard = (prop: TaskCardProp) => {
   return (
@@ -13,24 +12,20 @@ const TaskCard = (prop: TaskCardProp) => {
       <div className="flex gap-[20px] items-center justify-between">
         {prop.imageUrl && (
           <div className="relative w-[100px] h-[53px] hidden xl:hidden sm:block">
-            <Image src={testImg} alt="test" fill className="object-cover rounded-[4px]" />
+            <Image src={prop.imageUrl} alt="img" fill className="object-cover rounded-[4px]" />
           </div>
         )}
         <div className="flex flex-col w-full gap-[6px] justify-between p-[6px] sm:p-[9px]">
           {prop.imageUrl && (
             <div className="relative w-full h-[150px] sm:hidden xl:block">
-              <Image src={testImg} alt="test" fill className="object-cover rounded-[4px]" />
+              <Image src={prop.imageUrl} alt="test" fill className="object-cover rounded-[4px]" />
             </div>
           )}
           <h3 className="text-[14px] font-[500] sm:text-[16px]">{prop.title}</h3>
           <div className="flex justify-start items-center gap-[6px] sm:hidden xl:flex">
             {prop.tags &&
               prop.tags.map((data, idx) => {
-                return (
-                  <TagChip key={idx} color="green">
-                    {data}
-                  </TagChip>
-                );
+                return <TagChip key={idx} tag={data} />;
               })}
           </div>
           <div className="flex justify-between items-center">
@@ -39,11 +34,7 @@ const TaskCard = (prop: TaskCardProp) => {
                 <div className="flex gap-[6px]">
                   {prop.tags &&
                     prop.tags.map((data, idx) => {
-                      return (
-                        <TagChip key={idx} color="green">
-                          {data}
-                        </TagChip>
-                      );
+                      return <TagChip key={idx} tag={data} />;
                     })}
                 </div>
               </div>

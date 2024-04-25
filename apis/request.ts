@@ -1,7 +1,12 @@
 import type { Members } from '@/components/tables/members.type';
 import axios from './axios';
+
+// import { StatesData } from '@/components/modal/modal-new-todo';
+
 import getToken from './localStorage';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+import { Members } from '@/components/tables/members-type';
+
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -11,6 +16,19 @@ const headers = {
 };
 
 const requests = Object.freeze({
+
+  getInviteUsers: async (dashboardid: string, token: string | null) => {
+    if (!token) return;
+
+    try {
+      const { data } = await axios.get(`dashboards/${dashboardid}`, {
+        headers: { Authorization: 'Bearer ' + token },
+      });
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+    }
+  },
+
   login: async (email: string, password: string) => {
     try {
       const { data } = await axios.post('auth/login', { email, password });
@@ -20,12 +38,14 @@ const requests = Object.freeze({
       throw error;
     }
   },
+
   signup: async (email: string, nickname: string, password: string) => {
     try {
       const { data } = await axios.post('users', {
         email,
         nickname,
         password,
+
       });
       return data;
     } catch (error) {
@@ -68,15 +88,26 @@ const requests = Object.freeze({
       return error;
     }
   },
-
   fetchColumns: async (dashboardId: string) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+      const { data } = await axios.get(`/columns?dashboardId=${dashboardId}`, headers);
+      return data;
     } catch (error) {
       console.error(error);
+      return error;
     }
   },
-
+  fetchCards: async (columnId: string) => {
+    try {
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+      const { data } = await axios.get(`/cards?columnId=${columnId}`, headers);
+      return data;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  },
   getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
@@ -91,6 +122,24 @@ const requests = Object.freeze({
       };
     }
   },
+  createColumn: async (columnData: { title: string; dashboardId: number }) => {
+    try {
+      const { data } = await axios.post('columns', columnData, headers);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  sendInvite: async (emailData: { email: string }, dashboardId: string) => {
+    try {
+      const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, emailData, headers);
+
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
 
   deleteMembers: async (memberId: number) => {
     try {
@@ -100,43 +149,36 @@ const requests = Object.freeze({
       throw new Error(err.message);
     }
   },
-
-  getInviteUsers: async (dashboardid: string) => {
-    try {
-      const { data } = await axios.get(`dashboards/${dashboardid}/invitations`, headers);
-      return data;
-    } catch (error) {
-      console.error(ERROR_MESSAGE, error);
-    }
-  },
-
-  inviteUserInDashboard: async (dashboardid: string, {email : inviteUserEmail} : {email: string}) => {
-    try {
-      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, {email : inviteUserEmail}, headers);
-      return data;
-    } catch (error) {
-      console.error(ERROR_MESSAGE, error);
-    }
-  },
-
-  createColumn: async (columnData: { title: string; dashboardId: string }) => {
-    try {
-      const { data } = await axios.post('columns', columnData, headers);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  },
-  
-  sendInvite: async (emailData: { email: string }, dashboardId: string) => {
-    try {
-      const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, emailData, headers);
-      return data;
-    } catch (error) {
-      return error;
-    }
-  },
   // 다른 API 요청도 여기에 추가 가능
+
+  postCardImage: async (columnId: number, imageData: FormData) => {
+    const accessToken = window.localStorage.getItem('accessToken');
+
+    try {
+      const { data } = await axios.post(`columns/${columnId}/card-image`, imageData, {
+        headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'multipart/form-data' },
+      });
+
+      return data.imageUrl;
+    } catch (error) {
+      console.log(ERROR_MESSAGE, error);
+    }
+  },
+
+  postCard: async (cardInfo: any) => {
+    const accessToken = window.localStorage.getItem('accessToken');
+
+    try {
+      const { data } = await axios.post('cards', cardInfo, {
+        headers: { Authorization: 'Bearer ' + accessToken },
+      });
+      
+      return data;
+    } catch (error) {
+      console.log(ERROR_MESSAGE, error);
+
+    }
+  },
 });
 
 export default requests;
