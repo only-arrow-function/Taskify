@@ -3,12 +3,13 @@ import { useRouter } from 'next/router';
 import { KeyedMutator } from 'swr';
 import columnRequest from '@/apis/column-request';
 import InputField from '@/components/inputs/input-field';
+import RemoveColumn from '@/components/modal/column/remove-column';
+import Modal from '@/components/modal/modal';
 import ModalButton from '@/components/modal/modal-button';
 import ModalTitle from '@/components/modal/modal-title';
 import { ColumnResponse } from '@/hooks/swr/column/use-column';
 import { useColumnDuplicationTest } from '@/hooks/use-column-duplication-Test';
-import { useHandleModalOutside } from '@/hooks/use-handle-modal';
-import { useColumnStore } from '@/store/column';
+import { useHandleModal, useHandleModalOutside } from '@/hooks/use-handle-modal';
 
 interface NewColumnProp {
   onClose: () => void;
@@ -29,6 +30,7 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
   const [title, setTitle] = useState(columnTitle);
   const [error, setError] = useState('');
   const modalRef = useHandleModalOutside(() => '', onClose);
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const handleCloseBtnClick = () => {
     onClose();
   };
@@ -59,6 +61,11 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
   };
   return (
     <div ref={modalRef}>
+      {isOpenModal && (
+        <Modal>
+          <RemoveColumn onClose={handleCloseModal} columnId={columnId} columnMutate={data?.mutate} />
+        </Modal>
+      )}
       <ModalTitle>컬럼 관리</ModalTitle>
       <InputField
         label="이름"
@@ -71,7 +78,10 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
         error={error}
       />
       <div className="sm:flex justify-between items-end">
-        <span className="text-[14px] underline text-grayscale-50 mb-[16px] inline-block sm:mb cursor-pointer">
+        <span
+          className="text-[14px] underline text-grayscale-50 mb-[16px] inline-block sm:mb cursor-pointer"
+          onClick={handleOpenModal}
+        >
           삭제하기
         </span>
         <div className="flex justify-center gap-3 sm:justify-end">

@@ -35,6 +35,14 @@ const columnRequest = {
       return error;
     }
   },
+  deleteColumn: async (columnId: number) => {
+    try {
+      const { data } = await axios.delete(`columns/${columnId}`, headers);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
 };
 
 export default columnRequest;
