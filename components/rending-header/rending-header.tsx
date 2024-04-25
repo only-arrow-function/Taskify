@@ -3,9 +3,7 @@ import RendingHeaderLogo from './rending-header-logo';
 import RendingHeaderNavBar from './rending-header-navbar';
 
 const RendingHeader = (props: DarkmodeProps) => {
-  const themeModeClassName = props.isDarkmode
-    ? 'bg-black text-white'
-    : 'bg-white text-black';
+  const themeModeClassName = props.isDarkmode ? 'bg-black text-white' : 'bg-white text-black';
 
   return (
     <header className="w-full">

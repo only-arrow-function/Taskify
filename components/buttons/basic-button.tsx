@@ -8,7 +8,6 @@ interface Props {
 }
 
 const BasicButton = ({ children, purpose, eventHandler, type = 'button' }: Props) => {
-  // style
   const baseClasses =
     'flex items-center justify-center gap-10px flex-shrink-0 rounded w-[109px] py-[7px] sm:w-[84px] sm:py-[6px]';
   const bgVariantClasses = purpose === 'positive' ? 'bg-violet-50' : 'bg-white border border-grayscale-40';
