@@ -7,6 +7,7 @@ const TemporaryEansu = () => {
       <ModalNewTodo />
     </>
   )
+
 };
 
 export default TemporaryEansu;

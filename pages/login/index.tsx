@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
-import { useLogin } from '@/hooks/useLogin';
+import NotificationModal from '@/components/modal/notification-modal';
+import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
+import { useAuthenticationStore } from '@/store/auth';
+import { useToggleStore } from '@/store/toggle-store';
 
-const Login: React.FC = () => {
-  const { login, errors } = useLogin();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const router = useRouter();
+  const { isToggle, handleOpenToggle } = useToggleStore();
+  const { email, password, setEmail, setPassword, validateEmail, validatePassword } = useFormValidation();
+  const [notificationMessage, setnotificationMessage] = useState('');
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const setAuthentication = useAuthenticationStore((state) => state.setAuthentication);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await login(email, password);
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
+    if (!isEmailValid || !isPasswordValid) {
+      return;
+    }
+
+    try {
+      const response = await requests.login(email.value, password.value);
+      localStorage.setItem('accessToken', response.accessToken);
+      setAuthentication(response.user);
+      router.push('/my-dashboard');
+    } catch (err: any) {
+      handleOpenToggle();
+      setnotificationMessage(err.response.data.message || '알수없는 오류로 로그인에 실패하였습니다.');
+    }
   };
 
   return (
@@ -28,21 +50,23 @@ const Login: React.FC = () => {
           label="이메일"
           id="email"
           type="email"
-          value={email}
-          autoComplete="email"
+          value={email.value}
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={validateEmail}
+          autoComplete="email"
           placeholder="이메일을 입력해 주세요"
-          error={errors.email}
+          error={email.error}
         />
         <PasswordInput
           label="비밀번호"
           id="password"
           type="password"
-          value={password}
-          autoComplete="current-password"
+          value={password.value}
           onChange={(e) => setPassword(e.target.value)}
+          onBlur={validatePassword}
+          autoComplete="current-password"
           placeholder="비밀번호를 입력해 주세요"
-          error={errors.password}
+          error={password.error}
         />
         <button
           className="w-[351px] sm:w-[520px] h-[50px] py-[14px] bg-violet-50 rounded-md text-white text-lg font-500"
@@ -57,6 +81,7 @@ const Login: React.FC = () => {
           회원가입하기
         </Link>
       </p>
+      {isToggle && <NotificationModal message={notificationMessage} />}
     </div>
   );
 };
