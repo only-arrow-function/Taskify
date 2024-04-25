@@ -44,8 +44,7 @@ const SendInvite = () => {
           초대
         </ModalButton>
       </div>
-    </>
-  );
-};
+      </>
+  )
 
 export default SendInvite;

@@ -1,11 +1,12 @@
-// import MembersTable from "@/components/tables/members-table";
-import ColorChipGroup from '@/components/chips/color-chip-group';
+import ModalEditTodo from '@/components/modal/modal-edit-todo';
+//import ModalNewTodo from '@/components/modal/modal-new-todo';
 
 const TemporaryAyoung = () => {
   return (
     <div className="h-screen bg-slate-300">
       {/* <MembersTable /> */}
-      <ColorChipGroup />
+      {/* <ColorChipGroup /> */}
+      <ModalEditTodo />
     </div>
   );
 };

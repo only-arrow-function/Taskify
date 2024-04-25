@@ -14,14 +14,16 @@ import { useHandleModal } from '@/hooks/use-handle-modal';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
+import InviteTableSkeleton from './invite-table-skeleton';
 
 const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const [currentPage, setCurrentPage] = useState(1);
 
   // server state
-  const { data, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
 
+  const { data, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
+        
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
     if (hasNextPage) {
@@ -51,7 +53,8 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
                   />
                 </div>
             </div>
-          )}
+          </div>
+        )}
       </div>
       <div className="flex justify-between items-center mb-[10px]">
         <span className="text-grayscale-50 text-sm font-normal leading-normal">이메일</span>
