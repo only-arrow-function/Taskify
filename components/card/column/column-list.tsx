@@ -14,21 +14,17 @@ const ColumnList = (props: ColumnListProps) => {
   const columnData = useColumns(props.id);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
-  const columnDuplicationTest = (columnTitle: string): boolean => {
-    return columnData.data?.data.some((obj) => obj.title === columnTitle) ?? false;
-  };
-
   return (
     <>
       {isOpenModal && (
         <Modal>
-          <NewColumn onClose={handleCloseModal} onTest={columnDuplicationTest} data={columnData} />
+          <NewColumn onClose={handleCloseModal} data={columnData} />
         </Modal>
       )}
       <ColumnListLayout>
-        {columnData.data?.data &&
+        {columnData?.data?.data &&
           columnData.data.data.map((data) => {
-            return <CardList key={data.id} id={data.id} title={data.title} />;
+            return <CardList key={data.id} id={data.id} title={data.title} dashboardId={props.id} />;
           })}
         <ColumnAdd onClick={handleOpenModal} />
       </ColumnListLayout>
