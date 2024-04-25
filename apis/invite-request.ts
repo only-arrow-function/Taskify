@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> edf00e1 (feat [노은수] : 삭제하기 기능 추가, 뮤테이션 적용)
 import axios from './axios';
 import getToken from './localStorage';
 
@@ -13,33 +9,15 @@ const headers = {
 };
 
 const inviteRequests = Object.freeze({
-<<<<<<< HEAD
-<<<<<<< HEAD
   getInviteUsers: async (dashboardId: string, page: unknown | number) => {
-<<<<<<< HEAD
     console.log('들어갔습니다.');
     await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
-=======
->>>>>>> e84a234 (feat [노은수] : 사이드바 리액트 쿼리 데이터 연동)
-=======
-  getInviteUsers: async (dashboardId: string, page: number) => {
-=======
-  getInviteUsers: async (dashboardId: string, page: unknown | number) => {
->>>>>>> 5972300 (refactor & feat [노은수] : 삭제, 추가에 대한 뮤테이션, 최종 페이지 최신화 적용, 리액트 쿼리로 리팩토링)
-    console.log('들어갔습니다.');
->>>>>>> edf00e1 (feat [노은수] : 삭제하기 기능 추가, 뮤테이션 적용)
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           page,
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
           size: 5,
-=======
->>>>>>> edf00e1 (feat [노은수] : 삭제하기 기능 추가, 뮤테이션 적용)
->>>>>>> test-branch
         },
       });
       return data;
@@ -56,9 +34,6 @@ const inviteRequests = Object.freeze({
       console.error(ERROR_MESSAGE, error);
     }
   },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
   deleteInvitedUser: async (dashboardId: string, invitationId: string) => {
     try {
@@ -68,14 +43,6 @@ const inviteRequests = Object.freeze({
       console.error(ERROR_MESSAGE, error);
     }
   },
->>>>>>> test-branch
 });
 
 export default inviteRequests;
-=======
->>>>>>> 6be2eae (feat [노은수] : swr을 이용한 페이지네이션 구현)
-=======
-});
-
-export default inviteRequests;
->>>>>>> edf00e1 (feat [노은수] : 삭제하기 기능 추가, 뮤테이션 적용)
