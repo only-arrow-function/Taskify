@@ -9,6 +9,7 @@ import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg'
 const DashboardHeader = () => {
   const router = useRouter();
   const isPathMyDashboard = router.pathname.match('my');
+
   const beforeStyles = isPathMyDashboard
     ? ''
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
@@ -17,34 +18,23 @@ const DashboardHeader = () => {
     <header className="border-b border-grayscale-40 py-6">
       <div className="flex justify-between max-[430px]:justify-end sm:justify-between items-center px-4 sm:px-10 lg:pl-10 lg:pr-20">
         <h2 className=" text-xl font-bold max-[430px]:hidden">
-          <Link href="/dashboard/my">내 대시보드</Link>
+          <Link href="/my-dashboard">내 대시보드</Link>
         </h2>
 
         <div className="flex items-center">
           <div>
-            <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>
-              관리
-            </DashboardHeaderButton>
+            <Link href={`/dashboard/${router.query.id}/edit`}>
+              <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
+            </Link>
           </div>
           <div className="ml-4">
-            <DashboardHeaderButton imageSource={dashboardInviteIcon.src}>
-              초대하기
-            </DashboardHeaderButton>
+            <DashboardHeaderButton imageSource={dashboardInviteIcon.src}>초대하기</DashboardHeaderButton>
           </div>
           <div className="hidden ml-10 md:ml-6 lg:block lg:ml-10">
-            <DashboardHeaderMembers
-              users={[
-                '윤아영',
-                '노은수',
-                '김재성',
-                '구승모',
-                '동현이',
-                '이은수',
-              ]}
-            />
+            <DashboardHeaderMembers users={['윤아영', '노은수', '김재성', '구승모', '동현이', '이은수']} />
           </div>
           <div className={`ml-7 md:ml-8 lg:ml-16 relative ${beforeStyles}`}>
-            <DashboardHeaderProfile username="동현이" />
+            <DashboardHeaderProfile />
           </div>
         </div>
       </div>

@@ -1,9 +1,20 @@
 import React from 'react';
 import { InputFieldProps } from './input-field-type';
 
-const InputField = ({ label, type, id, value, placeholder, autoComplete, onChange, error }: InputFieldProps) => {
+const InputField = ({
+  label,
+  type,
+  id,
+  value,
+  placeholder,
+  autoComplete,
+  onBlur,
+  onChange,
+  error,
+  readOnly,
+}: InputFieldProps) => {
   return (
-    <div className="flex flex-col w-full w-[351px] sm:w-[520px]">
+    <div className="flex flex-col w-full">
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
         {label}
       </label>
@@ -12,9 +23,13 @@ const InputField = ({ label, type, id, value, placeholder, autoComplete, onChang
         id={id}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         autoComplete={autoComplete}
         placeholder={placeholder}
-        className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'}`}
+        readOnly={readOnly}
+        className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'} ${
+          readOnly ? 'text-grayscale-50' : 'text-black'
+        }`}
       />
       <p className={`text-red-50 text-sm mt-[0.5rem] h-5 ${error ? '' : 'opacity-0'}`}>{error || ' '}</p>
     </div>

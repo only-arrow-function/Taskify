@@ -1,13 +1,19 @@
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import HomeSectionFeature from '@/components/home/home-section-feature';
+import HomeSectionManual from '@/components/home/home-section-manual';
+import HomeSectionVisual from '@/components/home/home-section-visual';
+import RendingFooter from '@/components/rending-footer/rending-footer';
+import RendingHeader from '@/components/rending-header/rending-header';
 
 export default function Home() {
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-    
-    </main>
+    <>
+      <RendingHeader isDarkmode={true} />
+      <main className="bg-black text-white">
+        <HomeSectionVisual />
+        <HomeSectionManual />
+        <HomeSectionFeature />
+      </main>
+      <RendingFooter />
+    </>
   );
 }
