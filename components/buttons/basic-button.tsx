@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 interface Props {
   children?: ReactNode;
   purpose: 'positive' | 'negative';
-  eventHandler: () => void;
+  eventHandler?: () => void;
 }
 
 const BasicButton = ({ children, purpose, eventHandler }: Props) => {

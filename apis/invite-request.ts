@@ -9,7 +9,7 @@ const headers = {
 };
 
 const inviteRequests = Object.freeze({
-  getInviteUsers: async (dashboardId: string, page: unknown | number) => {
+  getInviteUsers: async (dashboardId: string, page: any) => {
     console.log('들어갔습니다.');
     await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
     try {

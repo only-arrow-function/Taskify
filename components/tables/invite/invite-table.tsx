@@ -61,6 +61,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
       </div>
       <ul className="flex flex-col items-center justify-between">
         {isPending ? (<InviteTableSkeleton />) : (
+          data.pages[currentPage - 1] &&
           data.pages[currentPage - 1].invitations.length ? (
             data.pages[currentPage - 1].invitations.map(
               ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (

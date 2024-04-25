@@ -8,8 +8,22 @@ interface QueryProps {
   dashboardId: string;
 }
 
+interface PageData {
+  invitations: InvitationData[];
+  totalCount: number;
+}
+
+interface InvitationData {
+  invitee: {
+    id: number;
+    email: string;
+    nickname: string;
+  };
+  inviteAccepted: boolean | null;
+}
+
 export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
-  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
+  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery<PageData>({
     queryKey: [`${dashboardId}-invitations`],
     queryFn: async ({ pageParam = 1 }) => await inviteRequests.getInviteUsers(dashboardId, pageParam),
     getNextPageParam: (lastPage, allPages) => {
@@ -29,6 +43,9 @@ export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
       const totalCount = data.pages[0]?.totalCount || 0;
       const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
       return { totalPages, totalCount, pages: data.pages };
+      // const totalCount = data.pages.reduce((total, page) => total + (page.totalCount ?? 0), 0);
+      // const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
+      // return { totalPages, totalCount, pages: data.pages.flatMap(page => page.invitations) };
     },
   });
 
