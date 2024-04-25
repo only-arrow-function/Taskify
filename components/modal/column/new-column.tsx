@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import { KeyedMutator } from 'swr';
 import columnRequest from '@/apis/column-request';
@@ -24,16 +24,14 @@ interface NewColumnProp {
 
 const NewColumn = ({ onClose, data }: NewColumnProp) => {
   const dashboardId = Number(useRouter().query.id);
-
-  const { title, handleInputChange, removeTitle } = useColumnStore((state) => ({
-    title: state.title,
-    handleInputChange: state.handleInputChange,
-    removeTitle: state.removeTitle,
-  }));
+  const [title, setTitle] = useState('');
   const [error, setError] = useState('');
   const modalRef = useHandleModalOutside(() => '', onClose);
   const handleCloseBtnClick = () => {
     onClose();
+  };
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
   };
   const handleInputBlur = () => {
     if (useColumnDuplicationTest(title, data?.data?.data)) {
