@@ -1,10 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { useSWRConfig } from 'swr';
 import type { Member } from './members.type';
 import TableButton from './table-button';
-import requests from '@/apis/request';
 import { useDeleteMembers } from '@/hooks/react-query/use-query-members';
-// import { useGetMembers } from '@/hooks/swr/use-members';
 
 const TableListItem = ({ member, dashboardId }: { member: Member; dashboardId: string }) => {
   const queryClient = useQueryClient();

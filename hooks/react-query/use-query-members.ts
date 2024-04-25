@@ -20,7 +20,6 @@ export const useMembersQuery = (dashboardId: string) => {
       }
     },
     select: (data) => {
-      // console.log(data);
       return data.pages;
     },
   });
