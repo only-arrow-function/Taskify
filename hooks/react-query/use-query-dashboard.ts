@@ -1,20 +1,36 @@
-import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query';
 
-import dashboardRequest from '@/apis/dashboard-request'
+import dashboardRequest from '@/apis/dashboard-request';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+
+interface Dashboards {
+  totalCount: number;
+  cursorId: null;
+  dashboards: {
+    id: number;
+    title: string;
+    color: DashboardColors;
+    userId: number;
+    createdAt: string;
+    updatedAt: string;
+    createdByMe: boolean;
+  }[];
+}
 
 const PAGE_DASHBOARD_COUNT = 5;
 
 export const useInfiniteDashboardsQuery = () => {
-  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
+  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery<Dashboards>({
     queryKey: [`my-dashboard`],
-    queryFn: async ({ pageParam = 1 }) => await dashboardRequest.fetchDashboards({page: pageParam, navigationMethod: 'pagination'}),
-    getNextPageParam: (lastPage, allPages) => {
+    queryFn: async ({ pageParam = 1 }) =>
+      await dashboardRequest.fetchDashboards({ page: pageParam, navigationMethod: 'pagination' }),
+
+    getNextPageParam: (lastPage: any, allPages: any) => {
       if (!lastPage) return undefined;
-    
+
       const totalPages = Math.ceil(lastPage.totalCount / PAGE_DASHBOARD_COUNT);
       const nextPage = allPages.length + 1;
-    
+
       if (nextPage <= totalPages) {
         return nextPage;
       } else {
@@ -30,16 +46,19 @@ export const useInfiniteDashboardsQuery = () => {
   });
 
   return { data, isSuccess, isPending, hasNextPage, fetchNextPage };
-}
+};
 
-export const useDashboardsMutation = (dashboardData: { title: string; color: DashboardColors }, queryClient: QueryClient) => {
+export const useDashboardsMutation = (
+  dashboardData: { title: string; color: DashboardColors },
+  queryClient: QueryClient,
+) => {
   const query = useMutation({
     mutationFn: async () => await dashboardRequest.createDashboard(dashboardData),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`my-dashboard`]})
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`] });
     },
   });
 
   return query;
-}
+};
