@@ -16,7 +16,7 @@ const PasswordInput = ({ label, value, id, placeholder, autoComplete, onBlur, on
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
         {label}
       </label>
-      <div className="relative w-full sm:w-[520px]">
+      <div className="relative w-full">
         <input
           id={id}
           type={showPassword ? 'text' : 'password'}
