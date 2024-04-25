@@ -11,7 +11,7 @@ const headers = {
 
 const inviteRequests = Object.freeze({
   getInviteUsers: async ({dashboardId, pageParam}: {dashboardId: string, pageParam: number}) => {
-    await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
+    await new Promise((resolve) => setTimeout(() => resolve(1), 300));
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
         headers: { Authorization: `Bearer ${token}` },

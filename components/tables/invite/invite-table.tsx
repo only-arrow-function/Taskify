@@ -20,7 +20,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // server state
-  const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
+  const { data, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
 
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
@@ -39,7 +39,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
     <div className="flex w-full px-[28px] py-[32px] flex-col rounded-md bg-white">
       <div className="flex items-center justify-between mb-[20px]">
         <span className="text-center text-lg font-bold">초대 내역</span>
-          {data && !!data.pages[0].totalPages && (
+          {data && !!data.pages[0]?.totalPages && (
             <div className="flex items-center gap-[10px]">
               <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
                 <div className="flex">
@@ -60,33 +60,29 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {!data || isPending ? (<InviteTableSkeleton />) : (
-          data.pages[currentPage - 1] &&
-          data.pages[currentPage - 1].invitations &&
-          data.pages[currentPage - 1].invitations.length ? (
-            data.pages[currentPage - 1].invitations.map(
-              ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
-                <li
-                  key={id}
-                  className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
-                >
-                  <span>{invitee.email}</span>
-                  <InviteCancelButton purpose="negative" invitationId={id} dashboardId={dashboardId}>
-                    취소
-                  </InviteCancelButton>
-                </li>
-              ),
-            )
-          ) : (
-            <>
-              <Image src={NoEmailIcon} alt="빈 이메일" />
-              <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
-            </>
-          )
+        {!data || isPending || isFetchingNextPage ? (<InviteTableSkeleton />) : (
+          !!data.pages[currentPage - 1]?.invitations.length && (
+            data.pages[currentPage - 1]?.invitations.map(({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (
+              <li
+                key={id}
+                className="w-full flex flex-row justify-between items-center border-b border-grayscale-30 py-[12px]"
+              >
+                <span>{invitee.email}</span>
+                <InviteCancelButton purpose="negative" invitationId={id} dashboardId={dashboardId}>
+                  취소
+                </InviteCancelButton>
+              </li>
+          )))
+        )}
+        {data && !data?.totalPages && (
+          <>
+            <Image src={NoEmailIcon} alt="빈 이메일" />
+            <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
+          </>
         )}
       </ul>
       {isOpenModal && (
-        <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={data.totalPages} />
+        <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={data?.totalPages} />
       )}
     </div>
   );

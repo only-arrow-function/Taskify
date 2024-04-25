@@ -23,7 +23,7 @@ const dashboardRequest = Object.freeze({
         },
       });
 
-      await new Promise((resolve) => setTimeout(() => resolve(1), 1000));
+      await new Promise((resolve) => setTimeout(() => resolve(1), 300));
       return data;
 
     } catch (error) {

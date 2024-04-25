@@ -8,14 +8,10 @@ interface QueryProps {
 }
 
 export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
-  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
+  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`${dashboardId}-invitations`],
     initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) => { 
-      //console.log(pageParam)
-      return await inviteRequests.getInviteUsers({dashboardId, pageParam});
-    },
-      
+    queryFn: async ({ pageParam = 1 }) => await inviteRequests.getInviteUsers({dashboardId, pageParam}),
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
       const nextPage = allPages.length + 1;
@@ -26,10 +22,12 @@ export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
         return undefined;
       }
     },
+    select: (data) => {
+      return { totalPages: data.pages[0]?.totalPages, pages: data.pages };
+    },
   });
 
-  console.log(data)
-  return { data, isSuccess, isPending, hasNextPage, fetchNextPage };
+  return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage };
 };
 
 export const useInvitationsMutation = (dashboardId: string, { email: input }: {email: string}, queryClient: QueryClient) => {
