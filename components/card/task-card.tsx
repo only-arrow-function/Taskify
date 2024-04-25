@@ -25,7 +25,7 @@ const TaskCard = (prop: TaskCardProp) => {
           <div className="flex justify-start items-center gap-[6px] sm:hidden xl:flex">
             {prop.tags &&
               prop.tags.map((data, idx) => {
-                return <TagChip key={idx} tag={`${data}$green`} />;
+                return <TagChip key={idx} tag={data} />;
               })}
           </div>
           <div className="flex justify-between items-center">
@@ -34,7 +34,7 @@ const TaskCard = (prop: TaskCardProp) => {
                 <div className="flex gap-[6px]">
                   {prop.tags &&
                     prop.tags.map((data, idx) => {
-                      return <TagChip key={idx} tag={`${data}$green`} />;
+                      return <TagChip key={idx} tag={data} />;
                     })}
                 </div>
               </div>

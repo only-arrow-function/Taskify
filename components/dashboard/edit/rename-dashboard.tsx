@@ -15,21 +15,21 @@ const RenameDashboard = () => {
   const router = useRouter();
   const { name, setName } = useRenameStore();
 
-  const handleInputChange = (event: ChangeEvent) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
 
     setName(event.target.value);
-  }
+  };
 
   const handlePostRename = async () => {
     if (typeof router.query.id !== 'string') return;
 
-    const result = await requests.editDashboard(router.query.id, { title: name, color: '#760DDE' });
-  }
+    await requests.editDashboard(router.query.id, { title: name, color: '#760DDE' });
+  };
 
   return (
-    <section className='bg-white rounded-lg px-[15px] py-[15px]'>
-      <div className='flex flex-row justify-between'>
+    <section className="bg-white rounded-lg px-[15px] py-[15px]">
+      <div className="flex flex-row justify-between">
         <ModalTitle>비브리지</ModalTitle>
         <ColorChipGroup />
       </div>
@@ -40,11 +40,13 @@ const RenameDashboard = () => {
         placeholder="변경할 프로젝트 이름을 입력하세요."
         onChange={handleInputChange}
       />
-      <div className='flex justify-end'>
-        <BasicButton purpose='positive' eventHandler={handlePostRename}>변경</BasicButton>
+      <div className="flex justify-end">
+        <BasicButton purpose="positive" eventHandler={handlePostRename}>
+          변경
+        </BasicButton>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default RenameDashboard
+export default RenameDashboard;

@@ -13,8 +13,9 @@ import { useHandleModal, useHandleModalOutside } from '@/hooks/use-handle-modal'
 
 interface NewColumnProp {
   onClose: () => void;
+  // prettier-ignore
   data:
-    | {
+    {
         data: ColumnResponse | undefined;
         isLoading: boolean;
         error: any;
@@ -31,9 +32,6 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
   const [error, setError] = useState('');
   const modalRef = useHandleModalOutside(() => '', onClose);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
-  const handleCloseBtnClick = () => {
-    onClose();
-  };
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -85,10 +83,10 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
           삭제하기
         </span>
         <div className="flex justify-center gap-3 sm:justify-end">
-          <ModalButton purpose="negative" disabled={false} onClick={() => handleCloseBtnClick()}>
+          <ModalButton purpose="negative" disabled={false} onClick={onClose}>
             취소
           </ModalButton>
-          <ModalButton purpose="positive" disabled={!title} onClick={() => handleEditBtnClick()}>
+          <ModalButton purpose="positive" disabled={!title} onClick={handleEditBtnClick}>
             수정
           </ModalButton>
         </div>

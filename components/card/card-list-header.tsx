@@ -16,7 +16,7 @@ const CardListHeader = (prop: CardListHeaderProp) => {
   return (
     <div className="flex justify-between items-center">
       <div className="flex items-center">
-        <div className={`${pseudoBefore}`}></div>
+        <div className={`${pseudoBefore}`} />
         <div className="mr-[12px] font-bold text-[18px]">{prop.title}</div>
         <NumberChip>{prop.count}</NumberChip>
       </div>
