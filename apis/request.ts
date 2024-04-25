@@ -22,6 +22,11 @@ const requests = Object.freeze({
     try {
       const { data } = await axios.get(`dashboards/${dashboardid}`, {
         headers: { Authorization: 'Bearer ' + token },
+      });
+    } catch (error) {
+      console.error(ERROR_MESSAGE, error);
+    }
+  },
 
   login: async (email: string, password: string) => {
     try {
@@ -32,6 +37,7 @@ const requests = Object.freeze({
       throw error;
     }
   },
+
   signup: async (email: string, nickname: string, password: string) => {
     try {
       const { data } = await axios.post('users', {
@@ -111,24 +117,6 @@ const requests = Object.freeze({
     } catch (error) {
       const err = error as Error;
       throw new Error(err.message);
-    }
-  },
-
-  getInviteUsers: async (dashboardid: string) => {
-    try {
-      const { data } = await axios.get(`dashboards/${dashboardid}/invitations`, headers);
-      return data;
-    } catch (error) {
-      console.error(ERROR_MESSAGE, error);
-    }
-  },
-
-  inviteUserInDashboard: async (dashboardid: string, {email : inviteUserEmail} : {email: string}) => {
-    try {
-      const { data } = await axios.post(`dashboards/${dashboardid}/invitations`, {email : inviteUserEmail}, headers);
-      return data;
-    } catch (error) {
-      console.error(ERROR_MESSAGE, error);
     }
   },
 
