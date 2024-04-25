@@ -9,7 +9,7 @@ import '@/styles/globals.css';
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-
+  
   if (router.isReady && router.asPath.startsWith(`/dashboard/${router.query.id}`)) {
     return (
       <QueryClientProvider client={queryClient}>
