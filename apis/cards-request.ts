@@ -19,6 +19,7 @@ const cardsRequests = Object.freeze({
       console.log(ERROR_MESSAGE, err.message);
     }
   },
+  
   putCard: async (cardId: number, cardInfo: any) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
@@ -34,6 +35,7 @@ const cardsRequests = Object.freeze({
       // console.log(ERROR_MESSAGE, err.message);
     }
   },
+
   getCardDetail: async (cardId: number) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
@@ -49,33 +51,6 @@ const cardsRequests = Object.freeze({
     }
   },
 
-  postCard: async (cardInfo: any): Promise<TaskCardResponse> => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
-    const { data } = await axios.post('cards', cardInfo, {
-      headers: { Authorization: 'Bearer ' + accessToken },
-    });
-
-    return data;
-  },
-  putCard: async (cardId: number, cardInfo: any): Promise<TaskCardResponse> => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
-    const { data } = await axios.put(`cards/${cardId}`, cardInfo, {
-      headers: { Authorization: 'Bearer ' + accessToken },
-    });
-
-    return data;
-  },
-  getCardDetail: async (cardId: number): Promise<TaskCardResponse> => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
-    const { data } = await axios.get(`cards/${cardId}`, {
-      headers: { Authorization: 'Bearer ' + accessToken },
-    });
-
-    return data;
-  },
   deleteCard: async (cardId: number) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
