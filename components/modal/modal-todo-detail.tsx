@@ -17,13 +17,13 @@ import useIntersect from '@/hooks/use-intersect';
 import CloseIcon from '@/public/icon/close.svg';
 import MoreIcon from '@/public/icon/more.svg';
 
-const tempCardId = 5235;
+const tempCardId = 5028;
 
 const ModalTodoDetail = () => {
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const { data } = useCard(tempCardId);
-  const { comments, nextCursorId, fetchComments, addComment, updateComment, deleteComment } = useComment(5235);
+  const { comments, nextCursorId, fetchComments, addComment, updateComment, deleteComment } = useComment(tempCardId);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -49,8 +49,8 @@ const ModalTodoDetail = () => {
     addComment({
       content: comment,
       cardId: tempCardId,
-      columnId: 20173,
-      dashboardId: 6000,
+      columnId: 20004,
+      dashboardId: 5947,
     });
   };
 
