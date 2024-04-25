@@ -14,6 +14,7 @@ import { useHandleModal } from '@/hooks/use-handle-modal';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
+import InviteTableSkeleton from './invite-table-skeleton';
 
 const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
@@ -21,7 +22,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
 
   // server state
   const { data, isPending, hasNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
-
+  console.log(data);
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
     if (hasNextPage) {
