@@ -1,33 +1,21 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useSWRConfig } from 'swr';
 import type { Member } from './members.type';
 import TableButton from './table-button';
 import requests from '@/apis/request';
+import { useDeleteMembers } from '@/hooks/react-query/use-query-members';
 // import { useGetMembers } from '@/hooks/swr/use-members';
 
-const TableListItem = ({
-  member,
-  members,
-  currentPage,
-  dashboardId,
-}: {
-  member: Member;
-  members: Member[];
-  currentPage: number;
-  dashboardId: string;
-}) => {
-  const { mutate } = useSWRConfig();
+const TableListItem = ({ member, dashboardId }: { member: Member; dashboardId: string }) => {
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useDeleteMembers(dashboardId, String(member.id), queryClient);
 
-  const handleDeleteMember = (deleteId: number) => async () => {
-    const updateMembers = (deleteId: number) => {
-      const newMembers = members.filter((member) => member.id !== deleteId);
-      return { members: newMembers, totalCount: newMembers.length };
-    };
-
+  const handleDeleteMember = async () => {
     try {
-      await requests.deleteMembers(deleteId);
-      mutate(`members?page=${currentPage}&dashboardId=${dashboardId}`, updateMembers(deleteId));
+      await mutateAsync();
+      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-members`] });
     } catch (error) {
-      console.log(error);
+      console.error('에러 발생:', error);
     }
   };
 
@@ -39,7 +27,7 @@ const TableListItem = ({
         </span>
         <span className="text-grayscale-80 text-sm sm:text-base">{member.nickname}</span>
       </div>
-      <TableButton purpose="negative" onClick={handleDeleteMember(member.id)}>
+      <TableButton purpose="negative" onClick={handleDeleteMember}>
         삭제
       </TableButton>
     </li>
