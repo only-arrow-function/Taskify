@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import requests from '@/apis/request';
+import columnRequest from '@/apis/column-request';
 
 export interface ColumnItem {
   createdAt: string;
@@ -17,10 +17,9 @@ export interface ColumnResponse {
 }
 
 export const useColumns = (dashboardId: string | string[] | undefined) => {
-  if (typeof dashboardId !== 'string') return;
   const { data, isLoading, error, mutate } = useSWR<ColumnResponse>(
     '/columns',
-    () => requests.fetchColumns(dashboardId),
+    () => columnRequest.fetchColumns(dashboardId as string),
     { revalidateIfStale: false, revalidateOnFocus: false },
   );
 
