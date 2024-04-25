@@ -1,7 +1,11 @@
 import type { Members } from '@/components/tables/members.type';
 import axios from './axios';
+
+// import { StatesData } from '@/components/modal/modal-new-todo';
+
 import getToken from './localStorage';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -11,6 +15,14 @@ const headers = {
 };
 
 const requests = Object.freeze({
+
+  getInviteUsers: async (dashboardid: string, token: string | null) => {
+    if (!token) return;
+
+    try {
+      const { data } = await axios.get(`dashboards/${dashboardid}`, {
+        headers: { Authorization: 'Bearer ' + token },
+
   login: async (email: string, password: string) => {
     try {
       const { data } = await axios.post('auth/login', { email, password });
@@ -26,6 +38,7 @@ const requests = Object.freeze({
         email,
         nickname,
         password,
+
       });
       return data;
     } catch (error) {
@@ -137,6 +150,34 @@ const requests = Object.freeze({
     }
   },
   // 다른 API 요청도 여기에 추가 가능
+
+  postCardImage: async (columnId: number, imageData: FormData) => {
+    const accessToken = window.localStorage.getItem('accessToken');
+
+    try {
+      const { data } = await axios.post(`columns/${columnId}/card-image`, imageData, {
+        headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'multipart/form-data' },
+      });
+
+      return data.imageUrl;
+    } catch (error) {
+      console.log(ERROR_MESSAGE, error);
+    }
+  },
+
+  postCard: async (cardInfo: any) => {
+    const accessToken = window.localStorage.getItem('accessToken');
+
+    try {
+      const { data } = await axios.post('cards', cardInfo, {
+        headers: { Authorization: 'Bearer ' + accessToken },
+      });
+      
+      return data;
+    } catch (error) {
+      console.log(ERROR_MESSAGE, error);
+    }
+  },
 });
 
 export default requests;
