@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import SideMenuDashboardItemSkelton from './side-menu-skeleton';
 import DashboardPaginationButton from '@/components/buttons/pagination/dashboard-pagination-button';
 import SideMenuDashBoard from '@/components/side-menu/side-menu-dash-boards';
 
@@ -11,7 +12,7 @@ const SideMenuDashBoardsList = () => {
 
   // server state
   const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteDashboardsQuery();
-  
+
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
     if (hasNextPage) {
@@ -28,6 +29,7 @@ const SideMenuDashBoardsList = () => {
   return (
     <>
       <div className="w-full flex flex-col justify-between items-center">
+        {isPending && <SideMenuDashboardItemSkelton />}
         {data &&
           data.pages[currentPage - 1] &&
           data.pages[currentPage - 1].dashboards &&
