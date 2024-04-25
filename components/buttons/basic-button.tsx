@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface Props {
   children?: ReactNode;
@@ -8,7 +8,8 @@ interface Props {
 
 const BasicButton = ({ children, purpose, eventHandler }: Props) => {
   // style
-  const baseClasses = "flex items-center justify-center gap-10px flex-shrink-0 rounded w-[109px] py-[7px] sm:w-[84px] sm:py-[6px]";
+  const baseClasses =
+    'flex items-center justify-center gap-10px flex-shrink-0 rounded w-[109px] py-[7px] sm:w-[84px] sm:py-[6px]';
   const bgVariantClasses = purpose === 'positive' ? 'bg-violet-50' : 'bg-white border border-grayscale-40';
   const textBaseClasses = 'text-center text-lg font-medium leading-normal sm:text-sm text-xs';
   const textVariantClasses = purpose === 'positive' ? 'text-white' : 'text-violet-50';
@@ -17,7 +18,7 @@ const BasicButton = ({ children, purpose, eventHandler }: Props) => {
     <button className={`${baseClasses} ${bgVariantClasses}`} onClick={eventHandler}>
       <span className={`${textBaseClasses} ${textVariantClasses}`}>{children}</span>
     </button>
-  )
-}
+  );
+};
 
-export default BasicButton
+export default BasicButton;
