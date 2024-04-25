@@ -27,7 +27,7 @@ const Signup = () => {
   } = useFormValidation();
   const { isToggle, handleOpenToggle } = useToggleStore();
   const [termsAgreed, setTermsAgreed] = useState(false);
-  const [notificationMessage, setnotificationMessage] = useState('');
+  const [notificationMessage, setNotificationMessage] = useState<string>('');
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTermsAgreed(event.target.checked);
@@ -36,14 +36,16 @@ const Signup = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!termsAgreed) {
+      setNotificationMessage('약관 동의가 필요합니다.');
       handleOpenToggle();
-      setnotificationMessage('약관동의가 필요합니다.');
       return;
     }
+
     const isEmailValid = validateEmail();
     const isNicknameValid = validateNickname();
     const isPasswordValid = validatePassword();
-    const isConfirmPasswordValid = validateConfirmPassword();
+    const isConfirmPasswordValid = validateConfirmPassword(password.value, confirmPassword.value);
+
     if (!isEmailValid || !isNicknameValid || !isPasswordValid || !isConfirmPasswordValid) {
       return;
     }
@@ -52,8 +54,8 @@ const Signup = () => {
       await requests.signup(email.value, nickname.value, password.value);
       router.push('/');
     } catch (err: any) {
+      setNotificationMessage(err.response?.data?.message || '알 수 없는 오류로 회원가입에 실패하였습니다.');
       handleOpenToggle();
-      setnotificationMessage(err.response.data.message || '알수없는 오류로 로그인에 실패하였습니다.');
     }
   };
 
@@ -94,8 +96,10 @@ const Signup = () => {
           type="password"
           value={password.value}
           autoComplete="new-password"
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={validatePassword}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            validateConfirmPassword(e.target.value, confirmPassword.value);
+          }}
           placeholder="8자 이상 입력해 주세요"
           error={password.error}
         />
@@ -105,8 +109,10 @@ const Signup = () => {
           type="password"
           value={confirmPassword.value}
           autoComplete="new-password"
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          onBlur={validateConfirmPassword}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            validateConfirmPassword(password.value, e.target.value);
+          }}
           placeholder="비밀번호를 한번 더 입력해 주세요"
           error={confirmPassword.error}
         />

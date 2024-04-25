@@ -13,6 +13,7 @@ import { useHandleModal } from '@/hooks/use-handle-modal';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
+import InviteTableSkeleton from './invite-table-skeleton';
 
 const InviteTable = ({ dashboardId }: DashboardIdProps) => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
@@ -40,7 +41,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         <span className="text-center text-lg font-bold">초대 내역</span>
         <div className="flex items-center gap-[10px]">
           <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
-          {data && data.totalPages && (
+          {data && !!data.totalPages && (
             <div className="flex">
               <DashboardPaginationButton onClick={prevPage} isDisabled={currentPage === 1} position="left" />
               <DashboardPaginationButton
@@ -59,7 +60,8 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {!data || !data.pages[currentPage - 1] || isPending ? (
+        {isPending && <InviteTableSkeleton />}
+        {!data || !data.pages[currentPage - 1] ? (
           <>
             <Image src={NoEmailIcon} alt="빈 이메일" />
             <span className="text-grayscale-40">아직 초대한 멤버가 없어요</span>
