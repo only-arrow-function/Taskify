@@ -5,5 +5,5 @@ const exceptedKeys = ['id', 'assignee', 'teamId', 'columnId', 'dashboardId', 'cr
 export const isFormFilled = (data: any) => {
   const statesKeys = Object.keys(data).filter((key) => !exceptedKeys.includes(key)) as (keyof StatesData)[];
 
-  return statesKeys.every((key) => data[key].length);
+  return statesKeys.every((key) => data[key]?.length);
 };
