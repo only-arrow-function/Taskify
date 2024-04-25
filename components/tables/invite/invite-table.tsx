@@ -39,14 +39,14 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
     <div className="flex w-full px-[28px] py-[32px] flex-col rounded-md bg-white">
       <div className="flex items-center justify-between mb-[20px]">
         <span className="text-center text-lg font-bold">초대 내역</span>
-          {data && !!data.totalPages && (
+          {data && !!data.pages[0].totalPages && (
             <div className="flex items-center gap-[10px]">
               <span className="text-xs text-grayscale-80 sm:text-sm">{currentPage}페이지</span>
                 <div className="flex">
                   <DashboardPaginationButton onClick={prevPage} isDisabled={currentPage === 1} position="left" />
                   <DashboardPaginationButton
                     onClick={nextPage}
-                    isDisabled={currentPage >= data.totalPages}
+                    isDisabled={currentPage >= data.pages[0].totalPages}
                     position="right"
                   />
                 </div>
@@ -60,8 +60,9 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
         </BasicButton>
       </div>
       <ul className="flex flex-col items-center justify-between">
-        {isPending ? (<InviteTableSkeleton />) : (
+        {!data || isPending ? (<InviteTableSkeleton />) : (
           data.pages[currentPage - 1] &&
+          data.pages[currentPage - 1].invitations &&
           data.pages[currentPage - 1].invitations.length ? (
             data.pages[currentPage - 1].invitations.map(
               ({ id, invitee, inviteAccepted }: InvitationsDataProps<InviteeType>) => (

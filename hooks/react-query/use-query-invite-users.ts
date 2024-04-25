@@ -2,53 +2,33 @@ import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-quer
 
 import inviteRequests from '@/apis/invite-request';
 
-const PAGE_DASHBOARD_COUNT = 5;
-
 interface QueryProps {
   dashboardId: string;
-}
-
-interface PageData {
-  invitations: InvitationData[];
-  totalCount: number;
-}
-
-interface InvitationData {
-  invitee: {
-    id: number;
-    email: string;
-    nickname: string;
-  };
-  inviteAccepted: boolean | null;
+  page? : number;
 }
 
 export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
-  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery<PageData>({
+  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`${dashboardId}-invitations`],
-    queryFn: async ({ pageParam = 1 }) => await inviteRequests.getInviteUsers(dashboardId, pageParam),
+    initialPageParam: 1,
+    queryFn: async ({ pageParam = 1 }) => { 
+      //console.log(pageParam)
+      return await inviteRequests.getInviteUsers({dashboardId, pageParam});
+    },
+      
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
-    
-      const totalPages = Math.ceil(lastPage.totalCount / PAGE_DASHBOARD_COUNT);
       const nextPage = allPages.length + 1;
-    
-      if (nextPage <= totalPages) {
+
+      if (nextPage <= lastPage.totalPages) {
         return nextPage;
       } else {
         return undefined;
       }
     },
-    select: (data) => {
-      // const flattenResults = data.pages.flatMap(page => page.invitations);
-      const totalCount = data.pages[0]?.totalCount || 0;
-      const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
-      return { totalPages, totalCount, pages: data.pages };
-      // const totalCount = data.pages.reduce((total, page) => total + (page.totalCount ?? 0), 0);
-      // const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
-      // return { totalPages, totalCount, pages: data.pages.flatMap(page => page.invitations) };
-    },
   });
 
+  console.log(data)
   return { data, isSuccess, isPending, hasNextPage, fetchNextPage };
 };
 
