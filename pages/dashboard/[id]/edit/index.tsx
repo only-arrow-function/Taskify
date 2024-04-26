@@ -17,12 +17,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const index = ({ id }: IdProps) => {
+  const idToNumber = Number(id);
+
   return (
     <main className="flex flex-col px-[15px] py-[15px] gap-[10px]">
-      <ReturnDashboardPage dashboardId={id} />
-      <EditDashboard dashboardId={id} />
-      <MembersTable dashboardId={id} />
-      <InviteTable dashboardId={id} />
+      <ReturnDashboardPage dashboardId={idToNumber} />
+      <EditDashboard dashboardId={idToNumber} />
+      <MembersTable dashboardId={idToNumber} />
+      <InviteTable dashboardId={idToNumber} />
     </main>
   );
 };
