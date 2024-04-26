@@ -3,7 +3,7 @@ export interface IdProps {
 }
 
 export interface DashboardIdProps {
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface InviteeType {
