@@ -2,12 +2,14 @@ import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-quer
 
 import cardsRequests from "@/apis/cards-request";
 
+const PAGE_DASHBOARD_COUNT = 5;
+
 export const useInfiniteCardsQuery = (columnId: string) => {
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`${columnId}-cards`],
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) =>
-      await cardsRequests.fetchDashboards({ page: pageParam, navigationMethod: 'pagination' }),
+      await cardsRequests.fetchCards(columnId, pageParam),
 
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;

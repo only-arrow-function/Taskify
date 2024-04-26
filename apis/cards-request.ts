@@ -18,6 +18,7 @@ const cardsRequests = Object.freeze({
         params: {
           size: 5,
           cursorId,
+          columnId: columnId,
         },
       });
       return data;

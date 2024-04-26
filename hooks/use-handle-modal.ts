@@ -4,6 +4,7 @@ export const useHandleModal = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleOpenModal = () => {
+    console.log("hi")
     setIsOpenModal(true);
   }
 
