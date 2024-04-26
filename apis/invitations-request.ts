@@ -7,8 +7,13 @@ const headers = {
 };
 
 const invitationRequest = {
-  getInvitations: async () => {
-    const { data } = await axios.get('invitations', headers);
+  getInvitations: async (cursorId?: number) => {
+    const { data } = await axios.get(`invitations?${cursorId ? `cursorId=${cursorId}` : ''}`, {
+      headers: headers.headers,
+      params: {
+        size: 5,
+      },
+    });
     return data;
   },
   putInvitations: async ({ invitationId, inviteAccepted }: { invitationId: number; inviteAccepted: boolean }) => {
