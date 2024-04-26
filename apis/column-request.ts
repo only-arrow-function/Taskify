@@ -9,7 +9,7 @@ const headers = {
 };
 
 const columnRequest = {
-  fetchColumns: async (dashboardId: string) => {
+  fetchColumns: async (dashboardId: number) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
       const { data } = await axios.get(`/columns?dashboardId=${dashboardId}`, headers);
@@ -27,7 +27,7 @@ const columnRequest = {
       return error;
     }
   },
-  updateColumn: async (columnData: { title: string }, columnId: string) => {
+  updateColumn: async (columnData: { title: string }, columnId: number) => {
     try {
       const { data } = await axios.put(`columns/${columnId}`, columnData, headers);
       return data;

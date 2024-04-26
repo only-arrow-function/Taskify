@@ -17,10 +17,11 @@ const InputWithTag = ({
   placeholder: string;
   tags: string[];
   onAddTag: (newTag: string) => void;
-  onRemoveTag: () => void;
+  onRemoveTag: (tags: string[]) => void;
 }) => {
   const handleKeyDown: KeyboardEventHandler = (e) => {
     const target = e.target as HTMLInputElement;
+    console.log(target.value);
     if (e.key !== 'Enter' && e.key !== 'Backspace') return;
 
     if (e.key === 'Enter') {
@@ -44,8 +45,9 @@ const InputWithTag = ({
     if (e.key === 'Backspace') {
       if (target.value === '' && tags.length !== 0) {
         e.preventDefault();
-        target.value = tags[tags.length - 1].split('$')[0];
-        onRemoveTag();
+        tags.pop();
+
+        onRemoveTag(tags);
         return;
       }
     }
@@ -66,7 +68,7 @@ const InputWithTag = ({
           id={id}
           type={type}
           placeholder={placeholder}
-          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyDown}
           className="flex-grow w-3/12 focus:outline-none"
         />
       </div>

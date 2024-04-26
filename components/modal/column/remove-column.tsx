@@ -5,7 +5,7 @@ import { ColumnResponse } from '@/hooks/swr/column/use-column';
 
 interface RemoveColumnProp {
   onClose: () => void;
-  columnId: string;
+  columnId: number;
   columnMutate: KeyedMutator<ColumnResponse> | undefined;
 }
 

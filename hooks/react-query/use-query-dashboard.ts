@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, QueryClient, useQueryClient, useQuery } from '@tanstack/react-query';
 
 import dashboardRequest from '@/apis/dashboard-request';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
@@ -48,4 +48,11 @@ export const useDashboardsMutation = (
   });
 
   return query;
+};
+
+export const useDetailDashboard = (dashboardId: number) => {
+  return useQuery({
+    queryFn: () => dashboardRequest.detailDashbaord(dashboardId),
+    queryKey: [`dashboard-${dashboardId}`],
+  });
 };

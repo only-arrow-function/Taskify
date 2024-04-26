@@ -5,10 +5,10 @@ export interface ColumnItem {
   createdAt: string;
   updatedAt: string;
   createdByMe: boolean;
-  id: string;
+  id: number;
   title: string;
   teamId: string;
-  dashboardId: string;
+  dashboardId: number;
 }
 
 export interface ColumnResponse {
@@ -16,10 +16,10 @@ export interface ColumnResponse {
   data: ColumnItem[];
 }
 
-export const useColumns = (dashboardId: string | string[] | undefined) => {
+export const useColumns = (dashboardId: number) => {
   const { data, isLoading, error, mutate } = useSWR<ColumnResponse>(
     '/columns',
-    () => columnRequest.fetchColumns(dashboardId as string),
+    () => columnRequest.fetchColumns(dashboardId),
     { revalidateIfStale: false, revalidateOnFocus: false },
   );
 

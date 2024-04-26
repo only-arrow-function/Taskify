@@ -22,7 +22,7 @@ interface NewColumnProp {
         mutate: KeyedMutator<ColumnResponse>;
       }
     | undefined;
-  columnId: string;
+  columnId: number;
   columnTitle: string;
 }
 

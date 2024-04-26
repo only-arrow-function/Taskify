@@ -1,3 +1,4 @@
+import { DetailDashboard } from '@/types/dashboard-detail';
 import axios from './axios';
 import getToken from './localStorage';
 
@@ -53,6 +54,10 @@ const dashboardRequest = Object.freeze({
     } catch (error) {
       return error;
     }
+  },
+
+  detailDashbaord: async (dashboardId: number) => {
+    return (await axios.get<DetailDashboard>(`dashboards/${dashboardId}`, headers)).data;
   },
 });
 
