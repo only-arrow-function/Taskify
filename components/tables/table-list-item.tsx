@@ -1,35 +1,11 @@
-import { useSWRConfig } from 'swr';
+import { useQueryClient } from '@tanstack/react-query';
 import type { Member } from './members.type';
 import TableButton from './table-button';
-import requests from '@/apis/request';
-// import { useGetMembers } from '@/hooks/swr/use-members';
+import { useDeleteMembers } from '@/hooks/react-query/use-query-members';
 
-const TableListItem = ({
-  member,
-  members,
-  currentPage,
-  dashboardId,
-}: {
-  member: Member;
-  members: Member[];
-  currentPage: number;
-  dashboardId: string;
-}) => {
-  const { mutate } = useSWRConfig();
-
-  const handleDeleteMember = (deleteId: number) => async () => {
-    const updateMembers = (deleteId: number) => {
-      const newMembers = members.filter((member) => member.id !== deleteId);
-      return { members: newMembers, totalCount: newMembers.length };
-    };
-
-    try {
-      await requests.deleteMembers(deleteId);
-      mutate(`members?page=${currentPage}&dashboardId=${dashboardId}`, updateMembers(deleteId));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const TableListItem = ({ member, dashboardId }: { member: Member; dashboardId: string }) => {
+  const queryClient = useQueryClient();
+  const { mutate } = useDeleteMembers(dashboardId, String(member.id), queryClient);
 
   return (
     <li className="flex justify-between items-center py-3 shadow-b-inner-30 px-5 first-of-type:pt-5 last-of-type:shadow-none last-of-type:pb-0 sm:px-7 sm:py-4 sm:first-of-type:pt-6">
@@ -39,7 +15,7 @@ const TableListItem = ({
         </span>
         <span className="text-grayscale-80 text-sm sm:text-base">{member.nickname}</span>
       </div>
-      <TableButton purpose="negative" onClick={handleDeleteMember(member.id)}>
+      <TableButton purpose="negative" onClick={mutate}>
         삭제
       </TableButton>
     </li>
