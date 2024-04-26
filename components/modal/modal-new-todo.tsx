@@ -134,7 +134,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
             <BasicButton purpose="negative" eventHandler={handleCloseModal}>
               취소
             </BasicButton>
-            <BasicButton type="submit" purpose="positive">
+            <BasicButton type="button" purpose="positive">
               확인
             </BasicButton>
           </div>
