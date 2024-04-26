@@ -6,6 +6,8 @@ import Dimmed from '@/components/modal/dimmed';
 import ModalLayout from '@/components/modal/modal-layout';
 import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useColumns } from '@/hooks/swr/column/use-column';
+
+import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
@@ -15,6 +17,7 @@ interface ColumnListProps {
 const ColumnList = (props: ColumnListProps) => {
   const dashboardId = +props.id;
   const columnData = useColumns(dashboardId);
+  const { data } = useColumnsQuery(Number(props.id));
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const dashboardsQuery = useDetailDashboard(dashboardId);
 
@@ -24,7 +27,7 @@ const ColumnList = (props: ColumnListProps) => {
         <>
           <Dimmed handleCloseModal={handleCloseModal} />
           <ModalLayout>
-            <NewColumn onClose={handleCloseModal} data={columnData} />
+            <NewColumn onClose={handleCloseModal} data={data} />
           </ModalLayout>
         </>
       )}

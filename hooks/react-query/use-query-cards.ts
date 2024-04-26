@@ -3,7 +3,7 @@ import { useInfiniteQuery, useMutation, QueryClient, useQueryClient } from '@tan
 import cardsRequests from '@/apis/cards-request';
 import { Card } from '@/types/card';
 
-const PAGE_DASHBOARD_COUNT = 5;
+const PAGE_COUNT = 5;
 
 export const useInfiniteCardsQuery = (columnId: number) => {
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
@@ -14,7 +14,7 @@ export const useInfiniteCardsQuery = (columnId: number) => {
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
 
-      const totalPages = Math.ceil(lastPage.totalCount / PAGE_DASHBOARD_COUNT);
+      const totalPages = Math.ceil(lastPage.totalCount / PAGE_COUNT);
       const nextPage = allPages.length + 1;
 
       if (nextPage <= totalPages) {
@@ -26,7 +26,7 @@ export const useInfiniteCardsQuery = (columnId: number) => {
 
     select: (data) => {
       const totalCount = data.pages[0]?.totalCount || 0;
-      const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
+      const totalPages = Math.ceil(totalCount / PAGE_COUNT);
       return { totalPages: totalPages, totalCount, pages: data.pages };
     },
   });

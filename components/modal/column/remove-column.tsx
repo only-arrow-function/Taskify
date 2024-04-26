@@ -1,28 +1,30 @@
-import { KeyedMutator } from 'swr';
+import { useQueryClient } from '@tanstack/react-query';
+
 import columnRequest from '@/apis/column-request';
 import ModalButton from '@/components/modal/modal-button';
-import { ColumnResponse } from '@/hooks/swr/column/use-column';
+import { useColumnsDeleteMutation } from '@/hooks/react-query/use-query-columns';
 
 interface RemoveColumnProp {
   onClose: () => void;
   columnId: number;
-  columnMutate: KeyedMutator<ColumnResponse> | undefined;
+  dashboardId: number;
 }
 
-const RemoveColumn = ({ onClose, columnId, columnMutate }: RemoveColumnProp) => {
+const RemoveColumn = ({ onClose, columnId, dashboardId }: RemoveColumnProp) => {
+  //server state
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useColumnsDeleteMutation(Number(columnId), dashboardId, queryClient);
+
   const handleRemoveBtnClick = async () => {
     try {
-      await columnRequest.deleteColumn(Number(columnId));
-      if (columnMutate) {
-        columnMutate();
-      } else {
-        console.log('mutate가 undefined입니다');
-      }
+      await mutateAsync();
+
       onClose();
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center py-[50px]">

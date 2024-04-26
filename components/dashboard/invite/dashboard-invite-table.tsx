@@ -1,6 +1,21 @@
-import BasicButton from '@/components/buttons/basic-button';
+import DashboardInviteItem from './dashboard-invite-item';
+import CommentSpinner from '@/components/modal/todo/comment-spinner';
+import { useInvitedDashboard } from '@/hooks/react-query/use-query-invited-dashboard';
+import useIntersect from '@/hooks/use-intersect';
 
-const DashboardInviteTable = () => {
+const DashboardInviteTable = ({ searchTitle }: { searchTitle?: string }) => {
+  const { data, hasNextPage, fetchNextPage } = useInvitedDashboard(searchTitle);
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  });
+
+  if (!data) return null;
+  const invitations = data.map((invitationsData) => invitationsData.invitations).flat();
+  console.log(invitations);
+
   return (
     <div>
       <div className="hidden md:flex text-grayscale-50">
@@ -9,23 +24,15 @@ const DashboardInviteTable = () => {
         <span className="md:w-[34%]">수락 여부</span>
       </div>
 
-      <ul className="text-sm sm:text-base">
-        <li className="md:flex items-center py-7 text-grayscale-80 border-b border-grayscale-30">
-          <div className="flex md:w-[36%]">
-            <span className="md:hidden text-grayscale-50">이름</span>
-            <span className="ml-7 md:ml-0">프로덕트 디자인</span>
-          </div>
-          <div className="flex sm:w-[30%] md:w-[30%] mt-2.5 md:mt-0">
-            <span className="md:hidden text-grayscale-50">초대자</span>
-            <span className="ml-4 md:ml-0">손동희</span>
-          </div>
-          <div className="flex md:w-[34%] mt-4 md:mt-0">
-            <span className="flex gap-2.5">
-              <BasicButton purpose="positive">수락</BasicButton>
-              <BasicButton purpose="negative">거절</BasicButton>
-            </span>
-          </div>
-        </li>
+      <ul className="h-[460px] text-sm sm:text-base overflow-y-auto">
+        {invitations.map(({ id, dashboard, inviter }) => (
+          <DashboardInviteItem key={id} id={id} dashboardTitle={dashboard.title} inviterName={inviter.nickname} />
+        ))}
+        {hasNextPage && (
+          <li ref={ref}>
+            <CommentSpinner />
+          </li>
+        )}
       </ul>
     </div>
   );

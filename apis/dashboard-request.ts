@@ -45,11 +45,10 @@ const dashboardRequest = Object.freeze({
     }
   },
 
-  editDashboard: async (dashboardId: string, dashboardData: { title: string; color: DashboardColors }) => {
-    if (!dashboardData.title || dashboardData.color) return;
-
+  editDashboard: async (dashboardId: number, dashboardData: { title: string; color: DashboardColors }) => {
     try {
       const { data } = await axios.put(`dashboards/${dashboardId}`, dashboardData, headers);
+      console.log(data);
       return data;
     } catch (error) {
       return error;
