@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query';
 
 import inviteRequests from '@/apis/invite-request';
 
@@ -14,10 +14,10 @@ export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
     queryFn: async ({ pageParam = 1 }) => await inviteRequests.getInviteUsers(dashboardId, pageParam),
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
-    
+
       const totalPages = Math.ceil(lastPage.totalCount / PAGE_DASHBOARD_COUNT);
       const nextPage = allPages.length + 1;
-    
+
       if (nextPage <= totalPages) {
         return nextPage;
       } else {
@@ -35,26 +35,30 @@ export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
   return { data, isSuccess, isPending, hasNextPage, fetchNextPage };
 };
 
-export const useInvitationsMutation = (dashboardId: string, { email: input }: {email: string}, queryClient: QueryClient) => {
+export const useInvitationsMutation = (
+  dashboardId: string,
+  { email: input }: { email: string },
+  queryClient: QueryClient,
+) => {
   const query = useMutation({
     mutationFn: async () => await inviteRequests.inviteUserInDashboard(dashboardId, { email: input }),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-invitations`]})
+      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-invitations`] });
     },
   });
 
   return query;
-}
+};
 
 export const useInvitationsDeleteMutation = (dashboardId: string, invitationId: string, queryClient: QueryClient) => {
   const query = useMutation({
     mutationFn: async () => await inviteRequests.deleteInvitedUser(dashboardId, invitationId),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-invitations`]})
+      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-invitations`] });
     },
   });
 
   return query;
-}
+};
