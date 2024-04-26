@@ -18,7 +18,7 @@ export const useHandleDropdownOutside = (onClickInside: () => void, onClickOutsi
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (ref.current && !ref.current.contains(event.target)) {
         onClickOutside && onClickOutside();
       } else {

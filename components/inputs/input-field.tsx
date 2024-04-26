@@ -27,6 +27,7 @@ const InputField = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         readOnly={readOnly}
+        autoFocus
         className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'} ${
           readOnly ? 'text-grayscale-50' : 'text-black'
         }`}

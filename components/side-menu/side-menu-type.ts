@@ -1,9 +1,9 @@
-import { Color } from '@/components/chips/color.type';
+import { DashboardColors } from '../dashboard/dashboard.constants';
 
 export interface DashBoardProps {
   id: number;
   title: string;
-  color: Color;
+  color: DashboardColors;
   createdAt?: string;
   updatedAt?: string;
   createdByMe: boolean;

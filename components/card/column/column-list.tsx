@@ -4,8 +4,10 @@ import CardList from '@/components/card/card-list';
 import ColumnAdd from '@/components/card/column/column-add';
 import ColumnListLayout from '@/components/card/column/column-list-layout';
 import NewColumn from '@/components/modal/column/new-column';
-import Modal from '@/components/modal/modal';
-import { useColumns } from '@/hooks/swr/column/use-column';
+import Dimmed from '@/components/modal/dimmed';
+import ModalLayout from '@/components/modal/modal-layout';
+
+import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
@@ -13,7 +15,7 @@ interface ColumnListProps {
 }
 
 const ColumnList = (props: ColumnListProps) => {
-  const columnData = useColumns(props.id);
+  const { data } = useColumnsQuery(Number(props.id));
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const [cardList, setCardList] = useState([]);
   const [enabled, setEnabled] = useState(false);
@@ -39,9 +41,12 @@ const ColumnList = (props: ColumnListProps) => {
   return (
     <>
       {isOpenModal && (
-        <Modal>
-          <NewColumn onClose={handleCloseModal} data={columnData} />
-        </Modal>
+        <>
+          <Dimmed handleCloseModal={handleCloseModal} />
+          <ModalLayout>
+            <NewColumn onClose={handleCloseModal} data={data} />
+          </ModalLayout>
+        </>
       )}
       <DragDropContext onDragEnd={handleDropCard}>
         <ColumnListLayout>

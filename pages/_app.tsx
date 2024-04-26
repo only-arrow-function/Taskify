@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HydrationBoundary, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AppProps } from 'next/app';
 
+import getToken from '@/apis/localStorage';
 import DashboardLayout from '@/components/dashboard/layout/dashboard-layout';
 
 import '@/styles/globals.css';

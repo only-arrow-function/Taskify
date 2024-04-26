@@ -26,15 +26,15 @@ interface CardResponse {
   cursorId: string;
 }
 
-export const useCards = (columnId: string) => {
-  const { data, isLoading, error, mutate } = useSWR<CardResponse>(`/cards/${columnId}`, () =>
-    requests.fetchCards(columnId),
-  );
+// export const useCards = (columnId: string) => {
+//   const { data, isLoading, error, mutate } = useSWR<CardResponse>(`/cards/${columnId}`, () =>
+//     requests.fetchCards(columnId),
+//   );
 
-  return {
-    data,
-    isLoading,
-    error,
-    mutate,
-  };
-};
+//   return {
+//     data,
+//     isLoading,
+//     error,
+//     mutate,
+//   };
+// };
