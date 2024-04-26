@@ -14,14 +14,16 @@ const AddCard = (props: AddCardProps) => {
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (
-    <Card>
+    <>
       {isOpenModal && <ModalNewTodo handleCloseModal={handleCloseModal} columnId={props.columnId} />}
-      <div className="flex justify-center items-center gap-[12px]" onClick={handleOpenModal}>
-        <div className="relative p-[3px] rounded-[4px] bg-violet-10 w-[22px] h-[22px]">
-          <Image src={addChips} alt="addChips" fill />
+      <Card>
+        <div className="flex justify-center items-center gap-[12px] cursor-pointer" onClick={handleOpenModal}>
+          <div className="relative p-[3px] rounded-[4px] bg-violet-10 w-[22px] h-[22px]">
+            <Image src={addChips} alt="addChips" fill />
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 };
 

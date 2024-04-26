@@ -4,7 +4,7 @@ import DashboardSectionLayout from './dashboard-section-layout';
 import DashboardHeader from '@/components/dashboard/header/dashboard-header';
 import SideMenu from '@/components/side-menu/side-menu';
 
-const Layout = ({ children }: PropsWithChildren) => {
+const DashboardLayout = ({ children }: PropsWithChildren) => {
   return (
     <DashboardSectionLayout>
       <DashboardHeader />
@@ -14,4 +14,4 @@ const Layout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default Layout;
+export default DashboardLayout;
