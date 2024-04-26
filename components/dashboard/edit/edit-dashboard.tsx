@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import requests from '@/apis/request';
 import BasicButton from '@/components/buttons/basic-button';
 import ColorChipGroup from '@/components/chips/color-chip-group';

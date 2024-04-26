@@ -4,8 +4,8 @@ import CardListLayout from '@/components/card/card-list-layout';
 import TaskCard from '@/components/card/task-card';
 import EditColumn from '@/components/modal/column/edit-column';
 import Modal from '@/components/modal/modal';
-import { useCards } from '@/hooks/swr/card/use-card';
-import { useColumns } from '@/hooks/swr/column/use-column';
+import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
+//import { useCards } from '@/hooks/swr/card/use-card';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface CardListProps {
@@ -14,22 +14,21 @@ interface CardListProps {
   dashboardId: string | string[] | undefined;
 }
 const CardList = (props: CardListProps) => {
-  const { data } = useCards(props.id);
-  const columnList = useColumns(props.dashboardId);
+  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCardsQuery(props.id);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (
     <>
       {isOpenModal && (
         <Modal>
-          <EditColumn onClose={handleCloseModal} data={columnList} columnId={props.id} columnTitle={props.title} />
+          <EditColumn onClose={handleCloseModal} columnId={props.id} columnTitle={props.title} /> 
         </Modal>
       )}
       <CardListLayout>
         <CardListHeader title={props.title} count={Number(data?.totalCount)} onClick={handleOpenModal} />
         <AddCard />
-        {data &&
-          data?.cards.map((data) => {
+        {/* {data &&
+          data?.pages.map((data) => {
             return (
               <TaskCard
                 key={data.id}
@@ -41,7 +40,7 @@ const CardList = (props: CardListProps) => {
                 imageUrl={data?.imageUrl}
               />
             );
-          })}
+          })} */}
       </CardListLayout>
     </>
   );

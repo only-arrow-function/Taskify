@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEventHandler } from 'react';
 
-import BackDrop from './backdrop';
+import Dimmed from './dimmed';
 import ModalNewTodoLayout from './modal-newTodo-layout';
 import InputWithCalendar from './todo/input-with-calendar';
 import InputWithImg from './todo/input-with-img';
+import BasicButton from '../buttons/basic-button';
 import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
-import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useIsFormFilled } from '@/hooks/use-is-form-filled';
@@ -31,7 +31,7 @@ const temporaryPostId = {
 };
 
 // columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
-const ModalNewTodo = () => {
+const ModalNewTodo = ({handleCloseModal}: {handleCloseModal: ()=> void}) => {
   const { isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, setImageUrl, ...formState } =
     useIsFormFilled();
 
@@ -58,7 +58,7 @@ const ModalNewTodo = () => {
 
   return (
     <>
-      <BackDrop />
+      <Dimmed handleCloseModal={handleCloseModal}/>
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
         <form onSubmit={handleSubmit}>
@@ -94,7 +94,10 @@ const ModalNewTodo = () => {
             onRemoveTag={setRemoveTag}
           />
           <InputWithImg label="이미지" id="image" value={formState.imageUrl} onChangeImageURL={setImageUrl} />
-          <ModalButtonGroup positiveName="생성" disabled={!isFilled} />
+          <div className="flex justify-end items-center gap-[10px] mt-[10px]">
+            <BasicButton purpose='negative' eventHandler={handleCloseModal}>취소</BasicButton>
+            <BasicButton purpose='positive'>확인</BasicButton>
+          </div>
         </form>
       </ModalNewTodoLayout>
     </>

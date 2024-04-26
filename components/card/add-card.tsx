@@ -1,17 +1,18 @@
 import Image from 'next/image';
+
+import ModalNewTodo from '../modal/modal-new-todo';
 import Card from '@/components/card/card';
+
+import { useHandleModal } from '@/hooks/use-handle-modal';
 import addChips from '@/public/chips/add.svg';
 
-interface AddCardProp {
-  isColumn?: boolean;
-  onClick: () => void;
-}
+const AddCard = () => {
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
-const AddCard = ({ isColumn = false, onClick }: AddCardProp) => {
   return (
     <Card>
-      <div className="flex justify-center items-center gap-[12px]" onClick={onClick}>
-        {isColumn && <h3 className="mt-1 text-[18px] font-bold">새로운 컬럼 추가하기</h3>}
+      {isOpenModal && <ModalNewTodo handleCloseModal={handleCloseModal}/>}
+      <div className="flex justify-center items-center gap-[12px]" onClick={handleOpenModal}>
         <div className="relative p-[3px] rounded-[4px] bg-violet-10 w-[22px] h-[22px]">
           <Image src={addChips} alt="addChips" fill />
         </div>
