@@ -1,4 +1,5 @@
 import React from 'react';
+import AuthHOC from '@/auth/auth-hoc';
 import DashboardSectionLayout from '@/components/dashboard/layout/dashboard-section-layout';
 import MypageHeader from '@/components/mypage/header/header';
 import Management from '@/components/mypage/management/management';
@@ -14,4 +15,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default AuthHOC(Mypage);
