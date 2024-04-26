@@ -1,42 +1,49 @@
 import { ChangeEvent, useState } from 'react';
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from 'next/router';
-import { KeyedMutator } from 'swr';
 import columnRequest from '@/apis/column-request';
 import InputField from '@/components/inputs/input-field';
 import RemoveColumn from '@/components/modal/column/remove-column';
 import Modal from '@/components/modal/modal';
 import ModalButton from '@/components/modal/modal-button';
 import ModalTitle from '@/components/modal/modal-title';
-import { ColumnResponse } from '@/hooks/swr/column/use-column';
+
+import { useColumnsQuery, useColumnsEditMutation } from '@/hooks/react-query/use-query-columns';
 import { useColumnDuplicationTest } from '@/hooks/use-column-duplication-Test';
 import { useHandleModal, useHandleModalOutside } from '@/hooks/use-handle-modal';
 
 interface NewColumnProp {
   onClose: () => void;
   // prettier-ignore
-  data:
-    {
-        data: ColumnResponse | undefined;
-        isLoading: boolean;
-        error: any;
-        mutate: KeyedMutator<ColumnResponse>;
-      }
-    | undefined;
+  // data:
+  //   {
+  //       data: ColumnResponse | undefined;
+  //       isLoading: boolean;
+  //       error: any;
+  //       mutate: KeyedMutator<ColumnResponse>;
+  //     }
+  //   | undefined;
   columnId: string;
   columnTitle: string;
 }
 
-const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => {
+const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
   const dashboardId = Number(useRouter().query.id);
   const [title, setTitle] = useState(columnTitle);
   const [error, setError] = useState('');
-  const modalRef = useHandleModalOutside(() => '', onClose);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
+  const modalRef = useHandleModalOutside(() => '', onClose);
+  
+  // server state
+  const queryClient = useQueryClient();
+  const { data } = useColumnsQuery(dashboardId);
+  const { mutateAsync } = useColumnsEditMutation(Number(columnId), dashboardId, { title }, queryClient);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
   const handleInputBlur = () => {
-    if (useColumnDuplicationTest(title, data?.data?.data)) {
+    if (useColumnDuplicationTest(title, data?.data)) {
       setError('중복된 컬럼 이름입니다.');
     } else {
       setError('');
@@ -44,14 +51,13 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
     return;
   };
   const handleEditBtnClick = async () => {
-    if (useColumnDuplicationTest(title, data?.data?.data)) {
+    if (useColumnDuplicationTest(title, data?.data)) {
       setError('중복된 컬럼 이름입니다.');
       return;
     }
     try {
-      if (typeof dashboardId !== 'number') return;
-      await columnRequest.updateColumn({ title: title }, columnId);
-      data?.mutate();
+      await mutateAsync();
+
       onClose();
     } catch (error) {
       setError('업데이트를 실패했습니다.');
@@ -61,7 +67,7 @@ const EditColumn = ({ onClose, data, columnId, columnTitle }: NewColumnProp) => 
     <div ref={modalRef}>
       {isOpenModal && (
         <Modal>
-          <RemoveColumn onClose={handleCloseModal} columnId={columnId} columnMutate={data?.mutate} />
+          <RemoveColumn onClose={handleCloseModal} columnId={columnId} dashboardId={dashboardId}/>
         </Modal>
       )}
       <ModalTitle>컬럼 관리</ModalTitle>
