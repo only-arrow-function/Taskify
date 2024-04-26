@@ -15,6 +15,7 @@ import { useCreateCard } from '@/hooks/react-query/use-query-cards';
 import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useIsFormFilled } from '@/hooks/use-is-form-filled';
 import { formatDate } from '@/lib/format-date';
+import { useMembersQuery } from '@/hooks/react-query/use-query-members';
 
 export interface StatesData {
   columnId: number;
@@ -44,6 +45,8 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
   const dashboardId = +params.id;
   const detailDashboardQuery = useDetailDashboard(dashboardId);
   const createCardMutation = useCreateCard(columnId);
+
+  const { data: membersData } = useMembersQuery(dashboardId);
 
   const { isFilled, setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, setImageUrl, ...formState } =
     useIsFormFilled();
@@ -92,7 +95,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
         <form onSubmit={handleSubmit}>
-          <ManagerDropdown placeholder="이름을 입력해 주세요" />
+          <ManagerDropdown placeholder="이름을 입력해 주세요" membersData={membersData} />
           <InputField
             label="제목"
             type="text"

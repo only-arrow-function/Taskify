@@ -25,8 +25,6 @@ const CardList = (props: CardListProps) => {
 
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
-  console.log(cardsData);
-
   return (
     <>
       {isOpenModal && (

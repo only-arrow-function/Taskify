@@ -12,7 +12,10 @@ const membersRequests = Object.freeze({
   getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
     if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
 
-    const { data } = await axios.get(`members?page=${currentPage}&size=${MEMBERS_PER_PAGE}&dashboardId=${dashboardId}`, headers);
+    const { data } = await axios.get(
+      `members?page=${currentPage}&size=${MEMBERS_PER_PAGE}&dashboardId=${dashboardId}`,
+      headers,
+    );
     return data;
   },
   deleteMember: async (memberId: string) => {

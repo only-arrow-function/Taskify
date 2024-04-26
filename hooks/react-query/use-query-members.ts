@@ -2,7 +2,7 @@ import { QueryClient, useInfiniteQuery, useMutation } from '@tanstack/react-quer
 import membersRequests from '@/apis/members-request';
 import { MEMBERS_PER_PAGE } from '@/components/tables/members-constants';
 
-export const useMembersQuery = (dashboardId: string) => {
+export const useMembersQuery = (dashboardId: number) => {
   const { data, isSuccess, isPending, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`${dashboardId}-members`],
     initialPageParam: 1,
@@ -20,7 +20,7 @@ export const useMembersQuery = (dashboardId: string) => {
       }
     },
     select: (data) => {
-      return data.pages;
+      return data.pages[0];
     },
   });
 
