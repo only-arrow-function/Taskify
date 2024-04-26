@@ -1,15 +1,15 @@
 import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query';
 
-import cardsRequests from "@/apis/cards-request";
+import cardsRequests from '@/apis/cards-request';
+import { CardsResponse } from '@/components/card/card-type';
 
 const PAGE_COUNT = 5;
 
 export const useInfiniteCardsQuery = (columnId: string) => {
-  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
+  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage, error } = useInfiniteQuery({
     queryKey: [`${columnId}-cards`],
     initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) =>
-      await cardsRequests.fetchCards(columnId, pageParam),
+    queryFn: ({ pageParam = 1 }) => cardsRequests.fetchCards(columnId, pageParam),
 
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
@@ -31,5 +31,5 @@ export const useInfiniteCardsQuery = (columnId: string) => {
     },
   });
 
-  return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage };
+  return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage, error };
 };

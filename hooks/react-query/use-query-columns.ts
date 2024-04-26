@@ -1,16 +1,16 @@
 import { useQuery, useMutation, QueryClient } from '@tanstack/react-query';
 
 import columnRequest from '@/apis/column-request';
+import { ColumnResponse } from '@/components/modal/column/columns-data.type';
 
 export const useColumnsQuery = (dashboardId: number) => {
-  const query = useQuery({
+  const query = useQuery<ColumnResponse>({
     queryKey: [`${dashboardId}-columns`],
-    queryFn: async () =>
-      await columnRequest.fetchColumns(dashboardId),
+    queryFn: async () => await columnRequest.fetchColumns(dashboardId),
   });
 
   return query;
-}
+};
 
 export const useColumnsCreateMutation = (
   columnData: { title: string; dashboardId: number },
@@ -54,4 +54,4 @@ export const useColumnsDeleteMutation = (columnId: number, dashboardId: number, 
   });
 
   return query;
-}
+};

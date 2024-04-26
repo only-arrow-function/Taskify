@@ -7,6 +7,7 @@ import ProfileBadge from '@/components/profile/profile-badge';
 import calenderImg from '@/public/icon/calendar.svg';
 
 const TaskCard = (prop: TaskCardProp) => {
+  console.log(prop);
   return (
     <Card>
       <div className="flex gap-[20px] items-center justify-between">

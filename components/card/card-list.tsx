@@ -6,7 +6,6 @@ import TaskCard from '@/components/card/task-card';
 import EditColumn from '@/components/modal/column/edit-column';
 import Modal from '@/components/modal/modal';
 import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
-//import { useCards } from '@/hooks/swr/card/use-card';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface CardListProps {
@@ -15,11 +14,11 @@ interface CardListProps {
   dashboardId: string | string[] | undefined;
 }
 const CardList = (props: CardListProps) => {
-  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCardsQuery(
+  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage, error } = useInfiniteCardsQuery(
     props.id,
   );
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
-  console.log(data);
+  if (typeof data === 'undefined' || error) return console.log(error, typeof data);
   return (
     <>
       {isOpenModal && (
@@ -30,27 +29,28 @@ const CardList = (props: CardListProps) => {
       <CardListLayout>
         <CardListHeader title={props.title} count={Number(data?.totalCount)} onClick={handleOpenModal} />
         <AddCard />
-        {/* {data &&
-          data?.pages.map((data) => {
+        {data.pages.map((page) => {
+          return page.cards.map((card, idx) => {
             return (
-              <Draggable key={data.id} draggableId={String(data.id)} index={idx}>
+              <Draggable key={card.id} draggableId={String(card.id)} index={idx}>
                 {(provided, snapshot) => {
                   return (
                     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                       <TaskCard
-                        id={data.id}
-                        title={data.title}
-                        dueDate={data.dueDate}
-                        tags={data.tags}
-                        assignee={data.assignee}
-                        imageUrl={data?.imageUrl}
+                        id={card.id}
+                        title={card.title}
+                        dueDate={card.dueDate}
+                        tags={card.tags}
+                        assignee={card.assignee}
+                        imageUrl={card?.imageUrl}
                       />
                     </div>
                   );
                 }}
               </Draggable>
             );
-          })} */}
+          });
+        })}
       </CardListLayout>
     </>
   );

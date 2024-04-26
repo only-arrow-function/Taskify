@@ -50,8 +50,8 @@ const ColumnList = (props: ColumnListProps) => {
       )}
       <DragDropContext onDragEnd={handleDropCard}>
         <ColumnListLayout>
-          {columnData?.data?.data &&
-            columnData.data.data.map((data) => {
+          {data?.data &&
+            data.data.map((data) => {
               return (
                 <Droppable key={data.id} droppableId={data.title}>
                   {(provided, snapshot) => (
