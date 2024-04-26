@@ -35,7 +35,7 @@ const columnRequest = {
     }
   },
 
-  updateColumn: async (columnData: { title: string }, columnId: string) => {
+  updateColumn: async (columnData: { title: string }, columnId: number) => {
     try {
       const { data } = await axios.put(`columns/${columnId}`, columnData, headers);
       return data;

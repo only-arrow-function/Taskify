@@ -7,7 +7,7 @@ import InputField from '@/components/inputs/input-field';
 import ModalButton from '@/components/modal/modal-button';
 import ModalTitle from '@/components/modal/modal-title';
 
-import { useColumnsMutation } from '@/hooks/react-query/use-query-columns';
+import { useColumnsCreateMutation } from '@/hooks/react-query/use-query-columns';
 import { useColumnDuplicationTest } from '@/hooks/use-column-duplication-Test';
 import { useHandleModalOutside } from '@/hooks/use-handle-modal';
 
@@ -17,7 +17,6 @@ interface NewColumnProp {
 }
 
 const NewColumn = ({ onClose, data }: NewColumnProp) => {
-  console.log(data)
   const dashboardId = Number(useRouter().query.id);
   const [title, setTitle] = useState('');
   const [error, setError] = useState('');
@@ -25,7 +24,7 @@ const NewColumn = ({ onClose, data }: NewColumnProp) => {
 
   // server state
   const queryClient = useQueryClient();
-  const { mutateAsync } = useColumnsMutation({ title, dashboardId }, queryClient)
+  const { mutateAsync } = useColumnsCreateMutation({ title, dashboardId }, queryClient);
 
   const handleCloseBtnClick = () => {
     onClose();

@@ -6,7 +6,6 @@ import Dimmed from '@/components/modal/dimmed';
 import ModalLayout from '@/components/modal/modal-layout';
 
 import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
-import { useColumns } from '@/hooks/swr/column/use-column';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
@@ -14,8 +13,7 @@ interface ColumnListProps {
 }
 
 const ColumnList = (props: ColumnListProps) => {
-  //const columnData = useColumns(props.id);
-  const { data, isSuccess, isPending } = useColumnsQuery(Number(props.id));
+  const { data } = useColumnsQuery(Number(props.id));
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (

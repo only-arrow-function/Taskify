@@ -5,8 +5,7 @@ import TaskCard from '@/components/card/task-card';
 import EditColumn from '@/components/modal/column/edit-column';
 import Modal from '@/components/modal/modal';
 import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
-import { useCards } from '@/hooks/swr/card/use-card';
-import { useColumns } from '@/hooks/swr/column/use-column';
+//import { useCards } from '@/hooks/swr/card/use-card';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface CardListProps {
@@ -15,17 +14,14 @@ interface CardListProps {
   dashboardId: string | string[] | undefined;
 }
 const CardList = (props: CardListProps) => {
-  //const { data } = useCards(props.id);
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCardsQuery(props.id);
-  // console.log(data);
-  const columnList = useColumns(props.dashboardId);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (
     <>
       {isOpenModal && (
         <Modal>
-          <EditColumn onClose={handleCloseModal} data={columnList} columnId={props.id} columnTitle={props.title} />
+          <EditColumn onClose={handleCloseModal} columnId={props.id} columnTitle={props.title} /> 
         </Modal>
       )}
       <CardListLayout>

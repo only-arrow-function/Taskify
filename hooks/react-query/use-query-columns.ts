@@ -1,8 +1,6 @@
-import { useQuery, useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, QueryClient } from '@tanstack/react-query';
 
 import columnRequest from '@/apis/column-request';
-
-const PAGE_COUNT = 5;
 
 export const useColumnsQuery = (dashboardId: number) => {
   const query = useQuery({
@@ -14,7 +12,7 @@ export const useColumnsQuery = (dashboardId: number) => {
   return query;
 }
 
-export const useColumnsMutation = (
+export const useColumnsCreateMutation = (
   columnData: { title: string; dashboardId: number },
   queryClient: QueryClient,
 ) => {
@@ -28,3 +26,32 @@ export const useColumnsMutation = (
 
   return query;
 };
+
+export const useColumnsEditMutation = (
+  columnId: number,
+  dashboardId: number,
+  columnData: { title: string },
+  queryClient: QueryClient,
+) => {
+  const query = useMutation({
+    mutationFn: async () => await columnRequest.updateColumn(columnData, columnId),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-columns`] });
+    },
+  });
+
+  return query;
+};
+
+export const useColumnsDeleteMutation = (columnId: number, dashboardId: number, queryClient: QueryClient) => {
+  const query = useMutation({
+    mutationFn: async () => await columnRequest.deleteColumn(columnId),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-columns`] });
+    },
+  });
+
+  return query;
+}
