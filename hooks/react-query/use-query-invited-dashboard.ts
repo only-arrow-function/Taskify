@@ -1,10 +1,10 @@
 import { QueryClient, useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 import invitationRequest from '@/apis/invitations-request';
 
-export const useInvitedDashboard = () => {
+export const useInvitedDashboard = (title?: string) => {
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['invited-dashboard'],
-    queryFn: async ({ pageParam }) => await invitationRequest.getInvitations(pageParam),
+    queryKey: [`invited-dashboard${title ? `/${title}` : ''}`],
+    queryFn: async ({ pageParam }) => await invitationRequest.getInvitations({ cursorId: pageParam, title }),
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPage) => {
       return lastPage.cursorId;

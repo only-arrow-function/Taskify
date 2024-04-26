@@ -3,8 +3,8 @@ import CommentSpinner from '@/components/modal/todo/comment-spinner';
 import { useInvitedDashboard } from '@/hooks/react-query/use-query-invited-dashboard';
 import useIntersect from '@/hooks/use-intersect';
 
-const DashboardInviteTable = () => {
-  const { data, hasNextPage, fetchNextPage } = useInvitedDashboard();
+const DashboardInviteTable = ({ searchTitle }: { searchTitle?: string }) => {
+  const { data, hasNextPage, fetchNextPage } = useInvitedDashboard(searchTitle);
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage) {
@@ -26,7 +26,7 @@ const DashboardInviteTable = () => {
 
       <ul className="h-[460px] text-sm sm:text-base overflow-y-auto">
         {invitations.map(({ id, dashboard, inviter }) => (
-          <DashboardInviteItem id={id} dashboardTitle={dashboard.title} inviterName={inviter.nickname} />
+          <DashboardInviteItem key={id} id={id} dashboardTitle={dashboard.title} inviterName={inviter.nickname} />
         ))}
         {hasNextPage && (
           <li ref={ref}>
