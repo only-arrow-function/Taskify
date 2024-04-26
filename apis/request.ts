@@ -5,8 +5,6 @@ import axios from './axios';
 
 import getToken from './localStorage';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
-import { Members } from '@/components/tables/members-type';
-
 
 const ERROR_MESSAGE = '에러 발생:';
 

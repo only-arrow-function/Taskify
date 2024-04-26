@@ -1,18 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { isFormFilled } from '@/lib/domain/is-form-filled';
-import useFormStore from '@/store/form-store';
 
 export const useIsFormFilled = () => {
-  const { title, description, dueDate, tags, imageUrl, isFilled,
-    setTitle, setDescription, setDueDate, setAddTag, setRemoveTag, setImageUrl, setIsFilled } = useFormStore();
-  const formStates = { title, description, dueDate, tags, imageUrl }
-
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [tags, setTag] = useState<string[]>([]);
+  const [imageUrl, setImageUrl] = useState('');
+  const [isFilled, setIsFilled] = useState(false);
+  
+  const setAddTag = (newTag: string) => {
+    setTag((tags) => [...tags, newTag]);
+  };
+  
+  const setRemoveTag = () => {
+    setTag([]);
+  }
+  
+  const formStates = { title, description, dueDate, tags, imageUrl };
   useEffect(() => {
     const isValidated = isFormFilled(formStates);
 
     if (isFilled !== isValidated) {
-      console.log(isValidated)
       setIsFilled(isValidated);
     } 
   }, [title, description, dueDate, tags, imageUrl]);
