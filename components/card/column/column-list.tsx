@@ -4,6 +4,8 @@ import ColumnListLayout from '@/components/card/column/column-list-layout';
 import NewColumn from '@/components/modal/column/new-column';
 import Dimmed from '@/components/modal/dimmed';
 import ModalLayout from '@/components/modal/modal-layout';
+
+import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
 import { useColumns } from '@/hooks/swr/column/use-column';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
@@ -12,8 +14,8 @@ interface ColumnListProps {
 }
 
 const ColumnList = (props: ColumnListProps) => {
-  const columnData = useColumns(props.id);
-  console.log(columnData)
+  //const columnData = useColumns(props.id);
+  const { data, isSuccess, isPending } = useColumnsQuery(Number(props.id));
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (
@@ -22,13 +24,13 @@ const ColumnList = (props: ColumnListProps) => {
         <>
           <Dimmed handleCloseModal={handleCloseModal} />
           <ModalLayout>
-            <NewColumn onClose={handleCloseModal} data={columnData} />
+            <NewColumn onClose={handleCloseModal} data={data} />
           </ModalLayout>
         </>
       )}
       <ColumnListLayout>
-        {columnData?.data?.data &&
-          columnData.data.data.map((data) => {
+        {data?.data &&
+          data.data.map((data: any) => {
             return <CardList key={data.id} id={data.id} title={data.title} dashboardId={props.id} />;
           })}
         <ColumnAdd onClick={handleOpenModal} />
