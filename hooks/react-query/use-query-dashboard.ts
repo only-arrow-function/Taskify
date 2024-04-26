@@ -35,12 +35,34 @@ export const useInfiniteDashboardsQuery = () => {
   return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage };
 };
 
+// export const useDashboardDetailsQuery = () => {
+//   const query = useQuery({
+//     queryKey: [`my-dashboard`, ],
+//   })
+// }
+
 export const useDashboardsMutation = (
   dashboardData: { title: string; color: DashboardColors },
   queryClient: QueryClient,
 ) => {
   const query = useMutation({
     mutationFn: async () => await dashboardRequest.createDashboard(dashboardData),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.setQueryData([`my-dashboard`], data);
+    },
+  });
+
+  return query;
+};
+
+export const useDashboardEditMutation = (
+  dashboardId: number,
+  dashboardData: { title: string; color: DashboardColors },
+  queryClient: QueryClient,
+) => {
+  const query = useMutation({
+    mutationFn: async () => await dashboardRequest.editDashboard(dashboardId, dashboardData),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [`my-dashboard`] });
