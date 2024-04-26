@@ -11,7 +11,7 @@ import { useInvitationsMutation } from '@/hooks/react-query/use-query-invite-use
 interface InviteModalType {
   handleCloseModal: () => void;
   dashboardId: string;
-  totalPages: number;
+  totalPages?: number;
 }
 
 const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalType) => {
@@ -28,13 +28,8 @@ const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalT
 
   const handleClickForInvite = async () => {
     try {
-      await mutateAsync(
-        { dashboardId, input },
-        {
-          onSuccess: () => {},
-        },
-      );
-
+      await mutateAsync();
+      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-invitations`] });
       handleCloseModal();
     } catch (error) {
       console.error('에러 발생:', error);

@@ -10,11 +10,6 @@ import '@/styles/globals.css';
 
 export default function App({ Component, pageProps, router }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
-  const token = getToken();
-
-  useEffect(() => {
-    if (!token) router.push('/login');
-  }, []);
 
   if (router.isReady && router.asPath.startsWith(`/dashboard/${router.query.id}`)) {
     return (
