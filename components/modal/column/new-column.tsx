@@ -8,7 +8,6 @@ import ModalTitle from '@/components/modal/modal-title';
 import { ColumnResponse } from '@/hooks/swr/column/use-column';
 import { useColumnDuplicationTest } from '@/hooks/use-column-duplication-Test';
 import { useHandleModalOutside } from '@/hooks/use-handle-modal';
-import { useColumnStore } from '@/store/column';
 
 interface NewColumnProp {
   onClose: () => void;

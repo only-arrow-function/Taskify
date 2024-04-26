@@ -1,3 +1,4 @@
+import { Draggable } from 'react-beautiful-dnd';
 import AddCard from '@/components/card/add-card';
 import CardListHeader from '@/components/card/card-list-header';
 import CardListLayout from '@/components/card/card-list-layout';
@@ -17,7 +18,7 @@ const CardList = (props: CardListProps) => {
   const { data } = useCards(props.id);
   const columnList = useColumns(props.dashboardId);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
-
+  console.log(data);
   return (
     <>
       {isOpenModal && (
@@ -29,17 +30,24 @@ const CardList = (props: CardListProps) => {
         <CardListHeader title={props.title} count={Number(data?.totalCount)} onClick={handleOpenModal} />
         <AddCard />
         {data?.cards &&
-          data?.cards.map((data) => {
+          data?.cards.map((data, idx) => {
             return (
-              <TaskCard
-                key={data.id}
-                id={data.id}
-                title={data.title}
-                dueDate={data.dueDate}
-                tags={data.tags}
-                assignee={data.assignee}
-                imageUrl={data?.imageUrl}
-              />
+              <Draggable key={data.id} draggableId={String(data.id)} index={idx}>
+                {(provided, snapshot) => {
+                  return (
+                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                      <TaskCard
+                        id={data.id}
+                        title={data.title}
+                        dueDate={data.dueDate}
+                        tags={data.tags}
+                        assignee={data.assignee}
+                        imageUrl={data?.imageUrl}
+                      />
+                    </div>
+                  );
+                }}
+              </Draggable>
             );
           })}
       </CardListLayout>

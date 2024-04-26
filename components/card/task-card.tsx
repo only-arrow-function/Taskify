@@ -44,8 +44,12 @@ const TaskCard = (prop: TaskCardProp) => {
               <h4 className="mt-1 text-[10px] font-[500] sm:text-[12px] text-grayscale-60">{prop.dueDate}</h4>
             </div>
             <div>
-              <ProfileBadge styles="font-[600] text-[10px] sm:text-[12px] w-[22px] h-[22px] sm:w-[24px] sm:h-[24px]">
-                {prop.assignee.nickname[0]}
+              <ProfileBadge styles="relative font-[600] text-[10px] sm:text-[12px] w-[22px] h-[22px] sm:w-[24px] sm:h-[24px]">
+                {prop.assignee.profileImageUrl ? (
+                  <Image src={prop.assignee.profileImageUrl} alt="img" fill></Image>
+                ) : (
+                  prop.assignee.nickname[0]
+                )}
               </ProfileBadge>
             </div>
           </div>
