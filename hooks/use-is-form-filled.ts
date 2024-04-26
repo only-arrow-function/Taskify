@@ -18,7 +18,8 @@ export const useIsFormFilled = () => {
     setTag([...tags]);
   };
 
-  const formStates = { title, description, dueDate, tags, imageUrl };
+  const formStates = { title, description, dueDate, tags };
+
   useEffect(() => {
     const isValidated = isFormFilled(formStates);
 

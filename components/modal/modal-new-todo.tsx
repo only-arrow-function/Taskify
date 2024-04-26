@@ -60,17 +60,30 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
 
     if (!isFilled) return;
 
-    const postStates = {
-      // ...temporaryPostId,
-      // dashboardId: dashboardsQuery.data.,
-      columnId,
-      assigneeUserId: detailDashboardQuery!.data?.userId,
-      dashboardId,
-      ...formState,
-      dueDate: formatDate(formState.dueDate),
-    };
+    let data;
 
-    createCardMutation.mutate(postStates);
+    if (!formState.imageUrl) {
+      data = {
+        columnId,
+        assigneeUserId: detailDashboardQuery!.data?.userId,
+        dashboardId,
+        title: formState.title,
+        description: formState.description,
+        tags: formState.tags,
+        dueDate: formatDate(formState.dueDate),
+      };
+    } else {
+      data = {
+        columnId,
+        assigneeUserId: detailDashboardQuery!.data?.userId,
+        dashboardId,
+        ...formState,
+        dueDate: formatDate(formState.dueDate),
+      };
+    }
+
+    await createCardMutation.mutateAsync(data);
+    handleCloseModal();
   };
 
   return (

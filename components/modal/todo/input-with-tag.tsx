@@ -46,7 +46,6 @@ const InputWithTag = ({
       if (target.value === '' && tags.length !== 0) {
         e.preventDefault();
         tags.pop();
-
         onRemoveTag(tags);
         return;
       }

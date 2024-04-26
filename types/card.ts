@@ -6,5 +6,5 @@ export interface Card {
   description: string;
   dueDate: string;
   tags: string[];
-  imageUrl: string;
+  imageUrl?: string;
 }
