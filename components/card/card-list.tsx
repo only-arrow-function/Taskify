@@ -1,3 +1,4 @@
+import { ColumnItem } from '../modal/column/columns-data.type';
 import AddCard from '@/components/card/add-card';
 import CardListHeader from '@/components/card/card-list-header';
 import CardListLayout from '@/components/card/card-list-layout';
@@ -9,8 +10,7 @@ import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface CardListProps {
-  columnId: number;
-  title: string;
+  columnData: ColumnItem;
   dashboardId: number;
 }
 const CardList = (props: CardListProps) => {
@@ -21,7 +21,7 @@ const CardList = (props: CardListProps) => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  } = useInfiniteCardsQuery(props.columnId);
+  } = useInfiniteCardsQuery(props.columnData.id);
 
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
@@ -29,12 +29,16 @@ const CardList = (props: CardListProps) => {
     <>
       {isOpenModal && (
         <Modal>
-          <EditColumn onClose={handleCloseModal} columnId={props.columnId} columnTitle={props.title} />
+          <EditColumn onClose={handleCloseModal} columnId={props.columnData.id} columnTitle={props.columnData.title} />
         </Modal>
       )}
       <CardListLayout>
-        <CardListHeader title={props.title} count={Number(cardsData?.totalCount)} onClick={handleOpenModal} />
-        <AddCard columnId={props.columnId} />
+        <CardListHeader
+          title={props.columnData.title}
+          count={Number(cardsData?.totalCount)}
+          onClick={handleOpenModal}
+        />
+        <AddCard columnId={props.columnData.id} />
         {cardsData?.pages[0].cards.map((data: any) => (
           <TaskCard
             key={data.id}
@@ -44,6 +48,7 @@ const CardList = (props: CardListProps) => {
             tags={data.tags}
             assignee={data.assignee}
             imageUrl={data?.imageUrl}
+            columnData={props.columnData}
           />
         ))}
       </CardListLayout>

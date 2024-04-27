@@ -33,6 +33,8 @@ const InputWithImg = ({
     onChangeImageURL(imageUrl);
   };
 
+  console.log(value);
+
   return (
     <div className="flex flex-col gap-[10px]">
       <h3 className="text-grayscale-80 font-medium">{label}</h3>

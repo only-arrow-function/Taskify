@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import BackDrop from './backdrop';
+import { ColumnItem } from './column/columns-data.type';
 import InfoWithLabel from './info-with-label';
 import ModalEditTodo from './modal-edit-todo';
 import ModalTitle from './modal-title';
@@ -18,22 +19,23 @@ import useIntersect from '@/hooks/use-intersect';
 import CloseIcon from '@/public/icon/close.svg';
 import MoreIcon from '@/public/icon/more.svg';
 
-const tempCardId = 5235;
-const tempColumnId = 20173;
+interface ModalTodoDetailProps {
+  columnData: ColumnItem;
+  cardId: number;
+  onCloseModal: () => void;
+}
 
-const ModalTodoDetail = () => {
+const ModalTodoDetail = ({ columnData, cardId, onCloseModal }: ModalTodoDetailProps) => {
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const queryClient = useQueryClient();
-  const { data } = useCardQuery(tempCardId);
-  const { data: commentsData, hasNextPage, fetchNextPage } = useCommentsQuery(tempCardId);
-  const { mutate: addMutate } = useAddComment(tempCardId, queryClient);
+  const { data } = useCardQuery(cardId);
+  const { data: commentsData, hasNextPage, fetchNextPage } = useCommentsQuery(cardId);
+  const { mutate: addMutate } = useAddComment(cardId, queryClient);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
-    if (hasNextPage) {
-      fetchNextPage();
-    }
+    if (hasNextPage) fetchNextPage();
   });
 
   if (!data) return;
@@ -53,7 +55,7 @@ const ModalTodoDetail = () => {
   const handleCommentAdd = (comment: string) => {
     addMutate({
       content: comment,
-      cardId: tempCardId,
+      cardId: cardId,
       columnId: 20173,
       dashboardId: 6000,
     });
@@ -61,8 +63,8 @@ const ModalTodoDetail = () => {
 
   return (
     <>
-      <BackDrop />
-      {/* {isOpenEditModal && <ModalEditTodo cardId={tempCardId} />} */}
+      <BackDrop onCloseModal={onCloseModal} />
+      {isOpenEditModal && <ModalEditTodo card={data} onCloseModal={onCloseModal} columnData={columnData} />}
       {!isOpenEditModal && (
         <ModalTodoDetailLayout>
           <header className="flex flex-col-reverse gap-[6px] items-start md:flex-row md:justify-between">
@@ -74,15 +76,15 @@ const ModalTodoDetail = () => {
                 </button>
                 {isOpenPopover && (
                   <Popover
-                    cardId={tempCardId}
-                    columnId={tempColumnId}
+                    cardId={cardId}
+                    columnId={columnData.id}
                     onModifyButtonClick={handleModifyButtonClick}
                     onClosePopover={() => setIsOpenPopover(false)}
                   />
                 )}
               </li>
               <li className="relative flex size-6 md:size-8">
-                <button className="size-full">
+                <button className="size-full" onClick={onCloseModal}>
                   <Image fill src={CloseIcon} alt="닫기" />
                 </button>
               </li>
@@ -98,7 +100,7 @@ const ModalTodoDetail = () => {
             <div className="flex flex-wrap gap-5 w-full md:gap-6">
               <section className="flex flex-col gap-4 w-full">
                 <div className="flex gap-3">
-                  <ProgressChip>To Do</ProgressChip>
+                  <ProgressChip>{columnData.title}</ProgressChip>
                   <div className="w-[1px] bg-grayscale-40" />
                   <ul className="flex gap-[6px]">
                     {tags?.map((tag) => (
@@ -117,7 +119,7 @@ const ModalTodoDetail = () => {
                 <TextareaWithLabel purpose="comment" onAddComment={handleCommentAdd} />
                 <ul className="flex flex-col w-full gap-3 h-16 overflow-y-scroll md:h-20">
                   {comments?.map((comment) => (
-                    <Comment key={comment.id} {...comment} cardId={tempCardId} />
+                    <Comment key={comment.id} {...comment} cardId={cardId} />
                   ))}
                   {hasNextPage && (
                     <li ref={ref} className="w-full">

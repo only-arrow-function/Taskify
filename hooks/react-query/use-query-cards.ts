@@ -43,3 +43,21 @@ export const useCreateCard = (columnId: number) => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${columnId}-cards`] }),
   });
 };
+
+export const useUpdateCard = (columnId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (cardData: any) => cardsRequests.putCard(cardData.id, cardData.data),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${columnId}-cards`] }),
+    onError: () => console.log('useUpdateCard Error'),
+  });
+};
+
+// export const useUpdateCard = (columnId: number) => {
+//   const queryClient = useQueryClient();
+//   return useMutation({
+//     mutationFn: () => cardsRequests.putCard(),
+//     onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${columnId}-cards`] }),
+//   });
+// };

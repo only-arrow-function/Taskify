@@ -1,3 +1,5 @@
+import { ColumnItem } from '../modal/column/columns-data.type';
+
 export interface TaskCardProp {
   id: number;
   title: string;
@@ -9,6 +11,7 @@ export interface TaskCardProp {
     id: number;
   };
   imageUrl?: string;
+  columnData: ColumnItem;
 }
 
 export interface TaskCardResponse extends TaskCardProp {
