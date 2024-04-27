@@ -1,4 +1,5 @@
 import { Draggable } from 'react-beautiful-dnd';
+import CommentSpinner from '../modal/todo/comment-spinner';
 import AddCard from '@/components/card/add-card';
 import CardListHeader from '@/components/card/card-list-header';
 import CardListLayout from '@/components/card/card-list-layout';
@@ -7,6 +8,7 @@ import EditColumn from '@/components/modal/column/edit-column';
 import Modal from '@/components/modal/modal';
 import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
 import { useHandleModal } from '@/hooks/use-handle-modal';
+import useIntersect from '@/hooks/use-intersect';
 
 interface CardListProps {
   columnId: number;
@@ -23,6 +25,13 @@ const CardList = (props: CardListProps) => {
     fetchNextPage,
     error,
   } = useInfiniteCardsQuery(props.columnId);
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  });
 
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   if (typeof cardsData === 'undefined' || error) {
@@ -61,6 +70,11 @@ const CardList = (props: CardListProps) => {
             );
           });
         })}
+        {hasNextPage && (
+          <span ref={ref}>
+            <CommentSpinner />
+          </span>
+        )}
       </CardListLayout>
     </>
   );
