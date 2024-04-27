@@ -34,7 +34,7 @@ const DashboardPagination = (props: DashboardPaginationProps) => {
   return (
     <div className="flex justify-end items-center gap-4 mt-3">
       <span className="text-sm text-grayscale-80">
-        {data.pages.totalPages} 페이지중 {props.currentPage}
+        {data.totalPages} 페이지중 {props.currentPage}
       </span>
       <div className="flex">
         <DashboardPaginationButton position="left" isDisabled={props.currentPage === 1} onClick={prevPage} />
