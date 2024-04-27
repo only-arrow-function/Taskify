@@ -3,13 +3,16 @@ import { useRouter } from 'next/router';
 import DashboardHeaderButton from '@/components/dashboard/header/dashboard-header-button';
 import DashboardHeaderMembers from '@/components/dashboard/header/dashboard-header-members';
 import DashboardHeaderProfile from '@/components/dashboard/header/dashboard-header-profile';
+import { useDashboardDetailQuery } from '@/hooks/react-query/use-query-dashboard';
 import dashboardInviteIcon from '@/public/dashboard/dashboard-invite.svg';
 import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg';
 
-const DashboardHeader = () => {
+const DashboardHeader = ({dashboardId}: {dashboardId?: number}) => {
   const router = useRouter();
   const isPathMyDashboard = router.pathname.match('my');
 
+  // server state
+  const { data } = useDashboardDetailQuery(dashboardId);
   const beforeStyles = isPathMyDashboard
     ? ''
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
@@ -18,7 +21,7 @@ const DashboardHeader = () => {
     <header className="border-b border-grayscale-40 py-6">
       <div className="flex justify-between max-[430px]:justify-end sm:justify-between items-center px-4 sm:px-10 lg:pl-10 lg:pr-20">
         <h2 className=" text-xl font-bold max-[430px]:hidden">
-          <Link href="/my-dashboard">내 대시보드</Link>
+          {data ? (<Link href="/my-dashboard">{data.title}</Link>) :(<Link href="/my-dashboard">내 대시보드</Link>)}
         </h2>
 
         <div className="flex items-center">

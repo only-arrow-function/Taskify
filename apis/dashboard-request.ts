@@ -35,6 +35,25 @@ const dashboardRequest = Object.freeze({
     }
   },
 
+  fetchDashboardDetails: async (dashboardId: number) => {
+    try {
+      if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
+      const { data } = await axios.get(`dashboards/${dashboardId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      await new Promise((resolve) => setTimeout(() => resolve(1), 300));
+      return data;
+    } catch (error) {
+      const err = error as Error;
+
+      return {
+        success: false,
+        error: err.message,
+      };
+    }
+  },
+
   createDashboard: async (dashboardData: { title: string; color: DashboardColors }) => {
     try {
       const { data } = await axios.post('dashboards', dashboardData, headers);
@@ -47,7 +66,6 @@ const dashboardRequest = Object.freeze({
   editDashboard: async (dashboardId: number, dashboardData: { title: string; color: DashboardColors }) => {
     try {
       const { data } = await axios.put(`dashboards/${dashboardId}`, dashboardData, headers);
-      console.log(data);
       return data;
     } catch (error) {
       return error;
