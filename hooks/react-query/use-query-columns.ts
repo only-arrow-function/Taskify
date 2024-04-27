@@ -5,12 +5,11 @@ import columnRequest from '@/apis/column-request';
 export const useColumnsQuery = (dashboardId: number) => {
   const query = useQuery({
     queryKey: [`${dashboardId}-columns`],
-    queryFn: async () =>
-      await columnRequest.fetchColumns(dashboardId),
+    queryFn: () => columnRequest.fetchColumns(dashboardId),
   });
 
   return query;
-}
+};
 
 export const useColumnsCreateMutation = (
   columnData: { title: string; dashboardId: number },
@@ -54,4 +53,4 @@ export const useColumnsDeleteMutation = (columnId: number, dashboardId: number, 
   });
 
   return query;
-}
+};

@@ -1,15 +1,15 @@
-import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, QueryClient, useQueryClient } from '@tanstack/react-query';
 
-import cardsRequests from "@/apis/cards-request";
+import cardsRequests from '@/apis/cards-request';
+import { Card } from '@/types/card';
 
 const PAGE_COUNT = 5;
 
-export const useInfiniteCardsQuery = (columnId: string) => {
+export const useInfiniteCardsQuery = (columnId: number) => {
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`${columnId}-cards`],
     initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) =>
-      await cardsRequests.fetchCards(columnId, pageParam),
+    queryFn: async ({ pageParam = 1 }) => await cardsRequests.fetchCards(columnId, pageParam),
 
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage) return undefined;
@@ -32,4 +32,14 @@ export const useInfiniteCardsQuery = (columnId: string) => {
   });
 
   return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage };
+};
+
+export const useCreateCard = (columnId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: Card) => cardsRequests.postCard(data),
+    onError: () => console.log('useCreateCard Error'),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${columnId}-cards`] }),
+  });
 };

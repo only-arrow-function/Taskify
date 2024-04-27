@@ -10,7 +10,7 @@ import { useInvitationsMutation } from '@/hooks/react-query/use-query-invite-use
 
 interface InviteModalType {
   handleCloseModal: () => void;
-  dashboardId: string;
+  dashboardId?: number;
   totalPages?: number;
 }
 
@@ -19,7 +19,7 @@ const InviteModal = ({ handleCloseModal, dashboardId, totalPages }: InviteModalT
 
   // server state
   const queryClient = useQueryClient();
-  const { mutateAsync } = useInvitationsMutation(dashboardId, { email: input }, queryClient);
+  const { mutateAsync } = useInvitationsMutation(dashboardId as number, { email: input }, queryClient);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

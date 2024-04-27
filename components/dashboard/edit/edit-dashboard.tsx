@@ -7,7 +7,7 @@ import InputField from '@/components/inputs/input-field';
 import ModalTitle from '@/components/modal/modal-title';
 
 import { DashboardIdProps } from '@/constant/type/data/dashboard.type';
-import { useDashboardEditMutation } from '@/hooks/react-query/use-query-dashboard';
+import { useDashboardEditMutation, useDashboardDetailQuery } from '@/hooks/react-query/use-query-dashboard';
 import { useDashboardsStore } from '@/store/dashboard';
 
 const EditDashboard = ({ dashboardId }: DashboardIdProps) => {
@@ -16,8 +16,7 @@ const EditDashboard = ({ dashboardId }: DashboardIdProps) => {
 
   // server state
   const queryClient = useQueryClient();
-  const oldData = queryClient.getQueryData([`my-dashboard`]);
-  console.log(oldData);
+  const { data, isPending } = useDashboardDetailQuery(dashboardId);
   const { mutateAsync } = useDashboardEditMutation(dashboardId, { title, color }, queryClient);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,17 +24,16 @@ const EditDashboard = ({ dashboardId }: DashboardIdProps) => {
   };
 
   const handlePostRename = async () => {
-    const result = await mutateAsync();
-    console.log(result);
+    await mutateAsync();
     // 여기에 토스트 처리 추가 가능.
 
-    setTitle(``);
+    setTitle('');
   };
 
   return (
     <section className="bg-white rounded-lg px-[15px] py-[15px]">
       <div className="flex flex-row justify-between">
-        <ModalTitle>비브리지</ModalTitle>
+        {isPending ? (<ModalTitle>로딩중</ModalTitle>) : (<ModalTitle>{data.title}</ModalTitle>)}
         <ColorChipGroup />
       </div>
       <InputField

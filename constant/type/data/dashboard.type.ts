@@ -1,5 +1,6 @@
 export interface IdProps {
   id: string;
+  title?: string;
 }
 
 export interface DashboardIdProps {

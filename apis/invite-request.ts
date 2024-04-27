@@ -10,7 +10,7 @@ const headers = {
 };
 
 const inviteRequests = Object.freeze({
-  getInviteUsers: async ({dashboardId, pageParam}: {dashboardId: string, pageParam: number}) => {
+  getInviteUsers: async ({dashboardId, pageParam}: {dashboardId: number, pageParam: number}) => {
     await new Promise((resolve) => setTimeout(() => resolve(1), 300));
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
@@ -30,7 +30,7 @@ const inviteRequests = Object.freeze({
     }
   },
 
-  inviteUserInDashboard: async (dashboardId: string, { email: inviteUserEmail }: { email: string }) => {
+  inviteUserInDashboard: async (dashboardId: number, { email: inviteUserEmail }: { email: string }) => {
     try {
       const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, { email: inviteUserEmail }, headers);
       return data;
@@ -39,7 +39,7 @@ const inviteRequests = Object.freeze({
     }
   },
 
-  deleteInvitedUser: async (dashboardId: string, invitationId: string) => {
+  deleteInvitedUser: async (dashboardId: number, invitationId: string) => {
     try {
       const { data } = await axios.delete(`dashboards/${dashboardId}/invitations/${invitationId}`, headers);
       return data;
