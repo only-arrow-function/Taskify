@@ -13,11 +13,7 @@ import { IdProps } from '@/constant/type/data/dashboard.type';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
 
-  return {
-    props: {
-      id,
-    },
-  };
+  return { props: { id } };
 };
 
 const index = ({ id }: IdProps) => {
@@ -31,7 +27,7 @@ const index = ({ id }: IdProps) => {
         <EditDashboard dashboardId={idToNumber} />
         <MembersTable dashboardId={idToNumber} />
         <InviteTable dashboardId={idToNumber} />
-        <DashboardDeleteButton dashboardId={idToNumber}/>
+        <DashboardDeleteButton dashboardId={idToNumber} />
       </main>
       <SideMenu />
     </DashboardSectionLayout>

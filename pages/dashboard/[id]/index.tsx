@@ -10,18 +10,14 @@ interface Props {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
 
-  return {
-    props: {
-      id,
-    },
-  };
+  return { props: { id } };
 };
 
 export default function index({ id }: Props) {
   const idToNumber = Number(id);
 
   return (
-    <DashboardLayout>
+    <DashboardLayout dashboardId={idToNumber}>
       <main>
         <ColumnList id={id} />
       </main>
