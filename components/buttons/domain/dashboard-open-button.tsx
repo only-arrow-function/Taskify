@@ -5,17 +5,15 @@ import Image from 'next/image';
 import DashboardBase from './commons/dashboard-base';
 import DomainButtonName from './commons/domain-button-name';
 
-import {
-  dashboardColors,
-  DashboardColors,
-} from '@/components/dashboard/dashboard.constants';
+import { dashboardColors, DashboardColors } from '@/components/dashboard/dashboard.constants';
 import ArrowForwardIcon from '@/public/icon/arrow-forward.svg';
 import CrownIcon from '@/public/icon/crown.svg';
 
 const DashboardOpenButton = ({
   children,
   color,
-}: PropsWithChildren<{ color: DashboardColors }>) => {
+  isCreatedByMe,
+}: PropsWithChildren<{ color: DashboardColors; isCreatedByMe: boolean }>) => {
   const pseudoBefore = `before:content-[''] before:block before:size-[8px] before:rounded-full  ${dashboardColors[color]} mr-3`;
 
   return (
@@ -24,7 +22,7 @@ const DashboardOpenButton = ({
         <div className="flex items-center">
           <span className={`${pseudoBefore}`} />
           <DomainButtonName purpose="dashboard">{children}</DomainButtonName>
-          <Image src={CrownIcon} alt="crown" className="ml-1" />
+          {isCreatedByMe && <Image src={CrownIcon} alt="crown" className="ml-1" />}
         </div>
         <Image src={ArrowForwardIcon} alt=">" />
       </div>
