@@ -10,19 +10,14 @@ import { useMembersQuery } from '@/hooks/react-query/use-query-members';
 const MembersTable = ({ dashboardId }: DashboardIdProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, fetchNextPage } = useMembersQuery(dashboardId);
-
-  const membersInfo = data?.[currentPage - 1];
-  const totalPage = membersInfo && Math.ceil(membersInfo.totalCount / MEMBERS_PER_PAGE);
+  const { data } = useMembersQuery(dashboardId, currentPage);
+  const membersInfo = data?.members.filter((member) => !member.isOwner);
+  const owner = data?.members.filter((member) => member.isOwner);
+  const totalPage = data && Math.ceil(data.totalCount / MEMBERS_PER_PAGE);
 
   const handleNextPageClick = async () => {
     if (currentPage === totalPage) return;
-    try {
-      await fetchNextPage();
-      setCurrentPage(currentPage + 1);
-    } catch (error) {
-      console.log(error);
-    }
+    setCurrentPage(currentPage + 1);
   };
 
   const handlePreviousPageClick = () => {
@@ -56,8 +51,11 @@ const MembersTable = ({ dashboardId }: DashboardIdProps) => {
       </header>
       <h4 className="px-5 text-sm leading-[17px] text-grayscale-50 sm:text-base sm:px-7 sm:leading-[19px]">이름</h4>
       <ul>
-        {membersInfo?.members?.map((member) => (
-          <TableListItem key={member.id} member={member} dashboardId={dashboardId} />
+        {owner?.map((member) => (
+          <TableListItem key={member.id} member={member} dashboardId={dashboardId} currentPage={currentPage} />
+        ))}
+        {membersInfo?.map((member) => (
+          <TableListItem key={member.id} member={member} dashboardId={dashboardId} currentPage={currentPage} />
         ))}
       </ul>
     </div>

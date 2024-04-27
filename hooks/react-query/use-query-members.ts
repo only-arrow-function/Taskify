@@ -1,47 +1,24 @@
-import { QueryClient, useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import membersRequests from '@/apis/members-request';
-import { MEMBERS_PER_PAGE } from '@/components/tables/members-constants';
 
-export const useMembersQuery = (dashboardId: number | undefined) => {
+export const useMembersQuery = (dashboardId: number | undefined, currentPage: number) => {
   if (!dashboardId) return { data: null, isPending: null };
 
-  const { data, isSuccess, isPending, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: [`${dashboardId}-members`],
-    initialPageParam: 1,
-    queryFn: async ({ pageParam }) => await membersRequests.getMembers(dashboardId, pageParam),
-    getNextPageParam: (lastPage, allPages) => {
-      if (!lastPage) return undefined;
-
-      const totalPage = Math.ceil(lastPage.totalCount / MEMBERS_PER_PAGE);
-      const nextPage = allPages.length + 1;
-
-      if (nextPage <= totalPage) {
-        return nextPage;
-      } else {
-        return undefined;
-      }
-    },
-    select: (data) => {
-      return data.pages;
-    },
+  const { data, isSuccess, isError } = useQuery({
+    queryKey: ['members', dashboardId, currentPage],
+    queryFn: () => membersRequests.getMembers(dashboardId, currentPage),
   });
 
-  return {
-    data,
-    isSuccess,
-    isPending,
-    isLoading,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  };
+  return { data, isSuccess, isError };
 };
 
-export const useDeleteMembers = (dashboardId: string, memberId: string, queryClient: QueryClient) => {
+export const useDeleteMembers = (dashboardId: number, memberId: number, currentPage: number) => {
+  const queryClient = useQueryClient();
+
   const query = useMutation({
     mutationFn: async () => await membersRequests.deleteMember(memberId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`${dashboardId}-members`] });
+      queryClient.invalidateQueries({ queryKey: ['members', dashboardId, currentPage] });
     },
     onError: (error) => {
       console.error('에러 발생:', error);
