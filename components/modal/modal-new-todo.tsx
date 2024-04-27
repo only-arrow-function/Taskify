@@ -58,9 +58,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
     setter(target.value);
   };
 
-  const handleSubmit: FormEventHandler = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     if (!isFilled) return;
 
     let data;
@@ -94,54 +92,52 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
       <Dimmed handleCloseModal={handleCloseModal} />
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
-        <form onSubmit={handleSubmit}>
-          <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} />
-          <InputField
-            label="제목"
-            type="text"
-            id="title"
-            placeholder="제목을 입력해주세요"
-            value={formState.title}
-            onChange={(e) => handleStateChange(e, setTitle)}
-          />
-          <InputField
-            label="설명"
-            type=""
-            id="context"
-            placeholder="설명을 입력해주세요"
-            value={formState.description}
-            onChange={(e) => handleStateChange(e, setDescription)}
-          />
-          <InputWithCalendar
-            label="마감일"
-            value={formState.dueDate}
-            onChange={(e) => handleStateChange(e, setDueDate)}
-          />
-          <InputWithTag
-            label="태그"
-            id="tag"
-            type="text"
-            placeholder="입력 후 Enter"
-            tags={formState.tags}
-            onAddTag={setAddTag}
-            onRemoveTag={setRemoveTag}
-          />
-          <InputWithImg
-            label="이미지"
-            id="image"
-            value={formState.imageUrl}
-            onChangeImageURL={setImageUrl}
-            columnId={columnId}
-          />
-          <div className="flex justify-end items-center gap-[10px] mt-[10px]">
-            <BasicButton purpose="negative" eventHandler={handleCloseModal}>
-              취소
-            </BasicButton>
-            <BasicButton type="submit" purpose="positive">
-              확인
-            </BasicButton>
-          </div>
-        </form>
+        <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} />
+        <InputField
+          label="제목"
+          type="text"
+          id="title"
+          placeholder="제목을 입력해주세요"
+          value={formState.title}
+          onChange={(e) => handleStateChange(e, setTitle)}
+        />
+        <InputField
+          label="설명"
+          type=""
+          id="context"
+          placeholder="설명을 입력해주세요"
+          value={formState.description}
+          onChange={(e) => handleStateChange(e, setDescription)}
+        />
+        <InputWithCalendar
+          label="마감일"
+          value={formState.dueDate}
+          onChange={(e) => handleStateChange(e, setDueDate)}
+        />
+        <InputWithTag
+          label="태그"
+          id="tag"
+          type="text"
+          placeholder="입력 후 Enter"
+          tags={formState.tags}
+          onAddTag={setAddTag}
+          onRemoveTag={setRemoveTag}
+        />
+        <InputWithImg
+          label="이미지"
+          id="image"
+          value={formState.imageUrl}
+          onChangeImageURL={setImageUrl}
+          columnId={columnId}
+        />
+        <div className="flex justify-end items-center gap-[10px] mt-[10px]">
+          <BasicButton purpose="negative" eventHandler={handleCloseModal}>
+            취소
+          </BasicButton>
+          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit}>
+            확인
+          </BasicButton>
+        </div>
       </ModalNewTodoLayout>
     </>
   );

@@ -2,6 +2,7 @@ import { useInfiniteQuery, useMutation, QueryClient, useQueryClient } from '@tan
 
 import cardsRequests from '@/apis/cards-request';
 import { Card } from '@/types/card';
+import { ColumnItem } from '@/components/modal/column/columns-data.type';
 
 const PAGE_COUNT = 5;
 
@@ -44,12 +45,12 @@ export const useCreateCard = (columnId: number) => {
   });
 };
 
-export const useUpdateCard = (columnId: number) => {
+export const useUpdateCard = (columns: ColumnItem[]) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (cardData: any) => cardsRequests.putCard(cardData.id, cardData.data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [`${columnId}-cards`] }),
+    onSuccess: () => columns.map((column) => queryClient.invalidateQueries({ queryKey: [`${column.id}-cards`] })),
     onError: () => console.log('useUpdateCard Error'),
   });
 };

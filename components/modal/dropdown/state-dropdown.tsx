@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
+import { ColumnItem } from '../column/columns-data.type';
 import ProgressChip from '@/components/chips/progress-chip';
 import { useHandleDropdown } from '@/hooks/use-handle-dropdown';
 import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
@@ -9,11 +10,13 @@ import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 const CURRENT_STATE = ['To Do', 'On_Progress', 'Done'];
 
 interface StateDropdownProps {
-  columnState: string;
   placeholder?: string;
+  onSelectedColumn: (updateColumn: ColumnItem) => void;
+  columnStates: ColumnItem[];
+  selectedState: ColumnItem;
 }
 
-const StateDropdown = ({ columnState, placeholder }: StateDropdownProps) => {
+const StateDropdown = ({ placeholder, selectedState, columnStates, onSelectedColumn }: StateDropdownProps) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
 
   const columnStateRef = useRef<HTMLUListElement>(null);
@@ -38,12 +41,6 @@ const StateDropdown = ({ columnState, placeholder }: StateDropdownProps) => {
     return () => document.removeEventListener('mousedown', handleOutside);
   }, []);
 
-  const [selectedState, setSelectedState] = useState(columnState || '');
-  const handleSelectedMember = (updatedState: string) => {
-    setSelectedState(updatedState);
-    handleCloseDropdown();
-  };
-
   return (
     <div>
       <div className="flex flex-col">
@@ -52,7 +49,7 @@ const StateDropdown = ({ columnState, placeholder }: StateDropdownProps) => {
           <button className="w-full outline-none flex items-center gap-x-3" type="button" data-type="columnState">
             {selectedState ? (
               <>
-                <ProgressChip>{selectedState}</ProgressChip>
+                <ProgressChip>{selectedState.title}</ProgressChip>
               </>
             ) : (
               placeholder
@@ -64,12 +61,12 @@ const StateDropdown = ({ columnState, placeholder }: StateDropdownProps) => {
       {isOpenDropdown && (
         <div className="flex w-[287px] rounded-lg border absolute mt-1 bg-white sm:w-[217px] sm:top-[167px]">
           <ul ref={columnStateRef} className="w-full">
-            {CURRENT_STATE.map((state) => (
+            {columnStates.map((state) => (
               <li
                 className="flex items-center px-4 gap-x-3 py-[13px] cursor-pointer hover:bg-grayscale-30 w-full overflow-hidden"
-                onClick={handleSelectedMember.bind(null, state)}
+                onClick={onSelectedColumn.bind(null, state)}
               >
-                <ProgressChip>{state}</ProgressChip>
+                <ProgressChip>{state.title}</ProgressChip>
               </li>
             ))}
           </ul>

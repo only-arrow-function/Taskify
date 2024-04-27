@@ -16,6 +16,8 @@ import { useAllMembers } from '@/hooks/react-query/use-query-members';
 import { CardDetail } from '@/types/card';
 import BasicButton from '../buttons/basic-button';
 import { useUpdateCard } from '@/hooks/react-query/use-query-cards';
+import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
+import { formatDate } from '../../lib/format-date';
 
 interface ModalEditTodoProps {
   card: CardDetail;
@@ -28,20 +30,27 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
   const dashboardId = +params.id;
   const { data: members } = useAllMembers(dashboardId);
 
-  const updateCardMutation = useUpdateCard(columnData.id);
+  const fetchCoulumQuery = useColumnsQuery(dashboardId);
+  const updateCardMutation = useUpdateCard(fetchCoulumQuery.data!.data);
 
   const [title, setTitle] = useState(card.title);
   const [description, setsDescription] = useState(card.description);
-  const [dueDate, setDueDate] = useState(card.dueDate);
+  const [dueDate, setDueDate] = useState(formatDate(card.dueDate));
   const [tags, setTags] = useState(card.tags);
   const [image, setImage] = useState(card.imageUrl);
+  const [selectedState, setSelectedState] = useState<ColumnItem>(columnData);
 
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (event) => setTitle(event.target.value);
   const handleDescriptionChange: ChangeEventHandler<HTMLInputElement> = (event) => setsDescription(event.target.value);
-  const handleDueDateChange: ChangeEventHandler<HTMLInputElement> = (event) => setDueDate(event.target.value);
+  const handleDueDateChange: ChangeEventHandler<HTMLInputElement> = (event) =>
+    setDueDate(formatDate(event.target.value));
   const handleAddTag = (newTag: string) => setTags((prevTag) => [...prevTag, newTag]);
   const handleRemoveTag = (tags: string[]) => setTags([...tags]);
   const handleUpdateImage = (url: string) => setImage(url);
+
+  const handleSelectedState = (updatedState: ColumnItem) => {
+    setSelectedState(updatedState);
+  };
 
   const isDisabled = !title || !description || !dueDate || !tags;
 
@@ -52,7 +61,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
 
     if (image) {
       data = {
-        columnId: columnData.id,
+        columnId: selectedState.id,
         assigneeUserId: card.assignee.id,
         dashboardId: dashboardId,
         title: title,
@@ -63,7 +72,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
       };
     } else {
       data = {
-        columnId: columnData.id,
+        columnId: selectedState.id,
         assigneeUserId: card.assignee.id,
         dashboardId: dashboardId,
         title: title,
@@ -78,6 +87,8 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
       data,
     };
 
+    console.log(data);
+
     await updateCardMutation.mutateAsync(transformedData);
     onCloseModal();
   };
@@ -88,7 +99,11 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
       <ModalNewTodoLayout>
         <ModalTitle>할 일 수정</ModalTitle>
         <GridLayout>
-          <StateDropdown columnState={columnData.title} />
+          <StateDropdown
+            columnStates={fetchCoulumQuery.data!.data}
+            selectedState={selectedState}
+            onSelectedColumn={handleSelectedState}
+          />
           <ManagerDropdown members={members} nickname={card.assignee.nickname} />
         </GridLayout>
         <InputField
