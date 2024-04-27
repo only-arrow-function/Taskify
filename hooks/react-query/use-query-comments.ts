@@ -11,7 +11,7 @@ interface CommentRequest {
 
 export const useCommentsQuery = (cardId: number) => {
   const { data, isSuccess, isPending, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
-    queryKey: [`${cardId}-comments`],
+    queryKey: ['comments', cardId],
     queryFn: async ({ pageParam }) => await commentsRequests.getComments(cardId, pageParam),
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.cursorId,
@@ -21,20 +21,11 @@ export const useCommentsQuery = (cardId: number) => {
   return { data, isSuccess, isPending, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage };
 };
 
-export const useAddComment = (
-  {
-    commentInfo,
-    cardId,
-  }: {
-    commentInfo: CommentRequest;
-    cardId: number;
-  },
-  queryClient: QueryClient,
-) => {
+export const useAddComment = (cardId: number, queryClient: QueryClient) => {
   const mutate = useMutation({
-    mutationFn: async () => await commentsRequests.postComment(commentInfo),
+    mutationFn: async (commentInfo: CommentRequest) => await commentsRequests.postComment(commentInfo),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`${cardId}-comments`] });
+      queryClient.invalidateQueries({ queryKey: ['comments', cardId] });
     },
     onError: (error) => {
       console.error('에러 발생:', error);
@@ -47,19 +38,17 @@ export const useAddComment = (
 export const updateComment = (
   {
     commentId,
-    newContent,
     cardId,
   }: {
     commentId: number;
-    newContent: string;
-    cardId: string;
+    cardId: number;
   },
   queryClient: QueryClient,
 ) => {
   const mutate = useMutation({
-    mutationFn: async () => await commentsRequests.putComment(commentId, newContent),
+    mutationFn: async (newContent: string) => await commentsRequests.putComment(commentId, newContent),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`${cardId}-comments`] });
+      queryClient.invalidateQueries({ queryKey: ['comments', cardId] });
     },
     onError: (error) => {
       console.error('에러 발생:', error);
@@ -82,7 +71,7 @@ export const useDeleteComment = (
   const mutate = useMutation({
     mutationFn: async () => await commentsRequests.deleteComment(commentId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [`${cardId}-comments`] });
+      queryClient.invalidateQueries({ queryKey: ['comments', cardId] });
     },
     onError: (error) => {
       console.error('에러 발생:', error);
