@@ -1,12 +1,12 @@
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
-import { useHandleDropdown, useHandleDropdownOutside } from '@/hooks/use-handle-dropdown';
-
-import { Member, Members } from '@/components/tables/members.type';
-import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 import ProfileBadge from '@/components/profile/profile-badge';
 import ProfileUsername from '@/components/profile/profile-username';
-import { useEffect, useRef, useState } from 'react';
+import { Members } from '@/components/tables/members.type';
+import { useHandleDropdown, useHandleDropdownOutside } from '@/hooks/use-handle-dropdown';
+
+import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 
 interface ManagerDropdownProps {
   placeholder: string;
@@ -21,9 +21,16 @@ const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
 
   useEffect(() => {
     const handleOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+
+      if (target.closest('button')) {
+        handleToggleDropdown();
+        return;
+      }
+
       if (memberRef.current && !memberRef.current.contains(event.target as any)) {
-        console.log('??');
         handleCloseDropdown();
+        return;
       }
     };
 
@@ -42,11 +49,17 @@ const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
     <div>
       <div className="flex flex-col relative">
         <label className="text-grayscale-80 text-base font-medium">담당자</label>
-        <div
-          className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50 cursor-pointer"
-          onClick={handleToggleDropdown}
-        >
-          <button className="w-full outline-none flex items-center">{selectedMember || placeholder}</button>
+        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50 cursor-pointer">
+          <button className="w-full outline-none flex items-center">
+            {selectedMember ? (
+              <>
+                <ProfileBadge>{selectedMember.slice(0, 1)}</ProfileBadge>
+                <ProfileUsername username={selectedMember} />
+              </>
+            ) : (
+              placeholder
+            )}
+          </button>
           <Image src={ArrowDownIcon} alt="아래 화살표" />
         </div>
 
