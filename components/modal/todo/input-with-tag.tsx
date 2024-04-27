@@ -20,8 +20,9 @@ const InputWithTag = ({
   onRemoveTag: (tags: string[]) => void;
 }) => {
   const handleKeyDown: KeyboardEventHandler = (e) => {
+    e.preventDefault();
+
     const target = e.target as HTMLInputElement;
-    console.log(target.value);
     if (e.key !== 'Enter' && e.key !== 'Backspace') return;
 
     if (e.key === 'Enter') {
@@ -39,6 +40,7 @@ const InputWithTag = ({
       onAddTag(addTag);
       target.value = '';
 
+      console.log('??');
       return;
     }
 
