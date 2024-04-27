@@ -21,9 +21,10 @@ const DashboardHeader = ({ dashboardId }: { dashboardId?: number }) => {
   const beforeStyles = isPathMyDashboard
     ? ''
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
-  const { data: usersData } = useMembersQuery(dashboardId);
-  const users = usersData?.[0].members.map((member) => member.nickname) || [];
-  const usersCount = usersData?.[0].totalCount || 0;
+  const { data: usersData } = useMembersQuery(dashboardId, 1);
+
+  const users = usersData?.members.map((member) => member.nickname) || [];
+  const usersCount = usersData?.totalCount || 0;
 
   return (
     <header className="border-b border-grayscale-40 py-6">
