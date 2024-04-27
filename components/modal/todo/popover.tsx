@@ -1,18 +1,22 @@
-import useCard from '@/hooks/swr/use-card';
+import { useQueryClient } from '@tanstack/react-query';
+import { useDeleteCard } from '@/hooks/react-query/use-query-card';
 
 const Popover = ({
   cardId,
+  columnId,
   onClosePopover,
   onModifyButtonClick,
 }: {
   cardId: number;
+  columnId: number;
   onClosePopover: () => void;
   onModifyButtonClick: () => void;
 }) => {
-  const { deleteCard } = useCard(cardId);
+  const queryClient = useQueryClient();
+  const { mutate } = useDeleteCard({ cardId, columnId }, queryClient);
 
   const handleDeleteButtonClick = () => {
-    deleteCard();
+    mutate();
     onClosePopover();
   };
 

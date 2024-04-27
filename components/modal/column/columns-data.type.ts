@@ -2,10 +2,10 @@ export interface ColumnItem {
   createdAt: string;
   updatedAt: string;
   createdByMe: boolean;
-  id: string;
+  id: number;
   title: string;
-  teamId: string;
-  dashboardId: string;
+  teamId: number;
+  dashboardId: number;
 }
 
 export interface ColumnResponse {

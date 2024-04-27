@@ -6,7 +6,7 @@ export const useInvitedDashboard = (title?: string) => {
     queryKey: [`invited-dashboard${title ? `/${title}` : ''}`],
     queryFn: async ({ pageParam }) => await invitationRequest.getInvitations({ cursorId: pageParam, title }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPage) => {
+    getNextPageParam: (lastPage) => {
       return lastPage.cursorId;
     },
     select: (data) => data.pages,

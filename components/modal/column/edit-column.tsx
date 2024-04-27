@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import columnRequest from '@/apis/column-request';
 import InputField from '@/components/inputs/input-field';
@@ -15,6 +15,7 @@ import { useHandleModal, useHandleModalOutside } from '@/hooks/use-handle-modal'
 interface NewColumnProp {
   onClose: () => void;
   // prettier-ignore
+
   // data:
   //   {
   //       data: ColumnResponse | undefined;
@@ -23,7 +24,7 @@ interface NewColumnProp {
   //       mutate: KeyedMutator<ColumnResponse>;
   //     }
   //   | undefined;
-  columnId: string;
+  columnId: number;
   columnTitle: string;
 }
 
@@ -33,7 +34,7 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
   const [error, setError] = useState('');
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const modalRef = useHandleModalOutside(() => '', onClose);
-  
+
   // server state
   const queryClient = useQueryClient();
   const { data } = useColumnsQuery(dashboardId);
@@ -67,7 +68,7 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
     <div ref={modalRef}>
       {isOpenModal && (
         <Modal>
-          <RemoveColumn onClose={handleCloseModal} columnId={columnId} dashboardId={dashboardId}/>
+          <RemoveColumn onClose={handleCloseModal} columnId={columnId} dashboardId={dashboardId} />
         </Modal>
       )}
       <ModalTitle>컬럼 관리</ModalTitle>

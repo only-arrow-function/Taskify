@@ -14,7 +14,6 @@ const DashboardInviteTable = ({ searchTitle }: { searchTitle?: string }) => {
 
   if (!data) return null;
   const invitations = data.map((invitationsData) => invitationsData.invitations).flat();
-  console.log(invitations);
 
   return (
     <div>

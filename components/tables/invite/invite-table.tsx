@@ -5,7 +5,7 @@ import InviteCancelButton from './invite-cancel-button';
 import InviteTableSkeleton from './invite-table-skeleton';
 import BasicButton from '../../buttons/basic-button';
 import DashboardPaginationButton from '../../buttons/pagination/dashboard-pagination-button';
-import InviteModal from '../../dashboard/modal/Invite-modal';
+// import InviteModal from '../../dashboard/modal/Invite-modal';
 
 import { DashboardIdProps, InvitationsDataProps, InviteeType } from '@/constant/type/data/dashboard.type';
 
@@ -14,9 +14,11 @@ import { useHandleModal } from '@/hooks/use-handle-modal';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
+import { useInviteToggleStore } from '@/store/invite/invite-toggle-store';
 
 const InviteTable = ({ dashboardId }: DashboardIdProps) => {
-  const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
+  //const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
+  const { handleOpenToggle } = useInviteToggleStore();
   const [currentPage, setCurrentPage] = useState(1);
 
   // server state
@@ -56,7 +58,7 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
       </div>
       <div className="flex justify-between items-center mb-[10px]">
         <span className="text-grayscale-50 text-sm font-normal leading-normal">이메일</span>
-        <BasicButton purpose="positive" eventHandler={handleOpenModal}>
+        <BasicButton purpose="positive" eventHandler={handleOpenToggle}>
           초대하기
         </BasicButton>
       </div>
@@ -82,9 +84,6 @@ const InviteTable = ({ dashboardId }: DashboardIdProps) => {
           </>
         )}
       </ul>
-      {isOpenModal && (
-        <InviteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} totalPages={data?.totalPages} />
-      )}
     </div>
   );
 };
