@@ -1,8 +1,8 @@
 import axios from './axios';
 
 import getToken from './localStorage';
-import { ColumnType } from '@/types/fetch-column.type';
 import { Card } from '@/types/card';
+import { ColumnType } from '@/types/fetch-column.type';
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -12,7 +12,7 @@ const headers = {
 };
 
 const cardsRequests = Object.freeze({
-  fetchCards: async (columnId: string, cursorId: number) => {
+  fetchCards: async (columnId: number, cursorId: number) => {
     const { data } = await axios.get<ColumnType>(`/cards`, {
       headers: { Authorization: `Bearer ${token}` },
       params: {

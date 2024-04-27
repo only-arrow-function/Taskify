@@ -21,21 +21,25 @@ const CardList = (props: CardListProps) => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    error,
   } = useInfiniteCardsQuery(props.columnId);
 
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
-  if (typeof data === 'undefined' || error) return console.log(error, typeof data);
+  if (typeof cardsData === 'undefined' || error) {
+    console.log(error, typeof cardsData);
+    return;
+  }
   return (
     <>
       {isOpenModal && (
         <Modal>
-          <EditColumn onClose={handleCloseModal} columnId={props.id} columnTitle={props.title} />
+          <EditColumn onClose={handleCloseModal} columnId={props.columnId} columnTitle={props.title} />
         </Modal>
       )}
       <CardListLayout>
-        <CardListHeader title={props.title} count={Number(data?.totalCount)} onClick={handleOpenModal} />
-        <AddCard />
-        {data.pages.map((page) => {
+        <CardListHeader title={props.title} count={Number(cardsData?.totalCount)} onClick={handleOpenModal} />
+        <AddCard columnId={props.columnId} />
+        {cardsData.pages.map((page) => {
           return page.cards.map((card, idx) => {
             return (
               <Draggable key={card.id} draggableId={String(card.id)} index={idx}>

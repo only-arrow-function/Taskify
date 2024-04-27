@@ -11,7 +11,7 @@ import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
-  id: string;
+  id: number;
 }
 
 const ColumnList = (props: ColumnListProps) => {
@@ -51,13 +51,13 @@ const ColumnList = (props: ColumnListProps) => {
       )}
       <DragDropContext onDragEnd={handleDropCard}>
         <ColumnListLayout>
-          {data?.data &&
-            data.data.map((data) => {
+          {columnData?.data &&
+            columnData.data.map((data) => {
               return (
                 <Droppable key={data.id} droppableId={data.title}>
                   {(provided, snapshot) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                      <CardList id={data.id} title={data.title} dashboardId={props.id} />
+                      <CardList columnId={data.id} title={data.title} dashboardId={props.id} />
                       {provided.placeholder}
                     </div>
                   )}

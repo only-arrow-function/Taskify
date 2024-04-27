@@ -6,7 +6,7 @@ import { Card } from '@/types/card';
 const PAGE_COUNT = 5;
 
 export const useInfiniteCardsQuery = (columnId: number) => {
-  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
+  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage, error } = useInfiniteQuery({
     queryKey: [`${columnId}-cards`],
     initialPageParam: 1,
     queryFn: async ({ pageParam = 1 }) => await cardsRequests.fetchCards(columnId, pageParam),
