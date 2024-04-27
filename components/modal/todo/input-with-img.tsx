@@ -10,23 +10,25 @@ const InputWithImg = ({
   id,
   value,
   onChangeImageURL,
+  columnId,
 }: {
   label: string;
   id: string;
   value: string;
   onChangeImageURL: (url: string) => void;
+  columnId: number;
 }) => {
   const handleChange = async (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
     if (!target.files) return;
 
-    const file = target.files?.[0];
+    const file = target.files[0];
 
     const formData = new FormData();
     formData.append('image', file);
 
-    const imageUrl = await requests.postCardImage(tempColumnId, formData);
+    const imageUrl = await requests.postCardImage(columnId, formData);
 
     onChangeImageURL(imageUrl);
   };

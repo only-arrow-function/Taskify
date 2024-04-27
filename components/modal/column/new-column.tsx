@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 
 import { ColumnResponse } from './columns-data.type';

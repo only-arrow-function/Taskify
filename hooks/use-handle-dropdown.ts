@@ -1,20 +1,22 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from 'react';
 
 export const useHandleDropdown = () => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
 
   const handleOpenDropdown = () => {
     setIsOpenDropdown(true);
-  }
+  };
 
   const handleCloseDropdown = () => {
     setIsOpenDropdown(false);
-  }
+  };
 
-  return { isOpenDropdown, handleOpenDropdown, handleCloseDropdown };
-}
+  const handleToggleDropdown = () => setIsOpenDropdown((prev) => !prev);
 
-export const useHandleDropdownOutside = (onClickInside: () => void, onClickOutside : () => void) => {
+  return { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown };
+};
+
+export const useHandleDropdownOutside = (onClickInside: () => void, onClickOutside: () => void) => {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -31,8 +33,7 @@ export const useHandleDropdownOutside = (onClickInside: () => void, onClickOutsi
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-
-  }, [ onClickOutside ]);
+  }, [onClickOutside]);
 
   return ref;
-}
+};

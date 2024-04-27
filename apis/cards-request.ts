@@ -1,6 +1,7 @@
 import axios from './axios';
 
 import getToken from './localStorage';
+import { Card } from '@/types/card';
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -10,14 +11,14 @@ const headers = {
 };
 
 const cardsRequests = Object.freeze({
-  fetchCards: async (columnId: string, cursorId: number) => {
+  fetchCards: async (columnId: number, cursorId: number) => {
     try {
       if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
       const { data } = await axios.get(`/cards`, {
         headers: { Authorization: `Bearer ${token}` },
         params: {
           size: 5,
-          cursorId,
+          // cursorId,
           columnId: columnId,
         },
       });
@@ -28,7 +29,7 @@ const cardsRequests = Object.freeze({
     }
   },
 
-  postCard: async (cardInfo: any) => {
+  postCard: async (cardInfo: Card) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
     try {
@@ -42,7 +43,7 @@ const cardsRequests = Object.freeze({
       console.log(ERROR_MESSAGE, err.message);
     }
   },
-  
+
   putCard: async (cardId: number, cardInfo: any) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
