@@ -2,12 +2,12 @@ import { GetServerSideProps } from 'next';
 
 import EditDashboard from '@/components/dashboard/edit/edit-dashboard';
 import ReturnDashboardPage from '@/components/dashboard/edit/return-dashboard-page';
-import InviteTable from '@/components/tables/invite/invite-table';
-import MembersTable from '@/components/tables/members-table';
-import { IdProps } from '@/constant/type/data/dashboard.type';
 import DashboardHeader from '@/components/dashboard/header/dashboard-header';
 import DashboardSectionLayout from '@/components/dashboard/layout/dashboard-section-layout';
 import SideMenu from '@/components/side-menu/side-menu';
+import InviteTable from '@/components/tables/invite/invite-table';
+import MembersTable from '@/components/tables/members-table';
+import { IdProps } from '@/constant/type/data/dashboard.type';
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

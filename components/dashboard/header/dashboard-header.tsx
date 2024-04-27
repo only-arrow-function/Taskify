@@ -1,15 +1,19 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
+import InviteModal from '../modal/Invite-modal';
 import DashboardHeaderButton from '@/components/dashboard/header/dashboard-header-button';
 import DashboardHeaderMembers from '@/components/dashboard/header/dashboard-header-members';
 import DashboardHeaderProfile from '@/components/dashboard/header/dashboard-header-profile';
 import { useDashboardDetailQuery } from '@/hooks/react-query/use-query-dashboard';
 import dashboardInviteIcon from '@/public/dashboard/dashboard-invite.svg';
 import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg';
+import { useInviteToggleStore } from '@/store/invite/invite-toggle-store';
 
 const DashboardHeader = ({dashboardId}: {dashboardId?: number}) => {
   const router = useRouter();
   const isPathMyDashboard = router.pathname.match('my');
+  const { isToggle, handleOpenToggle, handleCloseToggle } = useInviteToggleStore();
 
   // server state
   const { data } = useDashboardDetailQuery(dashboardId);
@@ -31,7 +35,7 @@ const DashboardHeader = ({dashboardId}: {dashboardId?: number}) => {
             </Link>
           </div>
           <div className="ml-4">
-            <DashboardHeaderButton imageSource={dashboardInviteIcon.src}>초대하기</DashboardHeaderButton>
+            <DashboardHeaderButton imageSource={dashboardInviteIcon.src} onClick={handleOpenToggle}>초대하기</DashboardHeaderButton>
           </div>
           <div className="hidden ml-10 md:ml-6 lg:block lg:ml-10">
             <DashboardHeaderMembers users={['윤아영', '노은수', '김재성', '구승모', '동현이', '이은수']} />
@@ -41,6 +45,9 @@ const DashboardHeader = ({dashboardId}: {dashboardId?: number}) => {
           </div>
         </div>
       </div>
+      {isToggle && (
+        <InviteModal handleCloseModal={handleCloseToggle} dashboardId={dashboardId} totalPages={data?.totalPages} />
+      )}
     </header>
   );
 };
