@@ -15,10 +15,9 @@ export default function App({ Component, pageProps, router }: AppProps) {
   //   return (
   //     <QueryClientProvider client={queryClient}>
   //       <HydrationBoundary state={pageProps.dehydratedState}>
-
-  //         {/* <DashboardLayout> */}
+  //         <DashboardLayout>
   //           <Component {...pageProps} />
-  //         {/* </DashboardLayout> */}
+  //         </DashboardLayout>
   //       </HydrationBoundary>
   //       <ReactQueryDevtools />
   //     </QueryClientProvider>

@@ -1,6 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-import columnRequest from '@/apis/column-request';
 import ModalButton from '@/components/modal/modal-button';
 import { useColumnsDeleteMutation } from '@/hooks/react-query/use-query-columns';
 

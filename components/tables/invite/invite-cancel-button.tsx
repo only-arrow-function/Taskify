@@ -6,7 +6,7 @@ import { useInvitationsDeleteMutation } from '@/hooks/react-query/use-query-invi
 interface TableButtonProps {
   purpose: 'positive' | 'negative';
   invitationId: string;
-  dashboardId: string;
+  dashboardId: number;
 }
 
 const InviteCancelButton = ({ purpose, children, invitationId, dashboardId }: PropsWithChildren<TableButtonProps>) => {

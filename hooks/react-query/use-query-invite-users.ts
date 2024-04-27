@@ -3,7 +3,7 @@ import { useInfiniteQuery, useMutation, QueryClient } from '@tanstack/react-quer
 import inviteRequests from '@/apis/invite-request';
 
 interface QueryProps {
-  dashboardId: string;
+  dashboardId: number;
   page?: number;
 }
 
@@ -32,7 +32,7 @@ export const useInfiniteInviteUsersQuery = ({ dashboardId }: QueryProps) => {
 };
 
 export const useInvitationsMutation = (
-  dashboardId: string,
+  dashboardId: number,
   { email: input }: { email: string },
   queryClient: QueryClient,
 ) => {
@@ -47,7 +47,7 @@ export const useInvitationsMutation = (
   return query;
 };
 
-export const useInvitationsDeleteMutation = (dashboardId: string, invitationId: string, queryClient: QueryClient) => {
+export const useInvitationsDeleteMutation = (dashboardId: number, invitationId: string, queryClient: QueryClient) => {
   const query = useMutation({
     mutationFn: async () => await inviteRequests.deleteInvitedUser(dashboardId, invitationId),
     onSuccess: () => {

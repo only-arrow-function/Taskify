@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+
 import ColumnList from '@/components/card/column/column-list';
 import DashboardLayout from '@/components/dashboard/layout/dashboard-layout';
 
@@ -17,6 +18,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 export default function index({ id }: Props) {
+  const idToNumber = Number(id);
+
   return (
     <DashboardLayout>
       <main>
