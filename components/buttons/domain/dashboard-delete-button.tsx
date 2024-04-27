@@ -1,7 +1,7 @@
 import DashboardBase from './commons/dashboard-base';
 import DomainButtonName from './commons/domain-button-name';
 
-const DashboardDeleteButton = () => {
+const DashboardDeleteButton = ({dashboardId}: {dashboardId: number}) => {
   return (
     <DashboardBase purpose="dashboard-delete">
       <div className='flex items-center justify-center gap-x-3'>
