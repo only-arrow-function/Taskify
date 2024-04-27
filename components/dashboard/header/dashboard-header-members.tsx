@@ -1,27 +1,22 @@
 import { useRouter } from 'next/router';
 import ProfileBadge from '@/components/profile/profile-badge';
 
-const DashboardHeaderMembers = (props: { users: string[] }) => {
+const DashboardHeaderMembers = (props: { users: string[]; totalCount: number }) => {
   const router = useRouter();
   if (router.pathname.match('my')) return null;
 
-  const isGreaterThanFive = props.users.length > 5;
-  const remainingUserCount = props.users.length - 4;
-  const users = props.users.slice(0, 4);
+  const isGreaterThanFive = props.totalCount > 5;
+  const remainingUserCount = props.totalCount - 4;
 
   return (
     <ul className="flex relative">
-      {users.map((user, index) => (
+      {props.users.map((user, index) => (
         <li key={index}>
-          <ProfileBadge styles={index >= 1 ? '-ml-[10px]' : ''}>
-            {user.slice(0, 1)}
-          </ProfileBadge>
+          <ProfileBadge styles={index >= 1 ? '-ml-[10px]' : ''}>{user.slice(0, 1)}</ProfileBadge>
         </li>
       ))}
 
-      {isGreaterThanFive && (
-        <ProfileBadge styles="-ml-[10px]">+{remainingUserCount}</ProfileBadge>
-      )}
+      {isGreaterThanFive && <ProfileBadge styles="-ml-[10px]">+{remainingUserCount}</ProfileBadge>}
     </ul>
   );
 };
