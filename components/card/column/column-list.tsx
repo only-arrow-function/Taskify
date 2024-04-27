@@ -6,16 +6,17 @@ import ColumnListLayout from '@/components/card/column/column-list-layout';
 import NewColumn from '@/components/modal/column/new-column';
 import Dimmed from '@/components/modal/dimmed';
 import ModalLayout from '@/components/modal/modal-layout';
-
 import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
+import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
-  id: string | string[] | undefined;
+  id: string;
 }
 
 const ColumnList = (props: ColumnListProps) => {
-  const { data } = useColumnsQuery(Number(props.id));
+  const dashboardId = +props.id;
+  const { data: columnData } = useColumnsQuery(dashboardId);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const [cardList, setCardList] = useState([]);
   const [enabled, setEnabled] = useState(false);
@@ -44,7 +45,7 @@ const ColumnList = (props: ColumnListProps) => {
         <>
           <Dimmed handleCloseModal={handleCloseModal} />
           <ModalLayout>
-            <NewColumn onClose={handleCloseModal} data={data} />
+            <NewColumn onClose={handleCloseModal} data={columnData} />
           </ModalLayout>
         </>
       )}

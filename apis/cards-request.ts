@@ -2,6 +2,7 @@ import axios from './axios';
 
 import getToken from './localStorage';
 import { ColumnType } from '@/types/fetch-column.type';
+import { Card } from '@/types/card';
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -23,7 +24,7 @@ const cardsRequests = Object.freeze({
     return data;
   },
 
-  postCard: async (cardInfo: any) => {
+  postCard: async (cardInfo: Card) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
     try {

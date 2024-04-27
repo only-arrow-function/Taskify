@@ -9,14 +9,20 @@ import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface CardListProps {
-  id: string;
+  columnId: number;
   title: string;
-  dashboardId: string | string[] | undefined;
+  dashboardId: number;
 }
 const CardList = (props: CardListProps) => {
-  const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage, error } = useInfiniteCardsQuery(
-    props.id,
-  );
+  const {
+    data: cardsData,
+    isSuccess,
+    isPending,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useInfiniteCardsQuery(props.columnId);
+
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   if (typeof data === 'undefined' || error) return console.log(error, typeof data);
   return (
