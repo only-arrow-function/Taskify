@@ -1,18 +1,18 @@
 import { Draggable } from 'react-beautiful-dnd';
-import CommentSpinner from '../modal/todo/comment-spinner';
 import AddCard from '@/components/card/add-card';
 import CardListHeader from '@/components/card/card-list-header';
 import CardListLayout from '@/components/card/card-list-layout';
 import TaskCard from '@/components/card/task-card';
+import { ColumnItem } from '@/components/modal/column/columns-data.type';
 import EditColumn from '@/components/modal/column/edit-column';
 import Modal from '@/components/modal/modal';
+import CommentSpinner from '@/components/modal/todo/comment-spinner';
 import { useInfiniteCardsQuery } from '@/hooks/react-query/use-query-cards';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 import useIntersect from '@/hooks/use-intersect';
 
 interface CardListProps {
-  columnId: number;
-  title: string;
+  columnData: ColumnItem;
   dashboardId: number;
 }
 const CardList = (props: CardListProps) => {
@@ -24,7 +24,7 @@ const CardList = (props: CardListProps) => {
     isFetchingNextPage,
     fetchNextPage,
     error,
-  } = useInfiniteCardsQuery(props.columnId);
+  } = useInfiniteCardsQuery(props.columnData.id);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -42,12 +42,16 @@ const CardList = (props: CardListProps) => {
     <>
       {isOpenModal && (
         <Modal>
-          <EditColumn onClose={handleCloseModal} columnId={props.columnId} columnTitle={props.title} />
+          <EditColumn onClose={handleCloseModal} columnId={props.columnData.id} columnTitle={props.columnData.title} />
         </Modal>
       )}
       <CardListLayout>
-        <CardListHeader title={props.title} count={Number(cardsData?.totalCount)} onClick={handleOpenModal} />
-        <AddCard columnId={props.columnId} />
+        <CardListHeader
+          title={props.columnData.title}
+          count={Number(cardsData?.totalCount)}
+          onClick={handleOpenModal}
+        />
+        <AddCard columnId={props.columnData.id} />
         {cardsData.pages.map((page) => {
           return page.cards.map((card, idx) => {
             return (
@@ -62,6 +66,7 @@ const CardList = (props: CardListProps) => {
                         tags={card.tags}
                         assignee={card.assignee}
                         imageUrl={card?.imageUrl}
+                        columnData={props.columnData}
                       />
                     </div>
                   );

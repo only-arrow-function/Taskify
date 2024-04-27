@@ -57,7 +57,7 @@ const ColumnList = (props: ColumnListProps) => {
                 <Droppable key={data.id} droppableId={data.title}>
                   {(provided, snapshot) => (
                     <div ref={provided.innerRef} {...provided.droppableProps}>
-                      <CardList columnId={data.id} title={data.title} dashboardId={props.id} />
+                      <CardList columnData={data} dashboardId={props.id} />
                       {provided.placeholder}
                     </div>
                   )}

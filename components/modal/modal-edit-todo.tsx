@@ -1,5 +1,7 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ChangeEventHandler, FormEventHandler, MouseEventHandler, useState } from 'react';
+import { useParams } from 'next/navigation';
 import BackDrop from './backdrop';
+import { ColumnItem } from './column/columns-data.type';
 import GridLayout from './dropdown/grid-layout';
 import StateDropdown from './dropdown/state-dropdown';
 import ModalNewTodoLayout from './modal-newTodo-layout';
@@ -10,50 +12,106 @@ import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
 import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
-import useCard from '@/hooks/swr/use-card';
-import { isFormFilled } from '@/lib/domain/is-form-filled';
+import { useAllMembers } from '@/hooks/react-query/use-query-members';
+import { CardDetail } from '@/types/card';
+import BasicButton from '../buttons/basic-button';
+import { useUpdateCard } from '@/hooks/react-query/use-query-cards';
+import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
+import { formatDate } from '../../lib/format-date';
 
-const tempCardId = 5028;
+interface ModalEditTodoProps {
+  card: CardDetail;
+  columnData: ColumnItem;
+  onCloseModal: () => void;
+}
 
-const ModalEditTodo = () => {
-  const { data, updateCard, mutate } = useCard(tempCardId);
+const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) => {
+  const params = useParams();
+  const dashboardId = +params.id;
+  const { data: members } = useAllMembers(dashboardId);
 
-  if (!data) return;
-  const { title, description, dueDate, tags, imageUrl } = data;
+  const fetchCoulumQuery = useColumnsQuery(dashboardId);
+  const updateCardMutation = useUpdateCard(fetchCoulumQuery.data!.data);
 
-  const handleValueChange = (name: string) => (e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
+  const [title, setTitle] = useState(card.title);
+  const [description, setsDescription] = useState(card.description);
+  const [dueDate, setDueDate] = useState(formatDate(card.dueDate));
+  const [tags, setTags] = useState(card.tags);
+  const [image, setImage] = useState(card.imageUrl);
+  const [selectedState, setSelectedState] = useState<ColumnItem>(columnData);
 
-    mutate({ ...data, [name]: target.value }, { revalidate: false });
+  const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (event) => setTitle(event.target.value);
+  const handleDescriptionChange: ChangeEventHandler<HTMLInputElement> = (event) => setsDescription(event.target.value);
+  const handleDueDateChange: ChangeEventHandler<HTMLInputElement> = (event) =>
+    setDueDate(formatDate(event.target.value));
+  const handleAddTag = (newTag: string) => setTags((prevTag) => [...prevTag, newTag]);
+  const handleRemoveTag = (tags: string[]) => setTags([...tags]);
+  const handleUpdateImage = (url: string) => setImage(url);
+
+  const handleSelectedState = (updatedState: ColumnItem) => {
+    setSelectedState(updatedState);
   };
 
-  const handleTagAdd = (newTag: string) => {
-    mutate({ ...data, tags: [...tags, newTag] }, { revalidate: false });
-  };
+  const isDisabled = !title || !description || !dueDate || !tags;
 
-  const handleTagRemove = () => {
-    mutate({ ...data, tags: tags.slice(0, -1) }, { revalidate: false });
-  };
+  const handleSubmit = async () => {
+    if (isDisabled) return;
 
-  const handleImageURLChange = (url: string) => {
-    mutate({ ...data, imageUrl: url }, { revalidate: false });
+    let data: any;
+
+    if (image) {
+      data = {
+        columnId: selectedState.id,
+        assigneeUserId: card.assignee.id,
+        dashboardId: dashboardId,
+        title: title,
+        description,
+        tags,
+        dueDate,
+        imageUrl: image,
+      };
+    } else {
+      data = {
+        columnId: selectedState.id,
+        assigneeUserId: card.assignee.id,
+        dashboardId: dashboardId,
+        title: title,
+        description,
+        tags,
+        dueDate,
+      };
+    }
+
+    const transformedData = {
+      id: card.id,
+      data,
+    };
+
+    console.log(data);
+
+    await updateCardMutation.mutateAsync(transformedData);
+    onCloseModal();
   };
 
   return (
     <>
-      <BackDrop />
+      <BackDrop onCloseModal={onCloseModal} />
       <ModalNewTodoLayout>
-        <ModalTitle>할 일 생성</ModalTitle>
+        <ModalTitle>할 일 수정</ModalTitle>
         <GridLayout>
-          <StateDropdown />
-          <ManagerDropdown placeholder="이름을 입력해 주세요" />
+          <StateDropdown
+            columnStates={fetchCoulumQuery.data!.data}
+            selectedState={selectedState}
+            onSelectedColumn={handleSelectedState}
+          />
+          <ManagerDropdown members={members} nickname={card.assignee.nickname} />
         </GridLayout>
         <InputField
           label="제목"
           type="text"
           id="title"
           value={title}
-          onChange={handleValueChange('title')}
+          onChange={handleTitleChange}
           placeholder="제목을 입력해주세요"
         />
         <InputField
@@ -61,21 +119,34 @@ const ModalEditTodo = () => {
           type=""
           id="context"
           value={description}
-          onChange={handleValueChange('description')}
+          onChange={handleDescriptionChange}
           placeholder="설명을 입력해주세요"
         />
-        <InputWithCalendar label="마감일" value={dueDate} onChange={handleValueChange('dueDate')} />
+        <InputWithCalendar label="마감일" value={dueDate} onChange={handleDueDateChange} />
         <InputWithTag
           label="태그"
           id="tag"
           type="text"
           placeholder="입력 후 Enter"
           tags={tags}
-          onAddTag={handleTagAdd}
-          onRemoveTag={handleTagRemove}
+          onAddTag={handleAddTag}
+          onRemoveTag={handleRemoveTag}
         />
-        <InputWithImg label="이미지" id="image" value={imageUrl} onChangeImageURL={handleImageURLChange} />
-        <ModalButtonGroup positiveName="생성" disabled={!isFormFilled(data)} onClick={() => updateCard(data)} />
+        <InputWithImg
+          label="이미지"
+          id="image"
+          value={image}
+          onChangeImageURL={handleUpdateImage}
+          columnId={card.columnId}
+        />
+        <div className="flex justify-end items-center gap-[10px] mt-[10px]">
+          <BasicButton purpose="negative" eventHandler={onCloseModal}>
+            취소
+          </BasicButton>
+          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit}>
+            확인
+          </BasicButton>
+        </div>
       </ModalNewTodoLayout>
     </>
   );
