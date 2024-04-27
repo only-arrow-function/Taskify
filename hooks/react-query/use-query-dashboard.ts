@@ -6,6 +6,15 @@ import myDashboard from '@/pages/my-dashboard';
 
 const PAGE_DASHBOARD_COUNT = 5;
 
+export const useDashboardsPaginationQuery = (page: number) => {
+  const query = useQuery({
+    queryKey: [`my-dashboard`, page],
+    queryFn: async () => await dashboardRequest.fetchDashboards({ page: page, navigationMethod: 'pagination' }),
+  });
+
+  return query;
+};
+
 export const useInfiniteDashboardsQuery = () => {
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`my-dashboard`],

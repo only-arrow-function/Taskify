@@ -1,10 +1,11 @@
-import { DetailDashboard } from '@/types/dashboard-detail';
 import axios from './axios';
 import getToken from './localStorage';
 
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+import { DetailDashboard } from '@/types/dashboard-detail';
 
 const ERROR_MESSAGE = '에러 발생:';
+const PAGE_DASHBOARD_COUNT = 5;
 
 const token = getToken();
 const headers = {
@@ -25,7 +26,11 @@ const dashboardRequest = Object.freeze({
       });
 
       await new Promise((resolve) => setTimeout(() => resolve(1), 300));
-      return data;
+
+      const { dashboards, totalCount } = data;
+      const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
+      
+      return { dashboards, totalCount, totalPages };
     } catch (error) {
       const err = error as Error;
 
