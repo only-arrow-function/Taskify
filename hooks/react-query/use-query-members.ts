@@ -2,7 +2,9 @@ import { QueryClient, useInfiniteQuery, useMutation, useQuery } from '@tanstack/
 import membersRequests from '@/apis/members-request';
 import { MEMBERS_PER_PAGE } from '@/components/tables/members-constants';
 
-export const useMembersQuery = (dashboardId: number) => {
+export const useMembersQuery = (dashboardId: number | undefined) => {
+  if (!dashboardId) return { data: null, isPending: null };
+
   const { data, isSuccess, isPending, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: [`${dashboardId}-members`],
     initialPageParam: 1,
