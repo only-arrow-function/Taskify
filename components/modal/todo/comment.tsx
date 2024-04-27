@@ -1,17 +1,22 @@
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import type { CommentProps } from './comment.type';
 import ProfileImage from './profile-image';
+import { updateComment, useDeleteComment } from '@/hooks/react-query/use-query-comments';
 
 const formatDate = (date: string) => {
   return date.slice(0, 16).replaceAll('T', ' ').replaceAll('-', '.');
 };
 
-const Comment = ({ id, content, createdAt, author, onUpdateComment, onDeleteComment }: CommentProps) => {
+const Comment = ({ id, content, createdAt, author, cardId }: CommentProps) => {
   const [changeContent, setChangeContent] = useState(content);
   const [isModify, setIsModify] = useState(false);
+  const queryClient = useQueryClient();
+  const { mutate: updateMutate } = updateComment({ commentId: id, cardId }, queryClient);
+  const { mutate: deleteMutate } = useDeleteComment({ commentId: id, cardId }, queryClient);
 
   const handleModifyComment = () => {
-    onUpdateComment(id, changeContent);
+    updateMutate(changeContent);
     setIsModify(false);
   };
 
@@ -49,7 +54,7 @@ const Comment = ({ id, content, createdAt, author, onUpdateComment, onDeleteComm
               </button>
             </li>
             <li className="text-grayscale-50 text-[10px] md:text-xs">
-              <button className="underline underline-offset-1" onClick={() => onDeleteComment(id)}>
+              <button className="underline underline-offset-1" onClick={() => deleteMutate()}>
                 삭제
               </button>
             </li>

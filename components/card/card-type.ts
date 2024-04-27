@@ -25,3 +25,8 @@ export interface CardsResponse {
   totalCount: number;
   cursorId: number | null;
 }
+
+export type CardRequestBody = Omit<TaskCardProp, 'id' | 'assignee'> & {
+  columId: number;
+  assigneeUserId: number;
+};

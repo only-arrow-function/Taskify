@@ -41,12 +41,11 @@ export const useDashboardDetailQuery = (dashboardId: number | undefined) => {
 
   const query = useQuery({
     queryKey: [`my-dashboard`, dashboardId],
-    queryFn: async () =>
-      await dashboardRequest.fetchDashboardDetails(dashboardId),
+    queryFn: async () => await dashboardRequest.fetchDashboardDetails(dashboardId),
   });
 
   return query;
-}
+};
 
 export const useDashboardsMutation = (
   dashboardData: { title: string; color: DashboardColors },
@@ -56,7 +55,7 @@ export const useDashboardsMutation = (
     mutationFn: async () => await dashboardRequest.createDashboard(dashboardData),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({queryKey: [`my-dashboard`]});
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`] });
     },
   });
 
@@ -83,10 +82,17 @@ export const useDashboardEditMutation = (
       //     }
       //   }
       // }
-      queryClient.invalidateQueries({queryKey: [`my-dashboard`]});
-      queryClient.invalidateQueries({queryKey: [`my-dashboard`, dashboardId]});
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`] });
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`, dashboardId] });
     },
   });
 
   return query;
+};
+
+export const useDetailDashboard = (dashboardId: number) => {
+  return useQuery({
+    queryFn: () => dashboardRequest.detailDashbaord(dashboardId),
+    queryKey: [`dashboard-${dashboardId}`],
+  });
 };

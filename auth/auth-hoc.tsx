@@ -15,7 +15,7 @@ const AuthHOC = (Component: ComponentType) => {
       return <Component {...props} />;
     }
 
-    return null;
+    return <Component {...props} />;
   };
 };
 

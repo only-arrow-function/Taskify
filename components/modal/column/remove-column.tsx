@@ -1,11 +1,11 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from '@tanstack/react-query';
 
 import ModalButton from '@/components/modal/modal-button';
 import { useColumnsDeleteMutation } from '@/hooks/react-query/use-query-columns';
 
 interface RemoveColumnProp {
   onClose: () => void;
-  columnId: string;
+  columnId: number;
   dashboardId: number;
 }
 
@@ -17,7 +17,7 @@ const RemoveColumn = ({ onClose, columnId, dashboardId }: RemoveColumnProp) => {
   const handleRemoveBtnClick = async () => {
     try {
       await mutateAsync();
-      
+
       onClose();
     } catch (error) {
       console.log(error);
