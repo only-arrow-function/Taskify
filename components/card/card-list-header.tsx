@@ -20,9 +20,9 @@ const CardListHeader = (prop: CardListHeaderProp) => {
         <div className="mr-[12px] font-bold text-[18px]">{prop.title}</div>
         <NumberChip>{prop.count}</NumberChip>
       </div>
-      <div className="size-[22px] sm:size-[24px]" onClick={handleIconClick}>
+      <button className="size-[22px] sm:size-[24px]" onClick={handleIconClick}>
         <Image src={SettingImg} alt="setting" />
-      </div>
+      </button>
     </div>
   );
 };

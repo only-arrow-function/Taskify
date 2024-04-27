@@ -31,7 +31,7 @@ const ColumnList = (props: ColumnListProps) => {
       <ColumnListLayout>
         {columnData?.data &&
           columnData.data.map((data) => {
-            return <CardList key={data.id} columnId={data.id} title={data.title} dashboardId={dashboardId} />;
+            return <CardList key={data.id} dashboardId={dashboardId} columnData={data} />;
           })}
         <ColumnAdd onClick={handleOpenModal} />
       </ColumnListLayout>

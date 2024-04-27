@@ -23,7 +23,7 @@ const membersRequests = Object.freeze({
     return (await axios.get<Members>(`members?&dashboardId=${dashboardId}`, headers)).data;
   },
 
-  deleteMember: async (memberId: string) => {
+  deleteMember: async (memberId: number) => {
     if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
 
     await axios.delete(`members/${memberId}`, headers);

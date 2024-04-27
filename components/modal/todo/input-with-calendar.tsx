@@ -8,7 +8,7 @@ const InputWithCalendar = ({
 }: {
   label: string;
   value: string;
-  onChange: (e: ChangeEvent) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
     <div className="flex flex-col gap-[10px]">

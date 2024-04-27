@@ -9,11 +9,12 @@ import { useHandleDropdown, useHandleDropdownOutside } from '@/hooks/use-handle-
 import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 
 interface ManagerDropdownProps {
-  placeholder: string;
+  placeholder?: string;
+  nickname?: string;
   members: Members | undefined;
 }
 
-const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
+const ManagerDropdown = ({ placeholder, members, nickname }: ManagerDropdownProps) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
   // const initRef = useHandleDropdownOutside(handleOpenDropdown, handleCloseDropdown);
 
@@ -23,7 +24,7 @@ const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
     const handleOutside = (event: MouseEvent) => {
       const target = event.target as Element;
 
-      if (target.closest('button')) {
+      if (target.closest('button[data-type="member"]')) {
         handleToggleDropdown();
         return;
       }
@@ -39,7 +40,7 @@ const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
     return () => document.removeEventListener('mousedown', handleOutside);
   }, []);
 
-  const [selectedMember, setSelectedMember] = useState('');
+  const [selectedMember, setSelectedMember] = useState(nickname || '');
   const handleSelectedMember = (member: string) => {
     setSelectedMember(member);
     handleCloseDropdown();
@@ -49,8 +50,8 @@ const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
     <div>
       <div className="flex flex-col relative">
         <label className="text-grayscale-80 text-base font-medium">담당자</label>
-        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50 cursor-pointer">
-          <button className="w-full outline-none flex items-center">
+        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 pl-6 rounded-lg border focus-within:border-violet-50 cursor-pointer">
+          <button className="w-full outline-none flex items-center gap-x-3" type="button" data-type="member">
             {selectedMember ? (
               <>
                 <ProfileBadge>{selectedMember.slice(0, 1)}</ProfileBadge>

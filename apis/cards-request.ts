@@ -1,7 +1,7 @@
 import axios from './axios';
 
 import getToken from './localStorage';
-import { Card } from '@/types/card';
+import { Card, CardDetail, UpdateCardResponse } from '@/types/card';
 
 const ERROR_MESSAGE = '에러 발생:';
 
@@ -45,26 +45,14 @@ const cardsRequests = Object.freeze({
   },
 
   putCard: async (cardId: number, cardInfo: any) => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
-    try {
-      const { data } = await axios.put(`cards/${cardId}`, cardInfo, {
-        headers: { Authorization: 'Bearer ' + accessToken },
-      });
-
-      return data;
-    } catch (error) {
-      const err = error as Error;
-      throw new Error(err.message);
-      // console.log(ERROR_MESSAGE, err.message);
-    }
+    return await axios.put(`cards/${cardId}`, cardInfo, headers);
   },
 
   getCardDetail: async (cardId: number) => {
     const accessToken = window.localStorage.getItem('accessToken');
 
     try {
-      const { data } = await axios.get(`cards/${cardId}`, {
+      const { data } = await axios.get<CardDetail>(`cards/${cardId}`, {
         headers: { Authorization: 'Bearer ' + accessToken },
       });
 
