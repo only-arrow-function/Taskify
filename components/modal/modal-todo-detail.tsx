@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import BackDrop from './backdrop';
 import InfoWithLabel from './info-with-label';
@@ -11,28 +12,32 @@ import Popover from './todo/popover';
 import TextareaWithLabel from './todo/textarea-with-label';
 import ProgressChip from '../chips/progress-chip';
 import TagChip from '../chips/tag-chip';
-import useCard from '@/hooks/swr/use-card';
-import useComment from '@/hooks/use-comments';
+import { useCardQuery } from '@/hooks/react-query/use-query-card';
+import { useAddComment, useCommentsQuery } from '@/hooks/react-query/use-query-comments';
 import useIntersect from '@/hooks/use-intersect';
 import CloseIcon from '@/public/icon/close.svg';
 import MoreIcon from '@/public/icon/more.svg';
 
-const tempCardId = 5028;
+const tempCardId = 5235;
+const tempColumnId = 20173;
 
 const ModalTodoDetail = () => {
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-  const { data } = useCard(tempCardId);
-  const { comments, nextCursorId, fetchComments, addComment, updateComment, deleteComment } = useComment(tempCardId);
+  const queryClient = useQueryClient();
+  const { data } = useCardQuery(tempCardId);
+  const { data: commentsData, hasNextPage, fetchNextPage } = useCommentsQuery(tempCardId);
+  const { mutate: addMutate } = useAddComment(tempCardId, queryClient);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
-    if (nextCursorId) {
-      fetchComments();
+    if (hasNextPage) {
+      fetchNextPage();
     }
   });
 
   if (!data) return;
+  const comments = commentsData?.map((data) => data.comments).flat();
 
   const { assignee, title, description, dueDate, imageUrl, tags } = data;
 
@@ -46,18 +51,18 @@ const ModalTodoDetail = () => {
   };
 
   const handleCommentAdd = (comment: string) => {
-    addComment({
+    addMutate({
       content: comment,
       cardId: tempCardId,
-      columnId: 20004,
-      dashboardId: 5947,
+      columnId: 20173,
+      dashboardId: 6000,
     });
   };
 
   return (
     <>
       <BackDrop />
-      {isOpenEditModal && <ModalEditTodo cardId={tempCardId} />}
+      {/* {isOpenEditModal && <ModalEditTodo cardId={tempCardId} />} */}
       {!isOpenEditModal && (
         <ModalTodoDetailLayout>
           <header className="flex flex-col-reverse gap-[6px] items-start md:flex-row md:justify-between">
@@ -70,6 +75,7 @@ const ModalTodoDetail = () => {
                 {isOpenPopover && (
                   <Popover
                     cardId={tempCardId}
+                    columnId={tempColumnId}
                     onModifyButtonClick={handleModifyButtonClick}
                     onClosePopover={() => setIsOpenPopover(false)}
                   />
@@ -110,16 +116,10 @@ const ModalTodoDetail = () => {
               <section className="flex flex-wrap gap-4 w-full md:gap-5">
                 <TextareaWithLabel purpose="comment" onAddComment={handleCommentAdd} />
                 <ul className="flex flex-col w-full gap-3 h-16 overflow-y-scroll md:h-20">
-                  {/* <CommentSpinner /> */}
-                  {comments.map((comment) => (
-                    <Comment
-                      key={comment.id}
-                      {...comment}
-                      onUpdateComment={updateComment}
-                      onDeleteComment={deleteComment}
-                    />
+                  {comments?.map((comment) => (
+                    <Comment key={comment.id} {...comment} cardId={tempCardId} />
                   ))}
-                  {nextCursorId && (
+                  {hasNextPage && (
                     <li ref={ref} className="w-full">
                       <CommentSpinner />
                     </li>
