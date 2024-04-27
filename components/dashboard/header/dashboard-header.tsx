@@ -34,16 +34,20 @@ const DashboardHeader = ({ dashboardId }: { dashboardId?: number }) => {
         </h2>
 
         <div className="flex items-center">
-          <div>
-            <Link href={`/dashboard/${router.query.id}/edit`}>
-              <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
-            </Link>
-          </div>
-          <div className="ml-4">
-            <DashboardHeaderButton imageSource={dashboardInviteIcon.src} onClick={handleOpenToggle}>
-              초대하기
-            </DashboardHeaderButton>
-          </div>
+          {data?.createdByMe && (
+            <>
+              <div>
+                <Link href={`/dashboard/${router.query.id}/edit`}>
+                  <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
+                </Link>
+              </div>
+              <div className="ml-4">
+                <DashboardHeaderButton imageSource={dashboardInviteIcon.src} onClick={handleOpenToggle}>
+                  초대하기
+                </DashboardHeaderButton>
+              </div>
+            </>
+          )}
           <div className="hidden ml-10 md:ml-6 lg:block lg:ml-10">
             <DashboardHeaderMembers users={users} totalCount={usersCount} />
           </div>
