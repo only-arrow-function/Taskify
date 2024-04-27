@@ -11,7 +11,7 @@ import Popover from './todo/popover';
 import TextareaWithLabel from './todo/textarea-with-label';
 import ProgressChip from '../chips/progress-chip';
 import TagChip from '../chips/tag-chip';
-import useCard from '@/hooks/swr/use-card';
+import { useCardQuery } from '@/hooks/react-query/use-query-card';
 import useComment from '@/hooks/use-comments';
 import useIntersect from '@/hooks/use-intersect';
 import CloseIcon from '@/public/icon/close.svg';
@@ -22,8 +22,7 @@ const tempCardId = 5028;
 const ModalTodoDetail = () => {
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-  const { data } = useCard(tempCardId);
-  const { comments, nextCursorId, fetchComments, addComment, updateComment, deleteComment } = useComment(tempCardId);
+  const { data } = useCardQuery(tempCardId);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
