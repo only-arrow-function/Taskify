@@ -9,7 +9,7 @@ const headers = {
 };
 
 const membersRequests = Object.freeze({
-  getMembers: async (dashboardId: string, currentPage: number): Promise<Members> => {
+  getMembers: async (dashboardId: number, currentPage: number): Promise<Members> => {
     if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
 
     const { data } = await axios.get(
@@ -18,6 +18,11 @@ const membersRequests = Object.freeze({
     );
     return data;
   },
+
+  getAllMembers: async (dashboardId: number) => {
+    return (await axios.get<Members>(`members?&dashboardId=${dashboardId}`, headers)).data;
+  },
+
   deleteMember: async (memberId: string) => {
     if (!token) throw new Error('토큰이 없어요. 다시 로그인 해주세요.');
 

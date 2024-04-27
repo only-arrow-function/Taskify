@@ -6,34 +6,60 @@ import { Member, Members } from '@/components/tables/members.type';
 import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 import ProfileBadge from '@/components/profile/profile-badge';
 import ProfileUsername from '@/components/profile/profile-username';
+import { useEffect, useRef, useState } from 'react';
 
 interface ManagerDropdownProps {
   placeholder: string;
-  membersData: Members | undefined;
+  members: Members | undefined;
 }
 
-const ManagerDropdown = ({ placeholder, membersData }: ManagerDropdownProps) => {
+const ManagerDropdown = ({ placeholder, members }: ManagerDropdownProps) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
   // const initRef = useHandleDropdownOutside(handleOpenDropdown, handleCloseDropdown);
 
-  console.log(isOpenDropdown);
+  const memberRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const handleOutside = (event: MouseEvent) => {
+      if (memberRef.current && !memberRef.current.contains(event.target as any)) {
+        console.log('??');
+        handleCloseDropdown();
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutside);
+
+    return () => document.removeEventListener('mousedown', handleOutside);
+  }, []);
+
+  const [selectedMember, setSelectedMember] = useState('');
+  const handleSelectedMember = (member: string) => {
+    setSelectedMember(member);
+    handleCloseDropdown();
+  };
 
   return (
     <div>
       <div className="flex flex-col relative">
         <label className="text-grayscale-80 text-base font-medium">담당자</label>
-        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50">
-          {/* <input placeholder={placeholder} className="w-full outline-none" /> */}
-          <button className="w-full outline-none flex items-center" onClick={handleToggleDropdown}>
-            {placeholder}
-          </button>
+        <div
+          className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50 cursor-pointer"
+          onClick={handleToggleDropdown}
+        >
+          <button className="w-full outline-none flex items-center">{selectedMember || placeholder}</button>
           <Image src={ArrowDownIcon} alt="아래 화살표" />
         </div>
 
         {isOpenDropdown && (
-          <ul className="left-0 flex sm:w-[217px] w-[287px] h-[3.125rem] rounded-lg border mt-1 absolute bg-white sm:right-[36px] top-[100%] ">
-            {membersData?.members.map((member) => (
-              <li className="flex items-center gap-x-3 px-4 cursor-pointer">
+          <ul
+            className="left-0 flex sm:w-[217px] w-[287px] h-[3.125rem] rounded-lg border mt-1 absolute bg-white sm:right-[36px] top-[100%]"
+            ref={memberRef}
+          >
+            {members?.members.map((member) => (
+              <li
+                className="flex items-center gap-x-3 pl-6 cursor-pointer hover:bg-grayscale-30 w-full overflow-hidden"
+                onClick={handleSelectedMember.bind(null, member.nickname)}
+              >
                 <ProfileBadge>{member.nickname.slice(0, 1)}</ProfileBadge>
                 <ProfileUsername username={member.nickname} />
               </li>
