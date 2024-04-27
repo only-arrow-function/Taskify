@@ -10,14 +10,14 @@ import { DashboardIdProps } from '@/constant/type/data/dashboard.type';
 import { useDashboardEditMutation, useDashboardDetailQuery } from '@/hooks/react-query/use-query-dashboard';
 import { useDashboardsStore } from '@/store/dashboard';
 
-const EditDashboard = ({ dashboardId }: DashboardIdProps) => {
+const EditDashboard = ({ dashboardId, page }: DashboardIdProps) => {
   const [title, setTitle] = useState('');
   const { color } = useDashboardsStore();
 
   // server state
   const queryClient = useQueryClient();
-  const { data, isPending } = useDashboardDetailQuery(dashboardId);
-  const { mutateAsync } = useDashboardEditMutation(dashboardId, { title, color }, queryClient);
+  const { data, isPending } = useDashboardDetailQuery(dashboardId, page as number);
+  const { mutateAsync } = useDashboardEditMutation(dashboardId, page as number , { title, color }, queryClient);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
