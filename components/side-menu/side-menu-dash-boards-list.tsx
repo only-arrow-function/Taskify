@@ -33,7 +33,7 @@ const SideMenuDashBoardsList = () => {
         {data &&
           data.pages[currentPage - 1] &&
           data.pages[currentPage - 1].dashboards &&
-          data.pages[currentPage - 1].dashboards.map((data) => {
+          data.pages[currentPage - 1].dashboards.map((data: any) => {
             return (
               <SideMenuDashBoard
                 key={data.id}
