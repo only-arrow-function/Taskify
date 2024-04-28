@@ -5,7 +5,7 @@ import SideMenuDashBoardsList from '@/components/side-menu/side-menu-dash-boards
 import SideMenuLogo from '@/components/side-menu/side-menu-logo';
 import { useToggleStore } from '@/store/toggle-store';
 
-const SideMenu = () => {
+const SideMenu = ({page}: {page: number}) => {
   const isToggle = useToggleStore((state) => state.isToggle);
   const handleOpenToggle = useToggleStore((state) => state.handleOpenToggle);
 
@@ -16,7 +16,7 @@ const SideMenu = () => {
     >
       <SideMenuLogo />
       <SideMenuAddDashBoards handleOpenModal={handleOpenToggle}/>
-      <SideMenuDashBoardsList />
+      <SideMenuDashBoardsList page={page}/>
       {isToggle && <NewDashboardModal/>}
     </aside>
   );

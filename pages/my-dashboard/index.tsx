@@ -9,17 +9,23 @@ import SideMenu from '@/components/side-menu/side-menu';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const title = context.query['title'];
+  const page = context.query['title'];
 
-  return { props: { title: title ? title : null } };
+  return { props: { 
+    title: title ? title : null,
+    page: page ? page : 1,
+  } };
 };
 
-const MyDashboard = ({ title }: { title?: string }) => {
+const MyDashboard = ({ title, page }: { title?: string, page?: string }) => {
+  const pageToNumber = Number(page);
+
   return (
     <DashboardSectionLayout>
       <DashboardHeader />
       <DashboardList />
       <DashboardInvite searchTitle={title} />
-      <SideMenu />
+      <SideMenu page={pageToNumber}/>
     </DashboardSectionLayout>
   );
 };

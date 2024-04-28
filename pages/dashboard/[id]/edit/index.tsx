@@ -11,25 +11,31 @@ import MembersTable from '@/components/tables/members-table';
 import { IdProps } from '@/constant/type/data/dashboard.type';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { id, page } = context.query;
 
-  return { props: { id } };
+  return {
+    props: {
+      id,
+      page: page,
+    },
+  };
 };
 
-const index = ({ id }: IdProps) => {
+const index = ({ id, page }: IdProps) => {
   const idToNumber = Number(id);
+  const pageToNumber = Number(page);
 
   return (
     <DashboardSectionLayout>
-      <DashboardHeader dashboardId={idToNumber} />
+      <DashboardHeader dashboardId={idToNumber} page={pageToNumber}/>
       <main className="flex flex-col px-[15px] py-[15px] gap-[10px]">
-        <ReturnDashboardPage dashboardId={idToNumber} />
-        <EditDashboard dashboardId={idToNumber} />
+        <ReturnDashboardPage dashboardId={idToNumber} page={pageToNumber}/>
+        <EditDashboard dashboardId={idToNumber} page={pageToNumber}/>
         <MembersTable dashboardId={idToNumber} />
         <InviteTable dashboardId={idToNumber} />
-        <DashboardDeleteButton dashboardId={idToNumber} />
+        <DashboardDeleteButton dashboardId={idToNumber} page={pageToNumber}/>
       </main>
-      <SideMenu />
+      <SideMenu page={pageToNumber}/>
     </DashboardSectionLayout>
   );
 };

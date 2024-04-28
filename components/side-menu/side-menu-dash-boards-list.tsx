@@ -4,20 +4,17 @@ import SideMenuDashboardItemSkelton from './side-menu-skeleton';
 import DashboardPaginationButton from '@/components/buttons/pagination/dashboard-pagination-button';
 import SideMenuDashBoard from '@/components/side-menu/side-menu-dash-boards';
 
-import { useInfiniteDashboardsQuery } from '@/hooks/react-query/use-query-dashboard';
+import { useDashboardsPaginationQuery } from '@/hooks/react-query/use-query-dashboard';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
-const SideMenuDashBoardsList = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+const SideMenuDashBoardsList = ({page}: {page: number}) => {
+  const [currentPage, setCurrentPage] = useState(page);
 
   // server state
-  const { data, isSuccess, isPending, hasNextPage, fetchNextPage } = useInfiniteDashboardsQuery();
+  const { data, isPending } = useDashboardsPaginationQuery(currentPage);
 
   const nextPage = () => {
     setCurrentPage((currentPage) => currentPage + 1);
-    if (hasNextPage) {
-      fetchNextPage();
-    }
   };
 
   const prevPage = () => {
@@ -29,11 +26,11 @@ const SideMenuDashBoardsList = () => {
   return (
     <>
       <div className="w-full flex flex-col justify-between items-center">
-        {isPending && <SideMenuDashboardItemSkelton />}
-        {data &&
-          data.pages[currentPage - 1] &&
-          data.pages[currentPage - 1].dashboards &&
-          data.pages[currentPage - 1].dashboards.map((data: any) => {
+        {isPending || !data ? (
+          <SideMenuDashboardItemSkelton />
+        ) : (
+          data &&
+          data.dashboards.map((data: any) => {
             return (
               <SideMenuDashBoard
                 key={data.id}
@@ -42,9 +39,11 @@ const SideMenuDashBoardsList = () => {
                 color={data.color}
                 createdByMe={data.createdByMe}
                 userId={data.userId}
+                page={currentPage}
               />
             );
-          })}
+          })
+        )}
       </div>
       {data && data.totalPages && (
         <div className="flex items-center">
