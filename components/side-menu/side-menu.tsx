@@ -1,4 +1,3 @@
-
 import NewDashboardModal from '../dashboard/modal/new-dashboard-modal';
 import SideMenuAddDashBoards from '@/components/side-menu/side-menu-add-dash-boards';
 import SideMenuDashBoardsList from '@/components/side-menu/side-menu-dash-boards-list';

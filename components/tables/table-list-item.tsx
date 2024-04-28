@@ -1,7 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
+
 import type { Member } from './members.type';
 import TableButton from './table-button';
 import { useDeleteMembers } from '@/hooks/react-query/use-query-members';
+import crownImg from '@/public/icon/crown.svg';
 
 const TableListItem = ({
   member,
@@ -22,6 +24,11 @@ const TableListItem = ({
         </span>
         <span className="text-grayscale-80 text-sm sm:text-base">{member.nickname}</span>
       </div>
+      {member.isOwner && (
+        <div className="sm:block relative mb-1 ml-1 w-[25px] h-[25px]">
+          <Image src={crownImg} alt="crown" fill />
+        </div>
+      )}
       {!member.isOwner && (
         <TableButton purpose="negative" onClick={mutate}>
           삭제

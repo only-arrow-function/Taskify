@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import DashboardBase from './commons/dashboard-base';
 import DomainButtonName from './commons/domain-button-name';
 import DashboardDeleteModal from '@/components/dashboard/modal/dashboard-delete-modal';
