@@ -1,6 +1,6 @@
 import { ComponentType, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import getToken from '@/apis/localStorage';
+import getToken from '@/apis/cookie';
 
 const AuthHOC = (Component: ComponentType) => {
   return (props: any) => {

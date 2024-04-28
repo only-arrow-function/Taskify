@@ -1,5 +1,5 @@
 import axios from './axios';
-import getToken from './localStorage';
+import getToken from './cookie';
 
 const token = getToken();
 const headers = {

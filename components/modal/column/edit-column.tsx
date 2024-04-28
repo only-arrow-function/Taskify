@@ -9,7 +9,7 @@ import ModalButton from '@/components/modal/modal-button';
 import ModalTitle from '@/components/modal/modal-title';
 
 import { useColumnsQuery, useColumnsEditMutation } from '@/hooks/react-query/use-query-columns';
-import { useColumnDuplicationTest } from '@/hooks/use-column-duplication-Test';
+import { useColumnDuplicationTest } from '@/hooks/use-column-duplication-test';
 import { useHandleModal, useHandleModalOutside } from '@/hooks/use-handle-modal';
 
 interface NewColumnProp {

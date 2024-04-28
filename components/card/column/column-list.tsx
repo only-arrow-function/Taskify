@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import CardList from '@/components/card/card-list';
 import ColumnAdd from '@/components/card/column/column-add';
 import ColumnListLayout from '@/components/card/column/column-list-layout';
@@ -9,14 +11,33 @@ import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
-  id: string;
+  id: number;
 }
 
 const ColumnList = (props: ColumnListProps) => {
   const dashboardId = +props.id;
   const { data: columnData } = useColumnsQuery(dashboardId);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
-  const dashboardsQuery = useDetailDashboard(dashboardId);
+  const [cardList, setCardList] = useState([]);
+  const [enabled, setEnabled] = useState(false);
+
+  const handleDropCard = ({ source, destination }: DropResult) => {
+    if (!destination) return;
+    console.log(cardList);
+  };
+
+  useEffect(() => {
+    const animation = requestAnimationFrame(() => setEnabled(true));
+
+    return () => {
+      cancelAnimationFrame(animation);
+      setEnabled(false);
+    };
+  }, []);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <>
@@ -28,13 +49,24 @@ const ColumnList = (props: ColumnListProps) => {
           </ModalLayout>
         </>
       )}
-      <ColumnListLayout>
-        {columnData?.data &&
-          columnData.data.map((data) => {
-            return <CardList key={data.id} dashboardId={dashboardId} columnData={data} />;
-          })}
-        <ColumnAdd onClick={handleOpenModal} />
-      </ColumnListLayout>
+      <DragDropContext onDragEnd={handleDropCard}>
+        <ColumnListLayout>
+          {columnData?.data &&
+            columnData.data.map((data) => {
+              return (
+                <Droppable key={data.id} droppableId={data.title}>
+                  {(provided, snapshot) => (
+                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                      <CardList columnData={data} dashboardId={props.id} />
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              );
+            })}
+          <ColumnAdd onClick={handleOpenModal} />
+        </ColumnListLayout>
+      </DragDropContext>
     </>
   );
 };

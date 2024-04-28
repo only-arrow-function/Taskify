@@ -1,5 +1,5 @@
 import axios from './axios';
-import getToken from './localStorage';
+import getToken from './cookie';
 import { InvitationsResponse } from '@/types/invited-dashboard.type';
 
 const token = getToken();

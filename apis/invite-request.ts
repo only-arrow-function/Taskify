@@ -1,5 +1,5 @@
 import axios from './axios';
-import getToken from './localStorage';
+import getToken from './cookie';
 
 const ERROR_MESSAGE = '에러 발생:';
 const PAGE_DASHBOARD_COUNT = 5;
@@ -10,7 +10,7 @@ const headers = {
 };
 
 const inviteRequests = Object.freeze({
-  getInviteUsers: async ({dashboardId, pageParam}: {dashboardId: number, pageParam: number}) => {
+  getInviteUsers: async ({ dashboardId, pageParam }: { dashboardId: number; pageParam: number }) => {
     await new Promise((resolve) => setTimeout(() => resolve(1), 300));
     try {
       const { data } = await axios.get(`dashboards/${dashboardId}/invitations`, {
@@ -23,8 +23,8 @@ const inviteRequests = Object.freeze({
 
       const { invitations, totalCount } = data;
       const totalPages = Math.ceil(totalCount / PAGE_DASHBOARD_COUNT);
-      
-      return {invitations: invitations, totalCount: totalCount, totalPages: totalPages};
+
+      return { invitations: invitations, totalCount: totalCount, totalPages: totalPages };
     } catch (error) {
       console.error(ERROR_MESSAGE, error);
     }

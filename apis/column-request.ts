@@ -1,10 +1,11 @@
 import axios from './axios';
-import getToken from './localStorage';
+import getToken from './cookie';
 import { ColumnResponse } from '@/components/modal/column/columns-data.type';
 
 const ERROR_MESSAGE = '에러 발생:';
 
 const token = getToken();
+
 const headers = {
   headers: { Authorization: `Bearer ${token}` },
 };

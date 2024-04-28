@@ -4,7 +4,7 @@ import ColumnList from '@/components/card/column/column-list';
 import DashboardLayout from '@/components/dashboard/layout/dashboard-layout';
 
 interface Props {
-  id: string;
+  id: number;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
