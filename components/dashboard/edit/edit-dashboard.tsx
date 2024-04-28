@@ -31,7 +31,7 @@ const EditDashboard = ({ dashboardId, page }: DashboardIdProps) => {
   };
 
   return (
-    <section className="bg-white rounded-lg px-[15px] py-[15px]">
+    <section className="flex flex-col justify-between min-w-[284px] max-w-[620px] rounded-lg bg-white pt-[22px] pb-4 sm:pt-[26px] sm:pb-5 px-5">
       <div className="flex flex-row justify-between">
         {isPending ? (<ModalTitle>로딩중</ModalTitle>) : (<ModalTitle>{data.title}</ModalTitle>)}
         <ColorChipGroup />
