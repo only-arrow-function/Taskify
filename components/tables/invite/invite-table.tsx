@@ -10,19 +10,16 @@ import DashboardPaginationButton from '../../buttons/pagination/dashboard-pagina
 import { DashboardIdProps, InvitationsDataProps, InviteeType } from '@/constant/type/data/dashboard.type';
 
 import { useInfiniteInviteUsersQuery } from '@/hooks/react-query/use-query-invite-users';
-import { useHandleModal } from '@/hooks/use-handle-modal';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
 import NoEmailIcon from '@/public/icon/no-email.svg';
 import { useInviteToggleStore } from '@/store/invite/invite-toggle-store';
 
 const InviteTable = ({ dashboardId }: DashboardIdProps) => {
-  //const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const { handleOpenToggle } = useInviteToggleStore();
   const [currentPage, setCurrentPage] = useState(1);
 
   // server state
-
   const { data, isPending, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteInviteUsersQuery({ dashboardId });
         
   const nextPage = () => {

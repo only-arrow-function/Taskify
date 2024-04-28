@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
 
 import BasicButton from '@/components/buttons/basic-button';
 import InputField from '@/components/inputs/input-field';
@@ -7,7 +8,6 @@ import ModalTitle from '@/components/modal/modal-title';
 import ModalWithDimmed from '@/components/modal/modal-with-dimmed';
 
 import { useDashboardDeleteMutation } from '@/hooks/react-query/use-query-dashboard';
-import { useRouter } from 'next/router';
 
 interface InviteModalType {
   handleCloseModal: () => void;

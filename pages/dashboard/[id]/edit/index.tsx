@@ -29,7 +29,7 @@ const index = ({ id, page }: IdProps) => {
     <DashboardSectionLayout>
       <DashboardHeader dashboardId={idToNumber} page={pageToNumber}/>
       <main className="flex flex-col px-[15px] py-[15px] gap-[10px]">
-        <ReturnDashboardPage dashboardId={idToNumber} />
+        <ReturnDashboardPage dashboardId={idToNumber} page={pageToNumber}/>
         <EditDashboard dashboardId={idToNumber} page={pageToNumber}/>
         <MembersTable dashboardId={idToNumber} />
         <InviteTable dashboardId={idToNumber} />
