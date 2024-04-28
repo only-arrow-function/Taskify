@@ -94,7 +94,7 @@ const SideMenu = ({ page }: { page: number }) => {
       <aside
         ref={sidebarRef}
         className={cn(
-          'relative top-0 left-0 w-[240px] border-grayscale-40 bg-white border-r-2 p-[20px] z-[99999]',
+          'relative top-0 left-0 w-[240px] border-grayscale-40 bg-white border-r-2 p-[20px]',
           isResetting && 'transition-all ease-in-out duration-300',
           isMobile && 'w-0 p-0',
           isCollapsed && 'w-0 p-0',
@@ -106,7 +106,7 @@ const SideMenu = ({ page }: { page: number }) => {
               onClick={collapse}
               role="button"
               className={cn(
-                'h-6 w-6 text-muted-foreground z-10 rounded-sm hover:bg-grayscale-50 absolute top-3 right-2 opacity-0 hover:opacity-100 transition',
+                'h-6 w-6 text-muted-foreground rounded-sm hover:bg-grayscale-50 absolute top-3 right-2 opacity-0 hover:opacity-100 transition',
               )}
             >
               <ChevronsLeft className="h-6 w-6" />
