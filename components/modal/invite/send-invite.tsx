@@ -12,7 +12,7 @@ const SendInvite = () => {
     email: state.email,
     handleInputChange: state.handleInputChange,
   }));
-  const dashboardId = useRouter().query.id;
+  const dashboardId = String(useRouter().query.id);
 
   const handleCloseToggle = useToggleStore((state) => state.handleCloseToggle);
   const [error, setError] = useState('');
@@ -44,7 +44,8 @@ const SendInvite = () => {
           초대
         </ModalButton>
       </div>
-      </>
-  )
+    </>
+  );
+};
 
 export default SendInvite;

@@ -34,7 +34,7 @@ const RendingHeaderNavBar = () => {
           )}
         </li>
         <li className="ml-9 max-sm:ml-5">
-          <Link href="/signUp">회원가입</Link>
+          <Link href="/signup">회원가입</Link>
         </li>
       </ul>
     </nav>
