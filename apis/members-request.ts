@@ -1,6 +1,6 @@
 import type { Members } from '@/components/tables/members.type';
 import axios from './axios';
-import getToken from './localStorage';
+import getToken from './cookie';
 import { MEMBERS_PER_PAGE } from '@/components/tables/members-constants';
 
 const token = getToken();

@@ -1,6 +1,5 @@
 import { GetServerSideProps } from 'next';
 
-import AuthHOC from '@/auth/auth-hoc';
 import DashboardHeader from '@/components/dashboard/header/dashboard-header';
 import DashboardInvite from '@/components/dashboard/invite/dashboard-invite';
 import DashboardSectionLayout from '@/components/dashboard/layout/dashboard-section-layout';
@@ -24,4 +23,4 @@ const MyDashboard = ({ title }: { title?: string }) => {
   );
 };
 
-export default AuthHOC(MyDashboard);
+export default MyDashboard;

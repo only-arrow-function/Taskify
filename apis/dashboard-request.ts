@@ -1,6 +1,6 @@
 import { DetailDashboard } from '@/types/dashboard-detail';
 import axios from './axios';
-import getToken from './localStorage';
+import getToken from './cookie';
 
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 

@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
 import BasicButton from '../buttons/basic-button';
-import getToken from '@/apis/localStorage';
+import getToken from '@/apis/cookie';
 
 const RendingHeaderNavBar = () => {
   const [isToken, setIsToken] = useState(false);
-
+  const [cookies, setCookie, removeCookie] = useCookies(['token']);
   useEffect(() => {
     const token = getToken();
     setIsToken(!!token);
   }, []);
 
   const hanldeLogout = () => {
-    localStorage.removeItem('accessToken');
+    removeCookie('token');
     setIsToken(false);
   };
 
@@ -34,7 +35,7 @@ const RendingHeaderNavBar = () => {
           )}
         </li>
         <li className="ml-9 max-sm:ml-5">
-          <Link href="/signUp">회원가입</Link>
+          <Link href="/signup">회원가입</Link>
         </li>
       </ul>
     </nav>
