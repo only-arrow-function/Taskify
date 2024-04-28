@@ -27,7 +27,7 @@ const DashboardHeader = ({dashboardId, page}: {dashboardId?: number, page?: numb
   const usersCount = usersData?.totalCount || 0;
 
   return (
-    <header className="border-b border-grayscale-40 py-6">
+    <header className="border-b border-grayscale-40 py-6 w-full">
       <div className="flex justify-between max-[430px]:justify-end sm:justify-between items-center px-4 sm:px-10 lg:pl-10 lg:pr-20">
         <h2 className=" text-xl font-bold max-[430px]:hidden">
           {data ? <Link href="/my-dashboard">{data.title}</Link> : <Link href="/my-dashboard">내 대시보드</Link>}
