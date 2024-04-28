@@ -47,12 +47,10 @@ export const useDashboardDetailQuery = (dashboardId: number | undefined) => {
   return query;
 };
 
-export const useDashboardsMutation = (
-  dashboardData: { title: string; color: DashboardColors },
-  queryClient: QueryClient,
-) => {
+export const useDashboardsMutation = (queryClient: QueryClient) => {
   const query = useMutation({
-    mutationFn: async () => await dashboardRequest.createDashboard(dashboardData),
+    mutationFn: async (dashboardData: { title: string; color: DashboardColors }) =>
+      await dashboardRequest.createDashboard(dashboardData),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [`my-dashboard`] });

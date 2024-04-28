@@ -20,7 +20,7 @@ const NewDashboardModal = () => {
 
   // server state
   const queryClient = useQueryClient();
-  const { mutateAsync } = useDashboardsMutation({ title: inputValue, color: color }, queryClient);
+  const { mutateAsync } = useDashboardsMutation(queryClient);
 
   // handler
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
