@@ -18,13 +18,13 @@ const DashboardInviteItem = ({
 
   return (
     <li id={String(id)} className="md:flex items-center py-7 text-grayscale-80 border-b border-grayscale-30">
-      <div className="flex md:w-[36%]">
-        <span className="md:hidden text-grayscale-50">이름</span>
-        <span className="ml-7 md:ml-0">{dashboardTitle}</span>
+      <div className="flex gap-4 md:w-[36%]">
+        <span className="md:hidden min-w-12 text-grayscale-50">이름</span>
+        <span className="md:ml-0">{dashboardTitle}</span>
       </div>
-      <div className="flex sm:w-[30%] md:w-[30%] mt-2.5 md:mt-0">
-        <span className="md:hidden text-grayscale-50">초대자</span>
-        <span className="ml-4 md:ml-0">{inviterName}</span>
+      <div className="flex gap-4 md:w-[30%] mt-2.5 md:mt-0">
+        <span className="md:hidden min-w-12 text-grayscale-50">초대자</span>
+        <span className="md:ml-0">{inviterName}</span>
       </div>
       <div className="flex md:w-[34%] mt-4 md:mt-0">
         <span className="flex gap-2.5">
