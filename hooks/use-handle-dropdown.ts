@@ -17,7 +17,7 @@ export const useHandleDropdown = () => {
 };
 
 export const useHandleDropdownOutside = (onClickInside: () => void, onClickOutside: () => void) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {

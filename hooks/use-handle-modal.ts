@@ -1,21 +1,21 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from 'react';
 
 export const useHandleModal = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleOpenModal = () => {
     setIsOpenModal(true);
-  }
+  };
 
   const handleCloseModal = () => {
     setIsOpenModal(false);
-  }
+  };
 
   return { isOpenModal, handleOpenModal, handleCloseModal };
-}
+};
 
-export const useHandleModalOutside = (onClickInside: () => void, onClickOutside : () => void) => {
-  const ref = useRef(null);
+export const useHandleModalOutside = (onClickInside: () => void, onClickOutside: () => void) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -31,8 +31,7 @@ export const useHandleModalOutside = (onClickInside: () => void, onClickOutside 
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
-
-  }, [ onClickOutside ]);
+  }, [onClickOutside]);
 
   return ref;
-}
+};

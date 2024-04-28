@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import ModalButton from '../modal-button';
 
 const INPUT_INFO = {
@@ -26,7 +26,7 @@ const TextareaWithLabel = ({
 }) => {
   const [content, setContent] = useState('');
 
-  const handleChangeContent = (e) => setContent(e.target.value);
+  const handleChangeContent: ChangeEventHandler<HTMLTextAreaElement> = (e) => setContent(e.target.value);
 
   const handleAddButtonClick = () => {
     setContent('');
