@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, FormEventHandler, MouseEventHandler, useState } from 'react';
+import { ChangeEventHandler, useState } from 'react';
 import { useParams } from 'next/navigation';
 import BackDrop from './backdrop';
 import { ColumnItem } from './column/columns-data.type';
@@ -29,8 +29,8 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
   const dashboardId = +params.id;
   const { data: members } = useAllMembers(dashboardId);
 
-  const fetchCoulumQuery = useColumnsQuery(dashboardId);
-  const updateCardMutation = useUpdateCard(fetchCoulumQuery.data!.data);
+  const fetchColumnQuery = useColumnsQuery(dashboardId);
+  const updateCardMutation = useUpdateCard(fetchColumnQuery.data!.data);
 
   const [title, setTitle] = useState(card.title);
   const [description, setsDescription] = useState(card.description);
@@ -99,7 +99,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
         <ModalTitle>할 일 수정</ModalTitle>
         <GridLayout>
           <StateDropdown
-            columnStates={fetchCoulumQuery.data!.data}
+            columnStates={fetchColumnQuery.data!.data}
             selectedState={selectedState}
             onSelectedColumn={handleSelectedState}
           />

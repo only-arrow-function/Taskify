@@ -28,18 +28,11 @@ export interface StatesData {
   imageUrl: string;
 }
 
-const temporaryPostId = {
-  columnId: 20004,
-  assigneeUserId: 1546,
-  dashboardId: 5947,
-};
-
 interface ModalNewTodoProps {
   columnId: number;
   handleCloseModal: () => void;
 }
 
-// columnId, assigneeUserId : 어디서 가져올까? columnId는 props로? assigneeUserId: useSWR?
 const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
   const params = useParams();
   const dashboardId = +params.id;

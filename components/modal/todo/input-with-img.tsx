@@ -3,8 +3,6 @@ import Image from 'next/image';
 import requests from '@/apis/request';
 import AddIcon from '@/public/chips/add.svg';
 
-const tempColumnId = 20004;
-
 const InputWithImg = ({
   label,
   id,

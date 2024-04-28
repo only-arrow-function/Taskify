@@ -5,7 +5,6 @@ import BasicButton from '@/components/buttons/basic-button';
 import ColorChipGroup from '@/components/chips/color-chip-group';
 import InputField from '@/components/inputs/input-field';
 import Modal from '@/components/modal/modal';
-//import ModalButtonGroup from '@/components/modal/modal-button-group'; // 레거시이므로, 삭제 부탁합니다.
 import ModalTitle from '@/components/modal/modal-title';
 
 import { useDashboardsMutation } from '@/hooks/react-query/use-query-dashboard';

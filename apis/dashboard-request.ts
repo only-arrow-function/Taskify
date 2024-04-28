@@ -1,8 +1,8 @@
-import { DetailDashboard } from '@/types/dashboard-detail';
 import axios from './axios';
 import getToken from './localStorage';
 
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
+import { DetailDashboard } from '@/types/dashboard-detail';
 
 const ERROR_MESSAGE = '에러 발생:';
 
