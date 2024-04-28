@@ -46,5 +46,6 @@ const SendInvite = () => {
       </div>
       </>
   )
+}
 
 export default SendInvite;
