@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
 import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
@@ -15,6 +16,7 @@ const Login = () => {
   const { isToggle, handleOpenToggle } = useToggleStore();
   const { email, password, setEmail, setPassword, validateEmail, validatePassword } = useFormValidation();
   const [notificationMessage, setnotificationMessage] = useState('');
+  const [cookies, setCookie] = useCookies(['token']);
 
   const setAuthentication = useAuthenticationStore((state) => state.setAuthentication);
 
@@ -28,7 +30,8 @@ const Login = () => {
 
     try {
       const response = await requests.login(email.value, password.value);
-      localStorage.setItem('accessToken', response.accessToken);
+      //localStorage.setItem('accessToken', response.accessToken);
+      setCookie('token', response.accessToken);
       setAuthentication(response.user);
       router.push('/my-dashboard');
     } catch (err: any) {

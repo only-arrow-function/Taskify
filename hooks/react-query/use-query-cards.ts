@@ -1,8 +1,8 @@
 import { useInfiniteQuery, useMutation, QueryClient, useQueryClient } from '@tanstack/react-query';
 
 import cardsRequests from '@/apis/cards-request';
-import { Card } from '@/types/card';
 import { ColumnItem } from '@/components/modal/column/columns-data.type';
+import { Card } from '@/types/card';
 
 const PAGE_COUNT = 5;
 

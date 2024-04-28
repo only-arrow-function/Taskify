@@ -1,6 +1,6 @@
 import axios from './axios';
 
-import getToken from './localStorage';
+import getToken from './cookie';
 import { Card, CardDetail, UpdateCardResponse } from '@/types/card';
 import { ColumnType } from '@/types/fetch-column.type';
 

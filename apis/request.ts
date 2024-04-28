@@ -3,7 +3,7 @@ import axios from './axios';
 
 // import { StatesData } from '@/components/modal/modal-new-todo';
 
-import getToken from './localStorage';
+import getToken from './cookie';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 
 const ERROR_MESSAGE = '에러 발생:';
@@ -14,7 +14,6 @@ const headers = {
 };
 
 const requests = Object.freeze({
-
   getInviteUsers: async (dashboardid: string, token: string | null) => {
     if (!token) return;
 
@@ -43,7 +42,6 @@ const requests = Object.freeze({
         email,
         nickname,
         password,
-
       });
       return data;
     } catch (error) {
@@ -170,11 +168,10 @@ const requests = Object.freeze({
       const { data } = await axios.post('cards', cardInfo, {
         headers: { Authorization: 'Bearer ' + accessToken },
       });
-      
+
       return data;
     } catch (error) {
       console.log(ERROR_MESSAGE, error);
-
     }
   },
 });

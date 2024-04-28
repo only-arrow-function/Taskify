@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import BasicButton from '../buttons/basic-button';
-import getToken from '@/apis/localStorage';
+import getToken from '@/apis/cookie';
 
 const RendingHeaderNavBar = () => {
   const [isToken, setIsToken] = useState(false);

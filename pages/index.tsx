@@ -1,4 +1,4 @@
-import getToken from '@/apis/localStorage';
+import getToken from '@/apis/cookie';
 import AuthHOC from '@/auth/auth-hoc';
 import HomeSectionFeature from '@/components/home/home-section-feature';
 import HomeSectionManual from '@/components/home/home-section-manual';
