@@ -13,9 +13,9 @@ import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useCreateCard } from '@/hooks/react-query/use-query-cards';
 import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
+import { useAllMembers, useMembersQuery } from '@/hooks/react-query/use-query-members';
 import { useIsFormFilled } from '@/hooks/use-is-form-filled';
 import { formatDate } from '@/lib/format-date';
-import { useAllMembers, useMembersQuery } from '@/hooks/react-query/use-query-members';
 
 export interface StatesData {
   columnId: number;

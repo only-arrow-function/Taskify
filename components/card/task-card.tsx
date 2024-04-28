@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
+import ModalTodoDetail from '../modal/modal-todo-detail';
 import Card from '@/components/card/card';
 import { TaskCardProp } from '@/components/card/card-type';
 import TagChip from '@/components/chips/tag-chip';
 import ProfileBadge from '@/components/profile/profile-badge';
-import calenderImg from '@/public/icon/calendar.svg';
-import ModalTodoDetail from '../modal/modal-todo-detail';
 import useToggle from '@/hooks/use-toggle';
+import calenderImg from '@/public/icon/calendar.svg';
 
 const TaskCard = (prop: TaskCardProp) => {
   const { isToggle, handleCloseToggle, handleOpenToggle } = useToggle();

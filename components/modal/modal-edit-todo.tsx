@@ -7,17 +7,16 @@ import StateDropdown from './dropdown/state-dropdown';
 import ModalNewTodoLayout from './modal-newTodo-layout';
 import InputWithCalendar from './todo/input-with-calendar';
 import InputWithImg from './todo/input-with-img';
+import { formatDate } from '../../lib/format-date';
+import BasicButton from '../buttons/basic-button';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
-import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
-import { useAllMembers } from '@/hooks/react-query/use-query-members';
-import { CardDetail } from '@/types/card';
-import BasicButton from '../buttons/basic-button';
 import { useUpdateCard } from '@/hooks/react-query/use-query-cards';
 import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
-import { formatDate } from '../../lib/format-date';
+import { useAllMembers } from '@/hooks/react-query/use-query-members';
+import { CardDetail } from '@/types/card';
 
 interface ModalEditTodoProps {
   card: CardDetail;
