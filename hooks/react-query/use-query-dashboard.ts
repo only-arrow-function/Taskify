@@ -94,6 +94,13 @@ export const useDetailDashboard = (dashboardId: number) => {
   });
 };
 
-export const useDashboardDelete = (dashboardId: number) => {
+export const useDashboardDeleteMutation = (dashboardId: number, page: number, queryClient: QueryClient) => {
+  const query = useMutation({
+    mutationFn: async () => await dashboardRequest.deleteDashboard(dashboardId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`, page] });
+    },
+  });
 
+  return query;
 }
