@@ -3,9 +3,10 @@ import { ReactNode } from "react";
 interface Props {
   children?: ReactNode;
   purpose: "column-add" | "dashboard" | "dashboard-delete";
+  onClickDelete?: () => void
 }
 
-const DomainButtonName = ({ children, purpose }: Props) => {
+const DomainButtonName = ({ children, purpose, onClickDelete }: Props) => {
   const textBaseClasses = "text-center font-[Pretendard]";
   const textSizeVariantClasses = 'text-lg sm:text-base';
   
@@ -23,7 +24,7 @@ const DomainButtonName = ({ children, purpose }: Props) => {
   }
 
   return (
-    <span className={`${textBaseClasses} ${textVariantClasses} ${textSizeVariantClasses}`}>{children}</span>
+    <span className={`${textBaseClasses} ${textVariantClasses} ${textSizeVariantClasses}`} onClick={onClickDelete}>{children}</span>
   )
 }
 

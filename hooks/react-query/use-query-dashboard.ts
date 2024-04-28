@@ -1,5 +1,6 @@
-import { useInfiniteQuery, useMutation, QueryClient, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { useRouter } from 'next/router';
 import dashboardRequest from '@/apis/dashboard-request';
 import { DashboardColors } from '@/components/dashboard/dashboard.constants';
 import myDashboard from '@/pages/my-dashboard';
@@ -95,4 +96,19 @@ export const useDetailDashboard = (dashboardId: number) => {
     queryFn: () => dashboardRequest.detailDashbaord(dashboardId),
     queryKey: [`dashboard-${dashboardId}`],
   });
+};
+
+export const useDeleteDashboard = (dashboardId: number) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const mutate = useMutation({
+    mutationFn: async () => await dashboardRequest.deleteDashboard(dashboardId),
+    onSuccess: () => {
+      queryClient.removeQueries({ queryKey: [`my-dashboard`, dashboardId] });
+      router.push('/my-dashboard');
+    },
+  });
+
+  return mutate;
 };

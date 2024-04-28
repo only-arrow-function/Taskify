@@ -76,6 +76,15 @@ const dashboardRequest = Object.freeze({
   detailDashbaord: async (dashboardId: number) => {
     return (await axios.get<DetailDashboard>(`dashboards/${dashboardId}`, headers)).data;
   },
+
+  deleteDashboard: async (dashboardId: number) => {
+    try {
+      await axios.delete(`dashboards/${dashboardId}`, headers);
+    } catch (error) {
+      const err = error as Error;
+      throw new Error(err.message);
+    }
+  },
 });
 
 export default dashboardRequest;
