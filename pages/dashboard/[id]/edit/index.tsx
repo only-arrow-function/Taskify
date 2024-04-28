@@ -23,19 +23,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const index = ({ id, page }: IdProps) => {
   const idToNumber = Number(id);
-  const PageToNumber = Number(page);
+  const pageToNumber = Number(page);
 
   return (
     <DashboardSectionLayout>
-      <DashboardHeader dashboardId={idToNumber} page={PageToNumber}/>
+      <DashboardHeader dashboardId={idToNumber} page={pageToNumber}/>
       <main className="flex flex-col px-[15px] py-[15px] gap-[10px]">
         <ReturnDashboardPage dashboardId={idToNumber} />
-        <EditDashboard dashboardId={idToNumber} page={PageToNumber}/>
+        <EditDashboard dashboardId={idToNumber} page={pageToNumber}/>
         <MembersTable dashboardId={idToNumber} />
         <InviteTable dashboardId={idToNumber} />
-        <DashboardDeleteButton dashboardId={idToNumber}/>
+        <DashboardDeleteButton dashboardId={idToNumber} page={pageToNumber}/>
       </main>
-      <SideMenu />
+      <SideMenu page={pageToNumber}/>
     </DashboardSectionLayout>
   );
 };

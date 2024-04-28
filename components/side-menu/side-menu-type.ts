@@ -8,4 +8,5 @@ export interface DashBoardProps {
   updatedAt?: string;
   createdByMe: boolean;
   userId: number;
+  page: number;
 }

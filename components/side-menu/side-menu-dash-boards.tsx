@@ -11,7 +11,10 @@ const SideMenuDashBoard = (prop: DashBoardProps) => {
   } mr-3 ml-2 sm:ml-0`;
 
   return (
-    <Link href={`/dashboard/${prop.id}`} className='w-full h-[40px] sm:h-[43px] xl:h-[45px] flex items-center rounded-[4px] text-grayscale-60 hover:bg-violet-10 hover:text-grayscale-80'>
+    <Link href={{pathname: `/dashboard/${prop.id}`, 
+      query: {page: prop.page}
+    }} className='w-full h-[40px] sm:h-[43px] xl:h-[45px] flex items-center rounded-[4px] text-grayscale-60 hover:bg-violet-10 hover:text-grayscale-80'
+    >
         <div className={`${pseudoBefore}`}></div>
         <div className="hidden sm:block text-[18px] text-inherit">{prop.title}</div>
         {prop.createdByMe && (

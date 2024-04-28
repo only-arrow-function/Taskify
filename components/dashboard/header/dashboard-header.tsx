@@ -10,7 +10,7 @@ import dashboardInviteIcon from '@/public/dashboard/dashboard-invite.svg';
 import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg';
 import { useInviteToggleStore } from '@/store/invite/invite-toggle-store';
 
-const DashboardHeader = ({dashboardId, page}: {dashboardId?: number, page: number}) => {
+const DashboardHeader = ({dashboardId, page}: {dashboardId?: number, page?: number}) => {
   const router = useRouter();
   const isPathMyDashboard = router.pathname.match('my');
   const { isToggle, handleOpenToggle, handleCloseToggle } = useInviteToggleStore();
