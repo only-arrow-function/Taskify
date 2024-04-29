@@ -12,6 +12,7 @@ export interface TaskCardProp {
   };
   imageUrl?: string;
   columnData: ColumnItem;
+  onSelectItem: (card: TaskCardProp) => void;
 }
 
 export interface TaskCardResponse extends TaskCardProp {
