@@ -43,6 +43,7 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
+
   const handleInputBlur = () => {
     if (useColumnDuplicationTest(title, data?.data)) {
       setError('중복된 컬럼 이름입니다.');
@@ -51,6 +52,7 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
     }
     return;
   };
+
   const handleEditBtnClick = async () => {
     if (useColumnDuplicationTest(title, data?.data)) {
       setError('중복된 컬럼 이름입니다.');
@@ -64,6 +66,7 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
       setError('업데이트를 실패했습니다.');
     }
   };
+
   return (
     <div ref={modalRef}>
       {isOpenModal && (

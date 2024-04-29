@@ -16,7 +16,7 @@ const ModalButtonGroup = ({
   onClick?: () => void;
 }) => {
   const { data, error, mutate } = useDashboards({ page: 1 });
-  const { color, title } = useDashboardsStore((state) => ({ color: state.color, title: state.title }));
+  const { color } = useDashboardsStore((state) => ({ color: state.color }));
   const handleCloseToggle = useToggleStore((state) => state.handleCloseToggle);
 
   if (error) {
