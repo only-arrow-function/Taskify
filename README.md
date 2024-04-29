@@ -184,7 +184,7 @@ npm run dev
 
 ## 기능 구현 요소 관련
 
-### ⚠️ 태일위드에서 클래스 이름 적용 문제
+### ⚠️ 테일위드에서 클래스 이름 적용 문제
 
 ✅ tailwinnd.config.ts 파일에 적용 경로에서 벗어날 경우 tailwind가 인식하지 못함.
 
@@ -193,6 +193,21 @@ npm run dev
   <br/>
   
   - 테일윈드는 클래스 이름을 추출할 때 끊어지지 않은 완전한 문자열로 존재하는 클래스만 인식. 즉, font-${fontWeight}와 같이 사용 불가. 따라서, 조건에 맞는 객체를 만들어서 사용.
+  - 클래스 이름을 모아둔 객체를 분리해서 사용하였는데, 클래스가 미적용. 이유는, tailwinnd.config.ts 파일에 적용 경로에서 벗어날 경우 tailwind가 인식하지 못함.
+  - tailwinnd.config.ts의 적절한 경로에 배치.
+</details>
+
+<br>
+
+### ⚠️ zustand: 다른 전역 상태 라이브러리와는 다른 시스템.
+
+✅ Redux, context-api와는 다소 결이 다른 zustand 시스템을 올바르게 이해하지 못하고 개발을 진행.
+
+<details>
+  <summary>설명 & 해결 방안</summary>
+  <br/>
+  
+  - 
   - 클래스 이름을 모아둔 객체를 분리해서 사용하였는데, 클래스가 미적용. 이유는, tailwinnd.config.ts 파일에 적용 경로에서 벗어날 경우 tailwind가 인식하지 못함.
   - tailwinnd.config.ts의 적절한 경로에 배치.
 </details>
