@@ -4,7 +4,7 @@ import largeLogo from '@/public/logo/logo-with-title-large.svg';
 
 const SideMenuLogo = () => {
   return (
-    <div className="w-full mb-[38px] sm:mb-[59px]">
+    <div className="w-full">
       <Link href="/">
         <picture>
           <source media="(min-width: 640px)" srcSet={largeLogo.src} />

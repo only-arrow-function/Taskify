@@ -8,7 +8,7 @@ const DashboardDeleteButton = ({dashboardId, page}: {dashboardId: number, page: 
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
 
   return (
-    <>
+    <div className='flex flex-col justify-between min-w-[284px] max-w-[620px] rounded-lg'>
     <DashboardBase purpose="dashboard-delete" onOpenModal={handleOpenModal}>
       <div className='flex items-center justify-center gap-x-3'>
         <DomainButtonName purpose="dashboard-delete">
@@ -17,7 +17,7 @@ const DashboardDeleteButton = ({dashboardId, page}: {dashboardId: number, page: 
       </div>
     </DashboardBase>
     {isOpenModal && <DashboardDeleteModal handleCloseModal={handleCloseModal} dashboardId={dashboardId} page={page}/>}
-    </>
+    </div>
   );
 };
 

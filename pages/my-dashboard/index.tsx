@@ -21,10 +21,12 @@ const MyDashboard = ({ title, page }: { title?: string, page?: string }) => {
 
   return (
     <DashboardSectionLayout>
-      <DashboardHeader />
-      <DashboardList />
-      <DashboardInvite searchTitle={title} />
       <SideMenu page={pageToNumber}/>
+      <div className='flex-col w-full'>
+        <DashboardHeader />
+        <DashboardList />
+        <DashboardInvite searchTitle={title} />
+      </div>
     </DashboardSectionLayout>
   );
 };
