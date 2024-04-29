@@ -87,8 +87,6 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
       data,
     };
 
-    console.log(data);
-
     await updateCardMutation.mutateAsync(transformedData);
     onCloseModal();
   };

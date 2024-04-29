@@ -47,7 +47,7 @@ const StateDropdown = (
   return (
     <div>
       <div className="flex flex-col">
-        <label className="text-grayscale-80 text-base font-medium">상태</label>
+        <label className="text-grayscale-80 text-base font-medium mb-[0.5rem]">상태</label>
         <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 rounded-lg border focus-within:border-violet-50">
           <button
             className="w-full outline-none flex items-center gap-x-3"
@@ -80,7 +80,6 @@ const StateDropdown = (
           </ul>
         </div>
       )}
-      <div className="flex w-full h-[1.5rem]" />
     </div>
   );
 };

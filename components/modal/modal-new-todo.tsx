@@ -95,7 +95,9 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
       <Dimmed handleCloseModal={handleCloseModal} />
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
-        <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} ref={focusRef} />
+        <div className="mb-[28px]">
+          <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} ref={focusRef} />
+        </div>
         <InputField
           label="제목"
           type="text"
@@ -137,7 +139,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
           <BasicButton purpose="negative" eventHandler={handleCloseModal}>
             취소
           </BasicButton>
-          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit}>
+          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit} disabled={!isFilled}>
             확인
           </BasicButton>
         </div>
