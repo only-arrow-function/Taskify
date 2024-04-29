@@ -18,6 +18,7 @@ const ColumnList = (props: ColumnListProps) => {
   const dashboardId = +props.id;
   const { data: columnData } = useColumnsQuery(dashboardId);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
+  
   const [cardList, setCardList] = useState([]);
   const [enabled, setEnabled] = useState(false);
 
