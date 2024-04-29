@@ -24,12 +24,8 @@ const cardsRequests = Object.freeze({
   },
 
   postCard: async (cardInfo: Card) => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
     try {
-      const { data } = await axios.post('cards', cardInfo, {
-        headers: { Authorization: 'Bearer ' + accessToken },
-      });
+      const { data } = await axios.post('cards', cardInfo, headers);
 
       return data;
     } catch (error) {
@@ -43,12 +39,8 @@ const cardsRequests = Object.freeze({
   },
 
   getCardDetail: async (cardId: number) => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
     try {
-      const { data } = await axios.get<CardDetail>(`cards/${cardId}`, {
-        headers: { Authorization: 'Bearer ' + accessToken },
-      });
+      const { data } = await axios.get<CardDetail>(`cards/${cardId}`, headers);
 
       return data;
     } catch (error) {
@@ -58,12 +50,8 @@ const cardsRequests = Object.freeze({
   },
 
   deleteCard: async (cardId: number) => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
     try {
-      await axios.delete(`cards/${cardId}`, {
-        headers: { Authorization: 'Bearer ' + accessToken },
-      });
+      await axios.delete(`cards/${cardId}`, headers);
     } catch (error) {
       const err = error as Error;
       console.log(ERROR_MESSAGE, err.message);
