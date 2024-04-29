@@ -29,6 +29,8 @@ const NewDashboardModal = () => {
   };
 
   const handleClickForCreateDashboard = async () => {
+    if (inputValue.trim().length === 0) return;
+
     try {
       await mutateAsync();
 
@@ -54,7 +56,7 @@ const NewDashboardModal = () => {
         onBlur={handleInputBlur}
         onChange={handleInputChange}
       />
-      <div className="mb-7">
+      <div className={`mb-7 ${hasError && 'mt-4'}`}>
         <ColorChipGroup />
       </div>
       <div className="flex flex-row gap-[10px] justify-end">
