@@ -9,6 +9,7 @@ import InputWithCalendar from './todo/input-with-calendar';
 import InputWithImg from './todo/input-with-img';
 import { formatDate } from '../../lib/format-date';
 import BasicButton from '../buttons/basic-button';
+import { Member } from '../tables/members.type';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
 import ModalTitle from '@/components/modal/modal-title';
@@ -39,6 +40,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
   const [tags, setTags] = useState(card.tags);
   const [image, setImage] = useState(card.imageUrl);
   const [selectedState, setSelectedState] = useState<ColumnItem>(columnData);
+  const [assignee, setAssignee] = useState(card.assignee.id || 0);
 
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (event) => setTitle(event.target.value);
   const handleDescriptionChange: ChangeEventHandler<HTMLInputElement> = (event) => setsDescription(event.target.value);
@@ -51,8 +53,11 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
   const handleSelectedState = (updatedState: ColumnItem) => {
     setSelectedState(updatedState);
   };
+  const handleAssignee = (member: Member) => setAssignee(member.userId);
 
   const isDisabled = !title || !description || !dueDate || !tags;
+
+  console.log(card);
 
   const handleSubmit = async () => {
     if (isDisabled) return;
@@ -62,7 +67,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
     if (image) {
       data = {
         columnId: selectedState.id,
-        assigneeUserId: card.assignee.id,
+        assigneeUserId: assignee,
         dashboardId: dashboardId,
         title: title,
         description,
@@ -73,7 +78,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
     } else {
       data = {
         columnId: selectedState.id,
-        assigneeUserId: card.assignee.id,
+        assigneeUserId: assignee,
         dashboardId: dashboardId,
         title: title,
         description,
@@ -104,7 +109,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
             selectedState={selectedState}
             onSelectedColumn={handleSelectedState}
           />
-          <ManagerDropdown members={members} assignee={card.assignee} />
+          <ManagerDropdown members={members} assignee={card.assignee} handleAssignee={handleAssignee} />
         </GridLayout>
         <InputField
           label="제목"
