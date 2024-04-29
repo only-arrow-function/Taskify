@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import BackDrop from './backdrop';
 import { ColumnItem } from './column/columns-data.type';
 import InfoWithLabel from './info-with-label';
@@ -26,6 +27,7 @@ interface ModalTodoDetailProps {
 }
 
 const ModalTodoDetail = ({ columnData, cardId, onCloseModal }: ModalTodoDetailProps) => {
+  const { id } = useParams();
   const [isOpenPopover, setIsOpenPopover] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
   const queryClient = useQueryClient();
@@ -56,8 +58,8 @@ const ModalTodoDetail = ({ columnData, cardId, onCloseModal }: ModalTodoDetailPr
     addMutate({
       content: comment,
       cardId: cardId,
-      columnId: 20173,
-      dashboardId: 6000,
+      columnId: columnData.id,
+      dashboardId: +id,
     });
   };
 
