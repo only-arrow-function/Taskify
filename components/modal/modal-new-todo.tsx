@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler } from 'react';
+import { ChangeEvent, FormEventHandler, useState } from 'react';
 
 import { useParams } from 'next/navigation';
 import Dimmed from './dimmed';
@@ -6,6 +6,7 @@ import ModalNewTodoLayout from './modal-newTodo-layout';
 import InputWithCalendar from './todo/input-with-calendar';
 import InputWithImg from './todo/input-with-img';
 import BasicButton from '../buttons/basic-button';
+import { Member } from '../tables/members.type';
 import requests from '@/apis/request';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
@@ -59,6 +60,9 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
     setter(target.value);
   };
 
+  const [assignee, setAssignee] = useState(0);
+  const handleAssignee = (member: Member) => setAssignee(member.userId);
+
   const handleSubmit = async () => {
     if (!isFilled) return;
 
@@ -67,7 +71,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
     if (!formState.imageUrl) {
       data = {
         columnId,
-        assigneeUserId: detailDashboardQuery!.data?.userId,
+        assigneeUserId: assignee,
         dashboardId,
         title: formState.title,
         description: formState.description,
@@ -77,7 +81,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
     } else {
       data = {
         columnId,
-        assigneeUserId: detailDashboardQuery!.data?.userId,
+        assigneeUserId: assignee,
         dashboardId,
         ...formState,
         dueDate: formatDate(formState.dueDate),
@@ -96,7 +100,12 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
         <div className="mb-[28px]">
-          <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} ref={focusRef} />
+          <ManagerDropdown
+            placeholder="이름을 입력해 주세요"
+            members={members}
+            ref={focusRef}
+            handleAssignee={handleAssignee}
+          />
         </div>
         <InputField
           label="제목"

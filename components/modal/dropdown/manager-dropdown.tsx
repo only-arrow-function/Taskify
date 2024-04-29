@@ -13,6 +13,7 @@ interface ManagerDropdownProps {
   placeholder?: string;
   assignee?: Assignee;
   members: Members | undefined;
+  handleAssignee: (member: Member) => void;
 }
 
 const profileBadge = (nickname: string, profileImageUrl?: string) => {
@@ -20,7 +21,7 @@ const profileBadge = (nickname: string, profileImageUrl?: string) => {
 };
 
 const ManagerDropdown = (
-  { placeholder, members, assignee }: ManagerDropdownProps,
+  { placeholder, members, assignee, handleAssignee }: ManagerDropdownProps,
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
@@ -54,9 +55,12 @@ const ManagerDropdown = (
     setSelectedMember(member.nickname);
     setSelectedMemberProfile(member.profileImageUrl);
     handleCloseDropdown();
+    handleAssignee(member);
   };
 
   const buttonStyles = !selectedMember ? 'text-grayscale-50' : 'text-black';
+
+  console.log(selectedMember, members);
 
   return (
     <div>
