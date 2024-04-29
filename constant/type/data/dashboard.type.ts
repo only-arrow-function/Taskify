@@ -1,10 +1,11 @@
 export interface IdProps {
   id: string;
-  title?: string;
+  page: string;
 }
 
 export interface DashboardIdProps {
   dashboardId: number;
+  page?: number;
 }
 
 export interface InviteeType {

@@ -19,7 +19,9 @@ const DashboardListItem = (props: DashboardListItemProps) => {
       {data &&
         data.dashboards.map((dashboard: any) => (
           <li key={dashboard.id} className="relative">
-            <Link href={`/dashboard/${dashboard.id}`}>
+            <Link href={{pathname: `/dashboard/${dashboard.id}`,
+            query: {page: props.currentPage}
+              }}>
               <DashboardOpenButton color={dashboard.color} isCreatedByMe={dashboard.createdByMe}>{dashboard.title}</DashboardOpenButton>
             </Link>
           </li>

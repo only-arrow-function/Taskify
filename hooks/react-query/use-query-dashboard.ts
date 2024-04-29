@@ -45,11 +45,11 @@ export const useInfiniteDashboardsQuery = () => {
   return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage };
 };
 
-export const useDashboardDetailQuery = (dashboardId: number | undefined) => {
+export const useDashboardDetailQuery = (dashboardId: number | undefined, page: number) => {
   if (!dashboardId) return { data: null, isPending: null };
 
   const query = useQuery({
-    queryKey: [`my-dashboard`, dashboardId],
+    queryKey: [`my-dashboard`, page, dashboardId],
     queryFn: async () => await dashboardRequest.fetchDashboardDetails(dashboardId),
   });
 
@@ -73,26 +73,14 @@ export const useDashboardsMutation = (
 
 export const useDashboardEditMutation = (
   dashboardId: number,
+  page: number,
   dashboardData: { title: string; color: DashboardColors },
   queryClient: QueryClient,
 ) => {
   const query = useMutation({
     mutationFn: async () => await dashboardRequest.editDashboard(dashboardId, dashboardData),
-    onSuccess: (data) => {
-      // console.log(data)
-      // // Invalidate and refetch
-      // const oldDataInQuery: {pages: [], pageParams: number} | undefined = queryClient.getQueryData(['my-dashboard']);
-      // if (oldDataInQuery) {
-      //   for (let page of oldDataInQuery?.pages) {
-      //     for (let dashboard in page.dashboards) {
-      //       if (page.dashboards[dashboard].id === data.id) {
-      //         console.log(page)
-      //       }
-      //     }
-      //   }
-      // }
-      queryClient.invalidateQueries({ queryKey: [`my-dashboard`] });
-      queryClient.invalidateQueries({ queryKey: [`my-dashboard`, dashboardId] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`my-dashboard`, page] });
     },
   });
 

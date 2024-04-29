@@ -7,11 +7,11 @@ import NewColumn from '@/components/modal/column/new-column';
 import Dimmed from '@/components/modal/dimmed';
 import ModalLayout from '@/components/modal/modal-layout';
 import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
-import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useHandleModal } from '@/hooks/use-handle-modal';
 
 interface ColumnListProps {
   id: number;
+  page?: number;
 }
 
 const ColumnList = (props: ColumnListProps) => {

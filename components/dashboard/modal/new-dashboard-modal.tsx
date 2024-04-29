@@ -30,12 +30,7 @@ const NewDashboardModal = () => {
 
   const handleClickForCreateDashboard = async () => {
     try {
-      await mutateAsync(
-        { title: inputValue, color: color },
-        {
-          onSuccess: () => {},
-        },
-      );
+      await mutateAsync();
 
       handleCloseToggle();
     } catch (error) {
