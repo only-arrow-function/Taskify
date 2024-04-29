@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
-const useFocus = () => {
-  const ref = useRef<HTMLInputElement>(null);
+const useFocus = <T extends HTMLInputElement | HTMLButtonElement>() => {
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     if (ref.current) {

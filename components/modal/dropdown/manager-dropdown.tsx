@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import ProfileBadge from '@/components/profile/profile-badge';
 import ProfileUsername from '@/components/profile/profile-username';
 import { Members } from '@/components/tables/members.type';
-import { useHandleDropdown, useHandleDropdownOutside } from '@/hooks/use-handle-dropdown';
+import { useHandleDropdown } from '@/hooks/use-handle-dropdown';
 
 import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 
@@ -14,7 +14,10 @@ interface ManagerDropdownProps {
   members: Members | undefined;
 }
 
-const ManagerDropdown = ({ placeholder, members, nickname }: ManagerDropdownProps) => {
+const ManagerDropdown = (
+  { placeholder, members, nickname }: ManagerDropdownProps,
+  ref: ForwardedRef<HTMLButtonElement>,
+) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
   // const initRef = useHandleDropdownOutside(handleOpenDropdown, handleCloseDropdown);
 
@@ -51,7 +54,7 @@ const ManagerDropdown = ({ placeholder, members, nickname }: ManagerDropdownProp
       <div className="flex flex-col relative">
         <label className="text-grayscale-80 text-base font-medium">담당자</label>
         <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 pl-6 rounded-lg border focus-within:border-violet-50 cursor-pointer">
-          <button className="w-full outline-none flex items-center gap-x-3" type="button" data-type="member">
+          <button className="w-full outline-none flex items-center gap-x-3" type="button" data-type="member" ref={ref}>
             {selectedMember ? (
               <>
                 <ProfileBadge>{selectedMember.slice(0, 1)}</ProfileBadge>
@@ -97,4 +100,4 @@ const ManagerDropdown = ({ placeholder, members, nickname }: ManagerDropdownProp
   );
 };
 
-export default ManagerDropdown;
+export default forwardRef(ManagerDropdown);
