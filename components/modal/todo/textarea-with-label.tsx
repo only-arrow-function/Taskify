@@ -26,7 +26,7 @@ const TextareaWithLabel = ({
 }) => {
   const [content, setContent] = useState('');
 
-  const handleChangeContent = (e) => setContent(e.target.value);
+  const handleChangeContent = (e: any) => setContent(e.target.value);
 
   const handleAddButtonClick = () => {
     setContent('');

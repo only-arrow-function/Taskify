@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
@@ -7,6 +7,7 @@ import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
 import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
+import useFocus from '@/hooks/use-focus';
 import mainLogo from '@/public/logo/logo-main.svg';
 import { useAuthenticationStore } from '@/store/auth';
 import { useToggleStore } from '@/store/toggle-store';
@@ -40,6 +41,8 @@ const Login = () => {
     }
   };
 
+  const focusRef = useFocus<HTMLInputElement>();
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">
       <div className="w-[120px] h-[167px] sm:w-[200px] sm:h-[279px]">
@@ -59,6 +62,7 @@ const Login = () => {
           autoComplete="email"
           placeholder="이메일을 입력해 주세요"
           error={email.error}
+          ref={focusRef}
         />
         <PasswordInput
           label="비밀번호"

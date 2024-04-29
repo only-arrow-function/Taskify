@@ -5,12 +5,12 @@ import MypagePasswordChangeForm from '../password-change-form/password-change-fo
 import MypageProfile from '../profile/profile';
 import NotificationModal from '@/components/modal/notification-modal';
 import { useUser } from '@/hooks/swr/use-user';
+import { useHandleModal } from '@/hooks/use-handle-modal';
 import arrowForward from '@/public/icon/arrow-forward-left.svg';
-import { useToggleStore } from '@/store/toggle-store';
 
 const MypageManagement = () => {
   const { user, isLoading, isError } = useUser();
-  const { isToggle, handleOpenToggle } = useToggleStore();
+  const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
   const [notificationMessage, setNotificationMessage] = useState('');
 
   if (isLoading) return <ManagementSkeleton />;
@@ -20,7 +20,7 @@ const MypageManagement = () => {
 
   const handleNotification = (message: string) => {
     setNotificationMessage(message);
-    handleOpenToggle();
+    handleOpenModal();
   };
   return (
     <>
@@ -30,7 +30,7 @@ const MypageManagement = () => {
       </Link>
       <MypageProfile userData={user} onNotification={handleNotification} />
       <MypagePasswordChangeForm onNotification={handleNotification} />
-      {isToggle && <NotificationModal message={notificationMessage} />}
+      {isOpenModal && <NotificationModal message={notificationMessage} onCloseModal={handleCloseModal} />}
     </>
   );
 };
