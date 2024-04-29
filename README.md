@@ -72,7 +72,7 @@ https://taskify-six-eta.vercel.app/
 
 ## 💬 Community
 
-![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white) <a href="https://whispering-sassafras-4ac.notion.site/528ae5a35f3e4736925fc93c812f853f?pvs=4"><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"></a> ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
+![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white) <a href="https://jumbled-tablecloth-e39.notion.site/Next-js-side-project-0657a0641e054062bc14fac2361cf2fa?pvs=4"><img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"></a> ![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)
 
 ## 🚢 Deploy
 
