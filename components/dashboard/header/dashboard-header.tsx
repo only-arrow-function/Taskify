@@ -11,13 +11,13 @@ import dashboardInviteIcon from '@/public/dashboard/dashboard-invite.svg';
 import dashboardSettingIcon from '@/public/dashboard/dashboard-setting-icon.svg';
 import { useInviteToggleStore } from '@/store/invite/invite-toggle-store';
 
-const DashboardHeader = ({ dashboardId }: { dashboardId?: number }) => {
+const DashboardHeader = ({dashboardId, page}: {dashboardId?: number, page?: number}) => {
   const router = useRouter();
   const isPathMyDashboard = router.pathname.match('my');
   const { isToggle, handleOpenToggle, handleCloseToggle } = useInviteToggleStore();
 
   // server state
-  const { data } = useDashboardDetailQuery(dashboardId);
+  const { data } = useDashboardDetailQuery(dashboardId, page);
   const beforeStyles = isPathMyDashboard
     ? ''
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
@@ -29,17 +29,20 @@ const DashboardHeader = ({ dashboardId }: { dashboardId?: number }) => {
   const usersCount = usersData?.totalCount || 0;
 
   return (
-    <header className="border-b border-grayscale-40 py-6">
+    <header className="border-b border-grayscale-40 py-6 w-full">
       <div className="flex justify-between max-[430px]:justify-end sm:justify-between items-center px-4 sm:px-10 lg:pl-10 lg:pr-20">
         <h2 className=" text-xl font-bold max-[430px]:hidden">
           {data ? <Link href="/my-dashboard">{data.title}</Link> : <Link href="/my-dashboard">내 대시보드</Link>}
         </h2>
-
         <div className="flex items-center">
           {data?.createdByMe && (
             <>
               <div>
-                <Link href={`/dashboard/${router.query.id}/edit`}>
+                <Link href={{pathname: `/dashboard/${router.query.id}/edit`,
+                query: {
+                  page: page
+                }
+              }}>
                   <DashboardHeaderButton imageSource={dashboardSettingIcon.src}>관리</DashboardHeaderButton>
                 </Link>
               </div>
