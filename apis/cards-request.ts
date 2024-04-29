@@ -13,11 +13,10 @@ const headers = {
 
 const cardsRequests = Object.freeze({
   fetchCards: async (columnId: number, cursorId: number) => {
-    const { data } = await axios.get<ColumnType>(`/cards`, {
+    const { data } = await axios.get<ColumnType>(`/cards?${cursorId ? `cursorId=${cursorId}` : ''}`, {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         size: 5,
-        cursorId,
         columnId: columnId,
       },
     });
