@@ -207,27 +207,27 @@ npm run dev
   <summary>설명 & 해결 방안</summary>
   <br/>
   
-  - 
-  - 클래스 이름을 모아둔 객체를 분리해서 사용하였는데, 클래스가 미적용. 이유는, tailwinnd.config.ts 파일에 적용 경로에서 벗어날 경우 tailwind가 인식하지 못함.
-  - tailwinnd.config.ts의 적절한 경로에 배치.
+  - zustand는 객체 자체를 반환한다(클래스의 인스턴스를 리턴) : provider가 존재하지 않는다.
+  - 즉, 훅으로 사용할 경우, 이미 생성된 객체에, 상태를 저장하는 구조다. (원리 : https://react.dev/reference/react/useSyncExternalStore)
+  - 따라서, 전역적으로 사용할 상태를 엄밀히 분리해야 한다. (모달의 토글 훅을 zustand로 관리해, 같은 페이지에서 모든 모달이 뜨는 이슈 발생.)
+
 </details>
 
 <br>
 
 ### ⚠️ SWR -> React-Query 마이그레이션
 
-✅ props의 단방향성으로 인해(부모 -> 자식), 생기는 문제
-- 만약 A 컴포넌트에서 상태를 정의하고, A의 자식 컴포넌트인 B 컴토넌트에서 A의 상태를 변경해야 할 때, 문제가 발생한다.
-- 상태를 변경할 수 있는 setter 함수 혹은 setter를 포함하는 핸들러 함수를 props로 전달해 상태를 바꿀 수 있다. 이를 drilling이라고 한다.
+✅ SWR VS react-Query : 간편함 vs 폭 넓은 생태계
 
-✅ setter 함수를 넘기는 문제
-- 만약 컴포넌트 트리가 깊어지면 어떨까?
-  - 실제 동작을 수행하는 “아래 트리의 컴포넌트”뿐 만 아니라, 해당 컴포넌트를 건너기 위한 중간 컴포넌트들이 “모두” setter 함수를 접근할 권한을 얻게 된다.
-  - 또한, 그저 전달을 위한 props를 연쇄적으로 정의하게 되어 번거로움을 유발한다.
-- <b>결정적으로, props로 함수를 전달할 경우, 컴포넌트 렌더링 과정에서 함수가 새로이 정의된다. props가 변경되었다고 인식하여, 실제 변화가 없더라도 함수 props를 전달 받은 컴포넌트는 "무조건" 리렌더링이 발생한다.</b>
-  - 이를 방지 하기위해 useCallback을 감싸야하는 번거로움이 발생한다.
+<details>
+  <summary>설명 & 해결 방안</summary>
+  <br/>
 
-- 예상 해결 방안: 전역 상태 도입, 전역 상태 라이브러리인 "Redux" 도입
+  - useSWRInfinite VS useinfinitequery: 무한 스크롤과 페이지네이션의 쿼리 키 관리의 어려움. 특히, 뮤테이션에서 문제가 발생.
+  - SWR의 뮤테이션은 자유도가 높은 대신, 전역적으로 흩어지는 서버 상태 쿼리를 관리하기 난해해 진다고 판단.
+
+</details>
+
 <br>
 
 ### ⚠️ react-Query 라이브러리와 제공받은 api와의 호환성
@@ -240,6 +240,35 @@ npm run dev
   
   - initialPageParam는 필수인데, 첫 api 요청할 때 cursorId params가 존재하면 안 된다.
   - initialPageParam을 0으로 해서 분기 처리
+</details>
+
+<br>
+
+### ⚠️ 서버와 클라이언트 비동기 처리 이슈
+
+✅ next의 useRouter로 파라미터값을 가져와서 SWR로 비동기 데이터 패칭을 진행하는 로직에서, 파라미터값을 가져오기 전에 SWR이 먼저 실행 되어서 id값에 undefined가 뜨는 이슈 발생
+  
+<details>
+  <summary>해결 방안</summary>
+  <br/>
+  
+  - 서버쪽 동작과 클라이언트쪽 동작이 비동기로 순서가 엉키면서 발생하는 이슈로 판단
+  - 프리렌더링을 이용해서 getServerSideProp으로 파라미터값을 가져와서 페이지에 전달하는 방식으로 수정
+</details>
+
+<br>
+
+### ⚠️ 토큰값 없을 시 login페이지로 리다이렉트 처리 중 페이지 렌더링되는 이슈
+
+✅ accessToken을 localStorage로 관리 -> 페이지에서 localStorage에 접근해서 분기하려니 1차적으로 유저화면에 페이지가 렌더링되고 넘어가는 이슈 발생
+  
+<details>
+  <summary>해결 방안</summary>
+  <br/>
+  
+  - 클라이언트에서 localStorage접근하기 때문에 페이지가 렌더링 되는 모습이 보였다가 이동하는 문제로 판단
+  - 서버측에서 localStorage에 접근이 불가하기 때문에 토큰 관리를 서버에서도 접근 가능한 쿠키형태로 변환 후 middleware를 추가해서 서버에서 쿠키를 검사해서 리다이렉트 시키는 방식으로 변경
+  - 단, 로그인 렌딩페이지 회원가입 페이지는 middleware작동 제외
 </details>
 
 
