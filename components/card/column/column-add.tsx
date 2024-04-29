@@ -18,6 +18,7 @@ const ColumnAdd = ({ onClick }: ColumnAddProp) => {
       <div className="xl:pt-[40px]">
         <Card>
           <div className="flex justify-center items-center gap-[12px]" onClick={handleCardClick}>
+            <h4 className="font-bold text-grayscale-80 text-[18px]">새로운 컬럼 추가하기</h4>
             <div className="relative p-[3px] rounded-[4px] bg-violet-10 w-[22px] h-[22px]">
               <Image src={addChips} alt="addChips" fill />
             </div>

@@ -3,7 +3,11 @@ import ProfileBadge from '@/components/profile/profile-badge';
 import ProfileUsername from '@/components/profile/profile-username';
 import { useAuthenticationStore } from '@/store/auth';
 
-const DashboardHeaderProfile = () => {
+interface DashboardHeaderProfileProp {
+  onClick: () => void;
+}
+
+const DashboardHeaderProfile = (prop: DashboardHeaderProfileProp) => {
   const nickname = useAuthenticationStore((state) => state.nickname);
   const profileImage = useAuthenticationStore((state) => state.profileImageUrl);
   const profileBadge = profileImage ? (
@@ -13,7 +17,7 @@ const DashboardHeaderProfile = () => {
   );
 
   return (
-    <div className="flex items-center gap-x-3">
+    <div className="flex items-center gap-x-3 cursor-pointer" onClick={prop.onClick}>
       <ProfileBadge>{profileBadge}</ProfileBadge>
       <ProfileUsername username={nickname} />
     </div>

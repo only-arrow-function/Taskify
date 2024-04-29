@@ -2,6 +2,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import AddCard from '@/components/card/add-card';
 import CardListHeader from '@/components/card/card-list-header';
 import CardListLayout from '@/components/card/card-list-layout';
+import { TaskCardProp } from '@/components/card/card-type';
 import TaskCard from '@/components/card/task-card';
 import { ColumnItem } from '@/components/modal/column/columns-data.type';
 import EditColumn from '@/components/modal/column/edit-column';
@@ -14,6 +15,7 @@ import useIntersect from '@/hooks/use-intersect';
 interface CardListProps {
   columnData: ColumnItem;
   dashboardId: number;
+  onSelectItem: (card: TaskCardProp) => void;
 }
 const CardList = (props: CardListProps) => {
   const {
@@ -66,7 +68,9 @@ const CardList = (props: CardListProps) => {
                         tags={card.tags}
                         assignee={card.assignee}
                         imageUrl={card?.imageUrl}
+                        description={card.description}
                         columnData={props.columnData}
+                        onSelectItem={props.onSelectItem}
                       />
                     </div>
                   );

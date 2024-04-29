@@ -1,5 +1,7 @@
+import { AxiosError, AxiosResponse } from 'axios';
 import axios from './axios';
 import getToken from './cookie';
+import { Invitation } from '@/types/invited-dashboard.type';
 
 const ERROR_MESSAGE = '에러 발생:';
 const PAGE_DASHBOARD_COUNT = 5;
@@ -30,12 +32,31 @@ const inviteRequests = Object.freeze({
     }
   },
 
+  getInviteUsersAll: async (dashboardId: number) => {
+    try {
+      const { data } = await axios.get<{ totalCount: number; invitations: Invitation[] }>(
+        `dashboards/${dashboardId}/invitations`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          params: {
+            size: 100,
+          },
+        },
+      );
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   inviteUserInDashboard: async (dashboardId: number, { email: inviteUserEmail }: { email: string }) => {
     try {
       const { data } = await axios.post(`dashboards/${dashboardId}/invitations`, { email: inviteUserEmail }, headers);
       return data;
     } catch (error) {
-      console.error(ERROR_MESSAGE, error);
+      const err = error as AxiosError;
+      const response = err.response as AxiosResponse;
+      throw new Error(response.data.message);
     }
   },
 

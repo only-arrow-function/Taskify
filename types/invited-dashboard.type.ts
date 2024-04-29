@@ -1,6 +1,6 @@
 import { InviteeType } from '@/constant/type/data/dashboard.type';
 
-interface Invitation {
+export interface Invitation {
   id: number;
   inviter: InviteeType;
   teamId: string;

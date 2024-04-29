@@ -7,7 +7,7 @@ import SideMenuDashBoard from '@/components/side-menu/side-menu-dash-boards';
 import { useDashboardsPaginationQuery } from '@/hooks/react-query/use-query-dashboard';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
-const SideMenuDashBoardsList = ({page}: {page: number}) => {
+const SideMenuDashBoardsList = ({ page }: { page: number }) => {
   const [currentPage, setCurrentPage] = useState(page);
 
   // server state
@@ -46,8 +46,8 @@ const SideMenuDashBoardsList = ({page}: {page: number}) => {
         )}
       </div>
       {data && data.totalPages && (
-        <div className="flex items-center">
-          <span className="text-center text-sm mx-[10px]">
+        <div className="justify-center sm:justify-start flex items-center">
+          <span className="hidden sm:block text-center text-sm mr-[10px]">
             {data.totalPages}페이지 중{currentPage}
           </span>
           <DashboardPaginationButton position="left" isDisabled={currentPage === 1} onClick={prevPage} />
