@@ -21,7 +21,7 @@ const SendInvite = () => {
       setError('유효한 이메일 형식을 입력해 주세요.');
       return;
     }
-    await requests.sendInvite({ email }, dashboardId);
+    await requests.sendInvite({ email }, dashboardId as string);
     handleCloseToggle();
   };
 
