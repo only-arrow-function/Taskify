@@ -4,8 +4,8 @@ import ModalButton from './modal-button';
 import ModalDescription from './modal-description';
 import { useToggleStore } from '@/store/toggle-store';
 
-const NotificationModal = ({ message }: { message: string }) => {
-  const { handleCloseToggle } = useToggleStore();
+const NotificationModal = ({ message, onCloseModal }: { message: string; onCloseModal?: () => void }) => {
+  const handleCloseToggle = onCloseModal || useToggleStore().handleCloseToggle;
   const modalRef = useRef<HTMLDivElement>(null);
   const scrollPosition = useRef<number>(0);
 
