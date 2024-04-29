@@ -11,7 +11,6 @@ import { formatDate } from '../../lib/format-date';
 import BasicButton from '../buttons/basic-button';
 import InputField from '@/components/inputs/input-field';
 import ManagerDropdown from '@/components/modal/dropdown/manager-dropdown';
-import ModalButtonGroup from '@/components/modal/modal-button-group';
 import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useUpdateCard } from '@/hooks/react-query/use-query-cards';
