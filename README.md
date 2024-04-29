@@ -23,36 +23,30 @@
   <summary>개별 역할☝️</summary>
 <br/>
  
-- <b>김동현  </b> <br/>
-  - 컴포넌트 : FeedCard, Modal(Question, Answer), Skeleton
-  - 페이지 : AnswerPage (CardPage의 조건부 랜더링으로 구현)
+- <b>구승모  </b> <br/>
+  - 로그인 & 회원 가입 관리
+  - 페이지 : 마이 페이지
+- <b>김재성  </b> <br/>
+  - 컬럼, 카드 도메인
+  - 페이지 : 대시보드 페이지
+  - 로컬 스토리지 -> 쿠키, 미들웨어
+  - 무한 스크롤
+  - Dnd 적용
+- <b>노은수  </b> <br/>
   - git flow 초기 설정, 레포지토리 관리
   - 무중단 배포 및 도메인 연결
-  - 다크모드
-- <b>김영은  </b> <br/>
-  - 컴포넌트: buttons,input
-  - 페이지 : MainPage
-  - 에러 객체
-  - 로컬 스토리지 객체 선언 및 관리
-  - svg 파일 전역으로 관리
-  - global style
-  - constant 전역으로 관리
-- <b>노은수  </b> <br/>
-  - 컴포넌트 : floatingButton, dropdown, reactions(좋아요, 싫어요), toast, avator
-  - 페이지 : CardPage
-  - date utils 함수
-  - 커스텀 훅 : 무한 스크롤, mutation(api 최신 업데이트), Query
-  - facebook, 카카오 공유 기능
-  - api 연결 리팩토링 → react Query 적용
-  - 라우터 연결
-  - 컴포넌트 성능 개선
-- <b>박기범  </b> <br/>
-  - 컴포넌트 : Badge, Pagination, User card
-  - 페이지 : ListPage
-  - 버튼 컴포넌트 css 수정
-  - 추가 모달 구현
-  - 페이지네이션 기능 개선
-  - 메타태그 수정
+  - 페이지: 수정 페이지
+  - react Query: 서버 상태 초기 설정
+  - 페이지 네이션
+- <b>윤아영  </b> <br/>
+  - 초대 도메인
+  - 페이지 : 마이 대시보드, 수정 페이지
+  - 무한 스크롤
+- <b>이동현  </b> <br/>
+  - 페이지 : 마이 대시보드, 랜딩 페이지
+  - 페이지네이션, 무한 스크롤
+  - Dnd 적용
+  - 스켈레톤
 
 </details>
 
