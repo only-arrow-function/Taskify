@@ -68,6 +68,7 @@ const CardList = (props: CardListProps) => {
                         tags={card.tags}
                         assignee={card.assignee}
                         imageUrl={card?.imageUrl}
+                        description={card.description}
                         columnData={props.columnData}
                         onSelectItem={props.onSelectItem}
                       />

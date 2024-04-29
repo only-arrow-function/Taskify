@@ -12,11 +12,11 @@ export interface TaskCardProp {
   };
   imageUrl?: string;
   columnData: ColumnItem;
+  description: string;
   onSelectItem: (card: TaskCardProp) => void;
 }
 
 export interface TaskCardResponse extends TaskCardProp {
-  description: string;
   teamId: string;
   columnId: number;
   createdAt: string;
