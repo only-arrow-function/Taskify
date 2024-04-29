@@ -19,10 +19,19 @@ const InputWithTag = ({
   onAddTag: (newTag: string) => void;
   onRemoveTag: (tags: string[]) => void;
 }) => {
+  let prevTargetValue: string;
+
   const handleKeyDown: KeyboardEventHandler = (e) => {
     e.preventDefault();
 
+    if (prevTargetValue === '' && e.key === 'Backspace') {
+      tags.pop();
+      onRemoveTag(tags);
+      return;
+    }
+
     const target = e.target as HTMLInputElement;
+    prevTargetValue = target.value;
     if (e.key !== 'Enter' && e.key !== 'Backspace') return;
 
     if (e.key === 'Enter') {
@@ -40,22 +49,12 @@ const InputWithTag = ({
       onAddTag(addTag);
       target.value = '';
 
-      console.log('??');
       return;
-    }
-
-    if (e.key === 'Backspace') {
-      if (target.value === '' && tags.length !== 0) {
-        e.preventDefault();
-        tags.pop();
-        onRemoveTag(tags);
-        return;
-      }
     }
   };
 
   return (
-    <div className="flex flex-col gap-[10px]">
+    <div className="flex flex-col gap-[10px] mt-[20px]">
       <label htmlFor={id} className="text-grayscale-80 font-medium">
         {label}
       </label>

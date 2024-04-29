@@ -20,9 +20,9 @@ const InputField = (
         placeholder={placeholder}
         readOnly={readOnly}
         ref={ref}
-        className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'} ${
-          readOnly ? 'text-grayscale-50' : 'text-black'
-        }`}
+        className={`w-full h-[3.125rem] px-4 rounded-lg border focus-within:border-2 focus-within:border-violet-50 ${
+          error ? 'border-red-50' : 'border-grayscale-40'
+        } ${readOnly ? 'text-grayscale-50' : 'text-black'}`}
       />
       <p className={`text-red-50 text-sm mt-[0.5rem] h-5 ${error ? '' : 'opacity-0'}`}>{error || ' '}</p>
     </div>

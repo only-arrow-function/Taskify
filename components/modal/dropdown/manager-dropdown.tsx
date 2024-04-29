@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import ProfileBadge from '@/components/profile/profile-badge';
@@ -19,7 +19,10 @@ const profileBadge = (nickname: string, profileImageUrl?: string) => {
   return profileImageUrl ? <Image src={profileImageUrl} alt={`${nickname}의 프로필`} fill /> : nickname.slice(0, 1);
 };
 
-const ManagerDropdown = ({ placeholder, members, assignee }: ManagerDropdownProps) => {
+const ManagerDropdown = (
+  { placeholder, members, assignee }: ManagerDropdownProps,
+  ref: ForwardedRef<HTMLButtonElement>,
+) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
   // const initRef = useHandleDropdownOutside(handleOpenDropdown, handleCloseDropdown);
 
@@ -53,12 +56,19 @@ const ManagerDropdown = ({ placeholder, members, assignee }: ManagerDropdownProp
     handleCloseDropdown();
   };
 
+  const buttonStyles = !selectedMember ? 'text-grayscale-50' : 'text-black';
+
   return (
     <div>
       <div className="flex flex-col relative">
-        <label className="text-grayscale-80 text-base font-medium">담당자</label>
-        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] px-4 pl-6 rounded-lg border focus-within:border-violet-50 cursor-pointer">
-          <button className="w-full outline-none flex items-center gap-x-3" type="button" data-type="member" ref={ref}>
+        <label className="text-grayscale-80 text-base font-medium mb-[0.5rem]">담당자</label>
+        <div className="flex sm:w-[217px] w-[287px] h-[3.125rem] rounded-lg border focus-within:border-2 focus-within:border-violet-50 cursor-pointer relative">
+          <button
+            className={`px-[16px] w-full outline-none flex items-center gap-x-3 font-normal ${buttonStyles}`}
+            type="button"
+            data-type="member"
+            ref={ref}
+          >
             {selectedMember ? (
               <>
                 <ProfileBadge>{profileBadge(selectedMember, selectedMemberProfile)}</ProfileBadge>
@@ -68,7 +78,11 @@ const ManagerDropdown = ({ placeholder, members, assignee }: ManagerDropdownProp
               placeholder
             )}
           </button>
-          <Image src={ArrowDownIcon} alt="아래 화살표" />
+          <Image
+            src={ArrowDownIcon}
+            alt="아래 화살표"
+            className="absolute pointer-events-none top-[50%] translate-y-[-50%] right-[16px]"
+          />
         </div>
 
         {isOpenDropdown && (
