@@ -41,7 +41,7 @@ const Login = () => {
     }
   };
 
-  const focusRef = useFocus();
+  const focusRef = useFocus<HTMLInputElement>();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">

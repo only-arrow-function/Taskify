@@ -6,9 +6,9 @@ import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
 import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
+import useFocus from '@/hooks/use-focus';
 import mainLogo from '@/public/logo/logo-main.svg';
 import { useToggleStore } from '@/store/toggle-store';
-import useFocus from '@/hooks/use-focus';
 
 const Signup = () => {
   const router = useRouter();
@@ -60,7 +60,7 @@ const Signup = () => {
     }
   };
 
-  const focusRef = useFocus();
+  const focusRef = useFocus<HTMLInputElement>();
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full p-4">

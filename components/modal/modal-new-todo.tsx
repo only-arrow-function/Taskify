@@ -14,9 +14,9 @@ import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useCreateCard } from '@/hooks/react-query/use-query-cards';
 import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
 import { useAllMembers } from '@/hooks/react-query/use-query-members';
+import useFocus from '@/hooks/use-focus';
 import { useIsFormFilled } from '@/hooks/use-is-form-filled';
 import { formatDate } from '@/lib/format-date';
-import useFocus from '@/hooks/use-focus';
 
 export interface StatesData {
   columnId: number;
