@@ -1,19 +1,20 @@
-![image](https://github.com/co-react/openMind/assets/98308702/2350aa59-2e32-4158-b6a4-8af844a4ef36)
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=240&section=header&text=Taskify%20중급%20프로젝트&fontSize=50&fontAlignY=40" />
 
 # ✨프로젝트 소개
 
 ## 👨‍💻 Members
 
-**Codeit FE Sprint 4기 - 1팀**
+**Codeit FE Sprint 4기 - 3팀**
 ## 멤버 소개👀
 <br/>
 
 <table>
   <tr>
-    <td height="160px" align="center"><a href="https://github.com/dtc03003"><img src="https://avatars.githubusercontent.com/u/66206266?v=4" width="160px"/><br/>구승모</a></td> 
-    <td height="160px" align="center"><a href="https://github.com/Young2un"><img src="https://avatars.githubusercontent.com/u/132687752?v=4" width="160px"/><br/>김재성</a></td> 
+    <td height="160px" align="center"><a href="https://github.com/Trophy198"><img src="https://avatars.githubusercontent.com/u/100824183?v=4" width="160px"/><br/>구승모</a></td> 
+    <td height="160px" align="center"><a href="https://github.com/bumpy1800"><img src="https://avatars.githubusercontent.com/u/51107943?v=4" width="160px"/><br/>김재성</a></td> 
     <td height="160px" align="center"><a href="https://github.com/whai2"><img src="https://avatars.githubusercontent.com/u/98308702?v=4" width="160px"/><br/>노은수</a></td> 
-    <td height="160px" align="center"><a href="https://github.com/gibeom0218"><img src="https://avatars.githubusercontent.com/u/108421517?v=4" width="160px"/><br/>🐶윤아영</a></td> 
+    <td height="160px" align="center"><a href="https://github.com/ayoung-iya"><img src="https://avatars.githubusercontent.com/u/129285524?v=4" width="160px"/><br/>윤아영</a></td> 
+    <td height="160px" align="center"><a href="https://github.com/D5ng"><img src="https://avatars.githubusercontent.com/u/121039744?v=4" width="160px"/><br/>이동현</a></td> 
   </tr>
 </table>
 <br/>
