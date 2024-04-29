@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { createPortal } from 'react-dom';
 import Card from '@/components/card/card';
 import { TaskCardProp } from '@/components/card/card-type';
 import TagChip from '@/components/chips/tag-chip';
@@ -15,9 +16,15 @@ const TaskCard = (prop: TaskCardProp) => {
     prop.assignee.nickname.slice(0, 1)
   );
 
+  const elem = document.querySelector('#modal')!;
+
   return (
     <>
-      {isToggle && <ModalTodoDetail onCloseModal={handleCloseToggle} columnData={prop.columnData} cardId={prop.id} />}
+      {isToggle &&
+        createPortal(
+          <ModalTodoDetail onCloseModal={handleCloseToggle} columnData={prop.columnData} cardId={prop.id} />,
+          elem,
+        )}
       <div onMouseDown={() => prop.onSelectItem(prop)}>
         <Card onClick={handleOpenToggle}>
           <div className="flex gap-[20px] items-center justify-between">
