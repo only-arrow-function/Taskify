@@ -5,10 +5,9 @@ import DashboardHeader from '@/components/dashboard/header/dashboard-header';
 import DashboardSectionLayout from '@/components/dashboard/layout/dashboard-section-layout';
 import SideMenu from '@/components/side-menu/side-menu';
 
-
 interface Props {
   id: string;
-  page? : string;
+  page?: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -17,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       id,
-      page: page ? page : null,
+      page: page ? page : 1,
     },
   };
 };
@@ -28,11 +27,11 @@ export default function index({ id, page }: Props) {
 
   return (
     <DashboardSectionLayout>
-      <SideMenu page={PageToNumber}/>
-      <div className='flex-col w-full'>
-        <DashboardHeader dashboardId={idToNumber} page={PageToNumber}/>
+      <SideMenu page={PageToNumber} />
+      <div className="flex-col w-full">
+        <DashboardHeader dashboardId={idToNumber} page={PageToNumber} />
         <main>
-          <ColumnList id={idToNumber} page={PageToNumber}/>
+          <ColumnList id={idToNumber} page={PageToNumber} />
         </main>
       </div>
     </DashboardSectionLayout>
