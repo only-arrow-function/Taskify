@@ -95,7 +95,6 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
 
   return (
     <>
-      <BackDrop onCloseModal={onCloseModal} />
       <ModalNewTodoLayout>
         <ModalTitle>할 일 수정</ModalTitle>
         <GridLayout>
