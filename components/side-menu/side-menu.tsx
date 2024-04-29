@@ -107,7 +107,7 @@ const SideMenu = ({ page }: { page: number }) => {
               onClick={collapse}
               role="button"
               className={cn(
-                'h-6 w-6 text-muted-foreground rounded-sm hover:bg-grayscale-50 absolute top-3 right-2 opacity-0 hover:opacity-100 transition',
+                'h-6 w-6 text-muted-foreground rounded-sm hover:bg-grayscale-50 absolute top-3 right-2 transition',
               )}
             >
               <ChevronsLeft className="h-6 w-6" />
@@ -133,7 +133,7 @@ const SideMenu = ({ page }: { page: number }) => {
         )}
       />
       {isCollapsed && (
-        <div className="h-[60px] rounded-lg bg-grayscale-40 items-center">
+        <div className="mt-[30px] h-[30px] rounded-lg items-center">
           <MenuIcon onClick={resetWidth} role="button" className="h-17 w-17 text-muted-foreground" />
         </div>
       )}
