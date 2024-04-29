@@ -85,20 +85,19 @@ https://taskify-six-eta.vercel.app/
 ## 1. Getting the sources
 
 ```bash
-git clone https://github.com/co-react/openMind.git
-cd openMind
+git clone https://github.com/only-arrow-function/Taskify.git
 ```
 
 ## 2. Install packages
 
 ```bash
-npm install
+npm i
 ```
 
 ## 3. Run development server
 
 ```bash
-npm run start
+npm run dev
 ```
 
 <br>
@@ -141,18 +140,11 @@ npm run start
 
 ---
 
-# ✨ Project Architecture
 
-## 🔁 User Flow
-
-![UserFlow](https://github.com/SiWooJinSeok/OpenMind6team/assets/59861974/dc454b3a-4f0a-4fb1-9602-dde2bf6e42a3)
-
-## 💡 Git branch strategy : Git flow
+# 💡 Git branch strategy : Git flow
 
 ![프레젠테이션2](https://github.com/co-react/openMind/assets/132687752/dcc2ed65-d3da-4e3c-a080-f9ae8accbd18)
 
-## Domain flow
-https://whispering-sassafras-4ac.notion.site/3e52bc153e4d4955962d907802f163ae?pvs=4
 
 <br/>
 
