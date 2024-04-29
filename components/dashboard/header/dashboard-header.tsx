@@ -23,7 +23,9 @@ const DashboardHeader = ({ dashboardId }: { dashboardId?: number }) => {
     : 'before:absolute before:w-px before:h-9 before:bg-grayscale-40 before:-left-3 md:before:-left-4 lg:before:-left-8';
   const { data: usersData } = useMembersQuery(dashboardId, 1);
 
-  const users = usersData?.members.map((member) => member.nickname) || [];
+  const users = usersData?.members.map(({ id, nickname, profileImageUrl }) => {
+    return { id, nickname, profileImageUrl };
+  });
   const usersCount = usersData?.totalCount || 0;
 
   return (
@@ -48,9 +50,11 @@ const DashboardHeader = ({ dashboardId }: { dashboardId?: number }) => {
               </div>
             </>
           )}
-          <div className="hidden ml-10 md:ml-6 lg:block lg:ml-10">
-            <DashboardHeaderMembers users={users} totalCount={usersCount} />
-          </div>
+          {users && (
+            <div className="hidden ml-10 md:ml-6 lg:block lg:ml-10">
+              <DashboardHeaderMembers users={users} totalCount={usersCount} />
+            </div>
+          )}
           <div className={`ml-7 md:ml-8 lg:ml-16 relative ${beforeStyles}`}>
             <DashboardHeaderProfile />
           </div>
