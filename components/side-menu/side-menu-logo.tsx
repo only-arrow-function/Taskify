@@ -8,7 +8,7 @@ const SideMenuLogo = () => {
       <Link href="/">
         <picture>
           <source media="(min-width: 640px)" srcSet={largeLogo.src} />
-          <img src={smallLogo.src} alt="logo" />
+          <img src={smallLogo.src} alt="logo" className="w-[48px] h-[48px] sm:w-auto sm:h-auto" />
         </picture>
       </Link>
     </div>

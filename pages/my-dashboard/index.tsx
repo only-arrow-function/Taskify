@@ -10,19 +10,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const title = context.query['title'];
   const page = context.query['title'];
 
-  return { props: { 
-    title: title ? title : null,
-    page: page ? page : 1,
-  } };
+  return {
+    props: {
+      title: title ? title : null,
+      page: page ? page : 1,
+    },
+  };
 };
 
-const MyDashboard = ({ title, page }: { title?: string, page?: string }) => {
+const MyDashboard = ({ title, page }: { title?: string; page?: string }) => {
   const pageToNumber = Number(page);
 
   return (
     <DashboardSectionLayout>
-      <SideMenu page={pageToNumber}/>
-      <div className='flex-col w-full'>
+      <SideMenu page={pageToNumber} />
+      <div className="flex-col w-full">
         <DashboardHeader />
         <DashboardList />
         <DashboardInvite searchTitle={title} />

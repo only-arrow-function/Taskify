@@ -87,12 +87,12 @@ const ManagerDropdown = (
 
         {isOpenDropdown && (
           <ul
-            className="left-0 flex sm:w-[217px] w-[287px] h-[3.125rem] rounded-lg border mt-1 absolute bg-white sm:right-[36px] top-[100%]"
+            className="left-0 sm:w-[217px] w-[287px] rounded-lg border mt-1 absolute bg-white sm:right-[36px] top-[100%] z-50"
             ref={memberRef}
           >
             {members?.members.map((member) => (
               <li
-                className="flex items-center gap-x-3 pl-6 cursor-pointer hover:bg-grayscale-30 w-full overflow-hidden"
+                className="flex items-center gap-x-3 pl-6 py-1 cursor-pointer hover:bg-grayscale-30 w-full overflow-hidden"
                 onClick={handleSelectedMember.bind(null, member)}
               >
                 <ProfileBadge>{profileBadge(member.nickname, member.profileImageUrl)}</ProfileBadge>
