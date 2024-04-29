@@ -10,7 +10,7 @@
 
 <table>
   <tr>
-    <td height="160px" align="center"><a href="https://github.com/Trophy198"><img src="https://avatars.githubusercontent.com/u/100824183?v=4" width="160px"/><br/>구승모</a></td> 
+    <td height="160px" align="center"><a href="https://github.com/Trophy198"><img src="https://avatars.githubusercontent.com/u/126785007?v=4" width="160px"/><br/>구승모</a></td> 
     <td height="160px" align="center"><a href="https://github.com/bumpy1800"><img src="https://avatars.githubusercontent.com/u/51107943?v=4" width="160px"/><br/>김재성</a></td> 
     <td height="160px" align="center"><a href="https://github.com/whai2"><img src="https://avatars.githubusercontent.com/u/98308702?v=4" width="160px"/><br/>노은수</a></td> 
     <td height="160px" align="center"><a href="https://github.com/ayoung-iya"><img src="https://avatars.githubusercontent.com/u/129285524?v=4" width="160px"/><br/>윤아영</a></td> 
