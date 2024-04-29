@@ -7,6 +7,7 @@ import InputField from '@/components/inputs/input-field';
 import PasswordInput from '@/components/inputs/password-input';
 import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
+import useFocus from '@/hooks/use-focus';
 import mainLogo from '@/public/logo/logo-main.svg';
 import { useAuthenticationStore } from '@/store/auth';
 import { useToggleStore } from '@/store/toggle-store';
@@ -19,8 +20,6 @@ const Login = () => {
   const [cookies, setCookie] = useCookies(['token']);
 
   const setAuthentication = useAuthenticationStore((state) => state.setAuthentication);
-
-  const focusRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,11 +41,7 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (focusRef.current) {
-      focusRef.current.focus();
-    }
-  }, []);
+  const focusRef = useFocus();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen w-full px-4">

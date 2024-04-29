@@ -8,6 +8,7 @@ import NotificationModal from '@/components/modal/notification-modal';
 import { useFormValidation } from '@/hooks/use-authentication-validation';
 import mainLogo from '@/public/logo/logo-main.svg';
 import { useToggleStore } from '@/store/toggle-store';
+import useFocus from '@/hooks/use-focus';
 
 const Signup = () => {
   const router = useRouter();
@@ -59,6 +60,8 @@ const Signup = () => {
     }
   };
 
+  const focusRef = useFocus();
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen w-full p-4">
       <div className="w-[120px] h-[167px] sm:w-[180px] sm:h-[220px] sm:mb-8">
@@ -78,6 +81,7 @@ const Signup = () => {
           onBlur={validateEmail}
           placeholder="이메일을 입력해 주세요"
           error={email.error}
+          ref={focusRef}
         />
         <InputField
           label="닉네임"
