@@ -7,8 +7,8 @@ import SideMenuDashBoard from '@/components/side-menu/side-menu-dash-boards';
 import { useDashboardsPaginationQuery } from '@/hooks/react-query/use-query-dashboard';
 import { useRevalidatePages } from '@/hooks/use-revalidate-pages';
 
-const SideMenuDashBoardsList = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+const SideMenuDashBoardsList = ({page}: {page: number}) => {
+  const [currentPage, setCurrentPage] = useState(page);
 
   // server state
   const { data, isPending } = useDashboardsPaginationQuery(currentPage);
@@ -39,6 +39,7 @@ const SideMenuDashBoardsList = () => {
                 color={data.color}
                 createdByMe={data.createdByMe}
                 userId={data.userId}
+                page={currentPage}
               />
             );
           })

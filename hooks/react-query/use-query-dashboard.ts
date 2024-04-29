@@ -45,8 +45,8 @@ export const useInfiniteDashboardsQuery = () => {
   return { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage };
 };
 
-export const useDashboardDetailQuery = (dashboardId: number | undefined, page: number) => {
-  if (!dashboardId) return { data: null, isPending: null };
+export const useDashboardDetailQuery = (dashboardId: number | undefined, page: number | undefined) => {
+  if (!dashboardId || !page) return { data: null, isPending: null };
 
   const query = useQuery({
     queryKey: [`my-dashboard`, page, dashboardId],
@@ -93,3 +93,7 @@ export const useDetailDashboard = (dashboardId: number) => {
     queryKey: [`dashboard-${dashboardId}`],
   });
 };
+
+export const useDashboardDelete = (dashboardId: number) => {
+
+}
