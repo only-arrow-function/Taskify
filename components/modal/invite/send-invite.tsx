@@ -16,12 +16,13 @@ const SendInvite = () => {
 
   const handleCloseToggle = useToggleStore((state) => state.handleCloseToggle);
   const [error, setError] = useState('');
+
   const handleInviteClick = async () => {
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
       setError('유효한 이메일 형식을 입력해 주세요.');
       return;
     }
-    await requests.sendInvite({ email }, dashboardId);
+    await requests.sendInvite({ email }, dashboardId as string);
     handleCloseToggle();
   };
 
@@ -46,5 +47,6 @@ const SendInvite = () => {
       </div>
       </>
   )
+}
 
 export default SendInvite;

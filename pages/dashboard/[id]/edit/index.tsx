@@ -11,25 +11,33 @@ import MembersTable from '@/components/tables/members-table';
 import { IdProps } from '@/constant/type/data/dashboard.type';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { id, page } = context.query;
 
-  return { props: { id } };
+  return {
+    props: {
+      id,
+      page: page,
+    },
+  };
 };
 
-const index = ({ id }: IdProps) => {
+const index = ({ id, page }: IdProps) => {
   const idToNumber = Number(id);
+  const pageToNumber = Number(page);
 
   return (
     <DashboardSectionLayout>
-      <DashboardHeader dashboardId={idToNumber} />
-      <main className="flex flex-col px-[15px] py-[15px] gap-[10px]">
-        <ReturnDashboardPage dashboardId={idToNumber} />
-        <EditDashboard dashboardId={idToNumber} />
-        <MembersTable dashboardId={idToNumber} />
-        <InviteTable dashboardId={idToNumber} />
-        <DashboardDeleteButton dashboardId={idToNumber} />
-      </main>
-      <SideMenu />
+      <SideMenu page={pageToNumber}/>
+      <div className='flex-col w-full'>
+        <DashboardHeader dashboardId={idToNumber} page={pageToNumber}/>
+        <main className="flex flex-col px-[15px] py-[15px] gap-[10px] overflow-y-auto">
+          <ReturnDashboardPage dashboardId={idToNumber} page={pageToNumber}/>
+          <EditDashboard dashboardId={idToNumber} page={pageToNumber}/>
+          <MembersTable dashboardId={idToNumber} />
+          <InviteTable dashboardId={idToNumber} />
+          <DashboardDeleteButton dashboardId={idToNumber} page={pageToNumber}/>
+        </main>
+      </div>
     </DashboardSectionLayout>
   );
 };

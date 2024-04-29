@@ -1,23 +1,25 @@
-import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import ProfileBadge from '@/components/profile/profile-badge';
 import ProfileUsername from '@/components/profile/profile-username';
-import { Members } from '@/components/tables/members.type';
+
+import { Assignee, Member, Members } from '@/components/tables/members.type';
 import { useHandleDropdown } from '@/hooks/use-handle-dropdown';
 
 import ArrowDownIcon from '@/public/icon/arrow-drop-down.svg';
 
 interface ManagerDropdownProps {
   placeholder?: string;
-  nickname?: string;
+  assignee?: Assignee;
   members: Members | undefined;
 }
 
-const ManagerDropdown = (
-  { placeholder, members, nickname }: ManagerDropdownProps,
-  ref: ForwardedRef<HTMLButtonElement>,
-) => {
+const profileBadge = (nickname: string, profileImageUrl?: string) => {
+  return profileImageUrl ? <Image src={profileImageUrl} alt={`${nickname}의 프로필`} fill /> : nickname.slice(0, 1);
+};
+
+const ManagerDropdown = ({ placeholder, members, assignee }: ManagerDropdownProps) => {
   const { isOpenDropdown, handleOpenDropdown, handleCloseDropdown, handleToggleDropdown } = useHandleDropdown();
   // const initRef = useHandleDropdownOutside(handleOpenDropdown, handleCloseDropdown);
 
@@ -43,9 +45,11 @@ const ManagerDropdown = (
     return () => document.removeEventListener('mousedown', handleOutside);
   }, []);
 
-  const [selectedMember, setSelectedMember] = useState(nickname || '');
-  const handleSelectedMember = (member: string) => {
-    setSelectedMember(member);
+  const [selectedMember, setSelectedMember] = useState(assignee?.nickname || '');
+  const [selectedMemberProfile, setSelectedMemberProfile] = useState(assignee?.profileImageUrl || '');
+  const handleSelectedMember = (member: Member) => {
+    setSelectedMember(member.nickname);
+    setSelectedMemberProfile(member.profileImageUrl);
     handleCloseDropdown();
   };
 
@@ -57,7 +61,7 @@ const ManagerDropdown = (
           <button className="w-full outline-none flex items-center gap-x-3" type="button" data-type="member" ref={ref}>
             {selectedMember ? (
               <>
-                <ProfileBadge>{selectedMember.slice(0, 1)}</ProfileBadge>
+                <ProfileBadge>{profileBadge(selectedMember, selectedMemberProfile)}</ProfileBadge>
                 <ProfileUsername username={selectedMember} />
               </>
             ) : (
@@ -75,9 +79,9 @@ const ManagerDropdown = (
             {members?.members.map((member) => (
               <li
                 className="flex items-center gap-x-3 pl-6 cursor-pointer hover:bg-grayscale-30 w-full overflow-hidden"
-                onClick={handleSelectedMember.bind(null, member.nickname)}
+                onClick={handleSelectedMember.bind(null, member)}
               >
-                <ProfileBadge>{member.nickname.slice(0, 1)}</ProfileBadge>
+                <ProfileBadge>{profileBadge(member.nickname, member.profileImageUrl)}</ProfileBadge>
                 <ProfileUsername username={member.nickname} />
               </li>
             ))}

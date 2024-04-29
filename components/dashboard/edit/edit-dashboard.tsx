@@ -10,14 +10,14 @@ import { DashboardIdProps } from '@/constant/type/data/dashboard.type';
 import { useDashboardEditMutation, useDashboardDetailQuery } from '@/hooks/react-query/use-query-dashboard';
 import { useDashboardsStore } from '@/store/dashboard';
 
-const EditDashboard = ({ dashboardId }: DashboardIdProps) => {
+const EditDashboard = ({ dashboardId, page }: DashboardIdProps) => {
   const [title, setTitle] = useState('');
   const { color } = useDashboardsStore();
 
   // server state
   const queryClient = useQueryClient();
-  const { data, isPending } = useDashboardDetailQuery(dashboardId);
-  const { mutateAsync } = useDashboardEditMutation(dashboardId, { title, color }, queryClient);
+  const { data, isPending } = useDashboardDetailQuery(dashboardId, page as number);
+  const { mutateAsync } = useDashboardEditMutation(dashboardId, page as number , { title, color }, queryClient);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -31,7 +31,7 @@ const EditDashboard = ({ dashboardId }: DashboardIdProps) => {
   };
 
   return (
-    <section className="bg-white rounded-lg px-[15px] py-[15px]">
+    <section className="flex flex-col justify-between min-w-[284px] max-w-[620px] rounded-lg bg-white pt-[22px] pb-4 sm:pt-[26px] sm:pb-5 px-5">
       <div className="flex flex-row justify-between">
         {isPending ? (<ModalTitle>로딩중</ModalTitle>) : (<ModalTitle>{data.title}</ModalTitle>)}
         <ColorChipGroup />

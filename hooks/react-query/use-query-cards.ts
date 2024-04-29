@@ -9,20 +9,11 @@ const PAGE_COUNT = 5;
 export const useInfiniteCardsQuery = (columnId: number) => {
   const { data, isSuccess, isPending, hasNextPage, isFetchingNextPage, fetchNextPage, error } = useInfiniteQuery({
     queryKey: [`${columnId}-cards`],
-    initialPageParam: 1,
-    queryFn: async ({ pageParam = 1 }) => await cardsRequests.fetchCards(columnId, pageParam),
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => await cardsRequests.fetchCards(columnId, pageParam),
 
-    getNextPageParam: (lastPage, allPages) => {
-      if (!lastPage) return undefined;
-
-      const totalPages = Math.ceil(lastPage.totalCount / PAGE_COUNT);
-      const nextPage = allPages.length + 1;
-
-      if (nextPage <= totalPages) {
-        return nextPage;
-      } else {
-        return undefined;
-      }
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursorId;
     },
 
     select: (data) => {

@@ -9,6 +9,12 @@ import calenderImg from '@/public/icon/calendar.svg';
 
 const TaskCard = (prop: TaskCardProp) => {
   const { isToggle, handleCloseToggle, handleOpenToggle } = useToggle();
+  const profileBadge = prop.assignee.profileImageUrl ? (
+    <Image src={prop.assignee.profileImageUrl} alt={`${prop.assignee.nickname}의 프로필`} fill />
+  ) : (
+    prop.assignee.nickname.slice(0, 1)
+  );
+
   return (
     <>
       {isToggle && <ModalTodoDetail onCloseModal={handleCloseToggle} columnData={prop.columnData} cardId={prop.id} />}
@@ -49,7 +55,7 @@ const TaskCard = (prop: TaskCardProp) => {
               </div>
               <div>
                 <ProfileBadge styles="font-[600] text-[10px] sm:text-[12px] w-[22px] h-[22px] sm:w-[24px] sm:h-[24px]">
-                  {prop.assignee.nickname[0]}
+                  {profileBadge}
                 </ProfileBadge>
               </div>
             </div>
