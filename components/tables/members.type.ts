@@ -13,3 +13,9 @@ export interface Members {
   members: Member[];
   totalCount: number;
 }
+
+export interface Assignee {
+  id: number;
+  nickname: string;
+  profileImageUrl: string | null;
+}
