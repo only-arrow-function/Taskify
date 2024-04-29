@@ -28,7 +28,7 @@ export default function index({ id, page }: Props) {
   return (
     <DashboardSectionLayout>
       <SideMenu page={PageToNumber} />
-      <div className="flex-col w-full">
+      <div className="flex-col w-full bg-grayscale-20">
         <DashboardHeader dashboardId={idToNumber} page={PageToNumber} />
         <main>
           <ColumnList id={idToNumber} page={PageToNumber} />
