@@ -144,7 +144,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
           <BasicButton purpose="negative" eventHandler={onCloseModal}>
             취소
           </BasicButton>
-          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit}>
+          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit} disabled={isDisabled}>
             확인
           </BasicButton>
         </div>
