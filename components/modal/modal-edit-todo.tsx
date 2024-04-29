@@ -16,6 +16,7 @@ import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useUpdateCard } from '@/hooks/react-query/use-query-cards';
 import { useColumnsQuery } from '@/hooks/react-query/use-query-columns';
 import { useAllMembers } from '@/hooks/react-query/use-query-members';
+import useFocus from '@/hooks/use-focus';
 import { CardDetail } from '@/types/card';
 
 interface ModalEditTodoProps {
@@ -86,19 +87,19 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
       data,
     };
 
-    console.log(data);
-
     await updateCardMutation.mutateAsync(transformedData);
     onCloseModal();
   };
 
+  const focusRef = useFocus<HTMLButtonElement>();
+
   return (
     <>
-      <BackDrop onCloseModal={onCloseModal} />
       <ModalNewTodoLayout>
         <ModalTitle>할 일 수정</ModalTitle>
         <GridLayout>
           <StateDropdown
+            ref={focusRef}
             columnStates={fetchCoulumQuery.data!.data}
             selectedState={selectedState}
             onSelectedColumn={handleSelectedState}
@@ -142,7 +143,7 @@ const ModalEditTodo = ({ columnData, card, onCloseModal }: ModalEditTodoProps) =
           <BasicButton purpose="negative" eventHandler={onCloseModal}>
             취소
           </BasicButton>
-          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit}>
+          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit} disabled={isDisabled}>
             확인
           </BasicButton>
         </div>

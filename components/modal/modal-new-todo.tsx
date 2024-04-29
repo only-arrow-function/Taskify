@@ -13,9 +13,10 @@ import ModalTitle from '@/components/modal/modal-title';
 import InputWithTag from '@/components/modal/todo/input-with-tag';
 import { useCreateCard } from '@/hooks/react-query/use-query-cards';
 import { useDetailDashboard } from '@/hooks/react-query/use-query-dashboard';
+import { useAllMembers } from '@/hooks/react-query/use-query-members';
+import useFocus from '@/hooks/use-focus';
 import { useIsFormFilled } from '@/hooks/use-is-form-filled';
 import { formatDate } from '@/lib/format-date';
-import { useAllMembers, useMembersQuery } from '@/hooks/react-query/use-query-members';
 
 export interface StatesData {
   columnId: number;
@@ -87,12 +88,16 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
     handleCloseModal();
   };
 
+  const focusRef = useFocus<HTMLButtonElement>();
+
   return (
     <>
       <Dimmed handleCloseModal={handleCloseModal} />
       <ModalNewTodoLayout>
         <ModalTitle>할 일 생성</ModalTitle>
-        <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} />
+        <div className="mb-[28px]">
+          <ManagerDropdown placeholder="이름을 입력해 주세요" members={members} ref={focusRef} />
+        </div>
         <InputField
           label="제목"
           type="text"
@@ -134,7 +139,7 @@ const ModalNewTodo = ({ columnId, handleCloseModal }: ModalNewTodoProps) => {
           <BasicButton purpose="negative" eventHandler={handleCloseModal}>
             취소
           </BasicButton>
-          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit}>
+          <BasicButton type="button" purpose="positive" eventHandler={handleSubmit} disabled={!isFilled}>
             확인
           </BasicButton>
         </div>

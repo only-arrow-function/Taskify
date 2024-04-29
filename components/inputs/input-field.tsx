@@ -1,18 +1,10 @@
-import React from 'react';
+import React, { forwardRef, ForwardedRef } from 'react';
 import { InputFieldProps } from './input-field-type';
 
-const InputField = ({
-  label,
-  type,
-  id,
-  value,
-  placeholder,
-  autoComplete,
-  onBlur,
-  onChange,
-  error,
-  readOnly,
-}: InputFieldProps) => {
+const InputField = (
+  { label, type, id, value, placeholder, autoComplete, onBlur, onChange, error, readOnly }: InputFieldProps,
+  ref: ForwardedRef<HTMLInputElement>,
+) => {
   return (
     <div className="flex flex-col w-full">
       <label htmlFor={id} className="text-grayscale-80 mb-[0.5rem]">
@@ -27,14 +19,14 @@ const InputField = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         readOnly={readOnly}
-        autoFocus
-        className={`w-full h-[3.125rem] px-4 rounded-lg border ${error ? 'border-red-50' : 'border-grayscale-40'} ${
-          readOnly ? 'text-grayscale-50' : 'text-black'
-        }`}
+        ref={ref}
+        className={`w-full h-[3.125rem] px-4 rounded-lg border focus-within:border-2 focus-within:border-violet-50 ${
+          error ? 'border-red-50' : 'border-grayscale-40'
+        } ${readOnly ? 'text-grayscale-50' : 'text-black'}`}
       />
       <p className={`text-red-50 text-sm mt-[0.5rem] h-5 ${error ? '' : 'opacity-0'}`}>{error || ' '}</p>
     </div>
   );
 };
 
-export default InputField;
+export default forwardRef(InputField);

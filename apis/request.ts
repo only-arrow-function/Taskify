@@ -148,11 +148,9 @@ const requests = Object.freeze({
   // 다른 API 요청도 여기에 추가 가능
 
   postCardImage: async (columnId: number, imageData: FormData) => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
     try {
       const { data } = await axios.post(`columns/${columnId}/card-image`, imageData, {
-        headers: { Authorization: 'Bearer ' + accessToken, 'Content-Type': 'multipart/form-data' },
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
       });
 
       return data.imageUrl;
@@ -162,11 +160,9 @@ const requests = Object.freeze({
   },
 
   postCard: async (cardInfo: any) => {
-    const accessToken = window.localStorage.getItem('accessToken');
-
     try {
       const { data } = await axios.post('cards', cardInfo, {
-        headers: { Authorization: 'Bearer ' + accessToken },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       return data;

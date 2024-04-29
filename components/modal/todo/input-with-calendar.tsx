@@ -13,8 +13,11 @@ const InputWithCalendar = ({
   return (
     <div className="flex flex-col gap-[10px]">
       <h3 className="text-grayscale-80 font-medium sm:text-lg">{label}</h3>
-      <div className="relative min-w-44 h-[42px] px-4 bg-white rounded-md border border-grayscale-40 sm:h-[48px]">
-        <label htmlFor="calendar" className="absolute inset-x-4 inset-y-0 flex items-center gap-[10px] bg-white">
+      <div className="overflow-hidden relative min-w-44 h-[42px] bg-white rounded-md border-grayscale-40 border sm:h-[48px]">
+        <label
+          htmlFor="calendar"
+          className="absolute inset-x-4 inset-y-0 flex items-center gap-[10px] bg-white h-[30px] translate-y-[-50%] top-[50%]"
+        >
           <svg
             viewBox="0 0 18 18"
             fill="currentColor"
@@ -32,7 +35,13 @@ const InputWithCalendar = ({
             <span className="flex-shrink-0 text-sm text-grayscale-50 sm:text-base">날짜를 선택해 주세요</span>
           )}
         </label>
-        <input className="size-full" id="calendar" value={value} type="datetime-local" onChange={onChange} />
+        <input
+          className="px-4 size-full focus-within:border-2 focus-within:border-violet-50 rounded-md"
+          id="calendar"
+          value={value}
+          type="datetime-local"
+          onChange={onChange}
+        />
       </div>
     </div>
   );

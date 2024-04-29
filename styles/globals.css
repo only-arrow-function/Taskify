@@ -73,6 +73,10 @@
     font-style: normal;
   }
 
+  input {
+    outline: none;
+  }
+
   input[type='datetime-local']::-webkit-calendar-picker-indicator {
     display: block;
     position: absolute;
