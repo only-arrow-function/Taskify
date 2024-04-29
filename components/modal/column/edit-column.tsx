@@ -44,6 +44,7 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
     setTitle(e.target.value);
   };
   const handleInputBlur = () => {
+    if (title === columnTitle) return;
     if (useColumnDuplicationTest(title, data?.data)) {
       setError('중복된 컬럼 이름입니다.');
     } else {
@@ -52,10 +53,6 @@ const EditColumn = ({ onClose, columnId, columnTitle }: NewColumnProp) => {
     return;
   };
   const handleEditBtnClick = async () => {
-    if (useColumnDuplicationTest(title, data?.data)) {
-      setError('중복된 컬럼 이름입니다.');
-      return;
-    }
     try {
       await mutateAsync();
 
