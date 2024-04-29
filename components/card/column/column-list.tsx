@@ -21,9 +21,7 @@ const ColumnList = (props: ColumnListProps) => {
   const dashboardId = +props.id;
   const { data: columnData, isLoading, isError } = useColumnsQuery(dashboardId);
   const { isOpenModal, handleOpenModal, handleCloseModal } = useHandleModal();
-
   const [cardInfo, setCardInfo] = useState<TaskCardProp>();
-
   const [enabled, setEnabled] = useState(false);
   const updateCardListMutation = useUpdateCard(columnData?.data as ColumnItem[]);
 
