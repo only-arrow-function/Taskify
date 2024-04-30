@@ -33,7 +33,7 @@ const DashboardHeader = ({ dashboardId, page }: { dashboardId?: number; page?: n
   const usersCount = usersData?.totalCount || 0;
 
   const handleLogoutClick = () => {
-    removeCookie('token');
+    removeCookie('token', { path: '/' });
     router.push('/login');
   };
 
