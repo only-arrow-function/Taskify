@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type { CommentProps } from './comment.type';
 import ProfileImage from './profile-image';
 import { updateComment, useDeleteComment } from '@/hooks/react-query/use-query-comments';
+import { useAuthenticationStore } from '@/store/auth';
 
 const formatDate = (date: string) => {
   return date.slice(0, 16).replaceAll('T', ' ').replaceAll('-', '.');
@@ -14,6 +15,7 @@ const Comment = ({ id, content, createdAt, author, cardId }: CommentProps) => {
   const queryClient = useQueryClient();
   const { mutate: updateMutate } = updateComment({ commentId: id, cardId }, queryClient);
   const { mutate: deleteMutate } = useDeleteComment({ commentId: id, cardId }, queryClient);
+  const userId = useAuthenticationStore((state) => state.id);
 
   const handleModifyComment = () => {
     updateMutate(changeContent);
@@ -44,21 +46,23 @@ const Comment = ({ id, content, createdAt, author, cardId }: CommentProps) => {
           ) : (
             <p className="text-xs text-grayscale-80 md:text-sm">{content}</p>
           )}
-          <ul className="flex gap-2 h-3 md:h-[14px]">
-            <li className="text-grayscale-50 text-[10px] md:text-xs">
-              <button
-                className="underline underline-offset-1"
-                onClick={isModify ? handleModifyComment : handleModifyButtonClick}
-              >
-                {isModify ? '완료' : '수정'}
-              </button>
-            </li>
-            <li className="text-grayscale-50 text-[10px] md:text-xs">
-              <button className="underline underline-offset-1" onClick={() => deleteMutate()}>
-                삭제
-              </button>
-            </li>
-          </ul>
+          {userId === author.id && (
+            <ul className="flex gap-2 h-3 md:h-[14px]">
+              <li className="text-grayscale-50 text-[10px] md:text-xs">
+                <button
+                  className="underline underline-offset-1"
+                  onClick={isModify ? handleModifyComment : handleModifyButtonClick}
+                >
+                  {isModify ? '완료' : '수정'}
+                </button>
+              </li>
+              <li className="text-grayscale-50 text-[10px] md:text-xs">
+                <button className="underline underline-offset-1" onClick={() => deleteMutate()}>
+                  삭제
+                </button>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </li>
