@@ -8,7 +8,7 @@ import largeLogoImage from '@/public/logo/logo-with-title-large.svg';
 
 const RendingHeaderLogo = (props: DarkmodeProps) => {
   return (
-    <h1 className="relative w-[121px] h-[39px] max-sm:w-[24px] max-sm:h-[27px]">
+    <h1 className="relative w-[120px] h-[60px]  md:w-[121px] md:h-[39px] ">
       <Link href="/" className="block">
         {!props.isDarkmode && <source media={`(max-width: 640px)`} srcSet={smallLogoImage.src} />}
         {props.isDarkmode && <source media={`(max-width: 640px)`} srcSet={darkmodeSmallLogoImage.src} />}

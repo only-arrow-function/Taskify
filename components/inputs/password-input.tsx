@@ -25,7 +25,7 @@ const PasswordInput = ({ label, value, id, placeholder, autoComplete, onBlur, on
           onBlur={onBlur}
           autoComplete={autoComplete}
           placeholder={placeholder}
-          className={`w-full h-[3.125rem] pl-4 pr-10 rounded-lg border border-solid ${
+          className={`w-full h-[3.125rem] pl-4 pr-10 rounded-lg border border-solid  focus-within:border-2 focus-within:border-violet-50 ${
             error ? 'border-red-50' : 'border-grayscale-40'
           }`}
         />
